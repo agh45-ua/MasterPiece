@@ -18,8 +18,4 @@ Descripción detallada del issue
 Al pulsar en .. debería ocurrir...
 
 ---
-Assignes - Persona responsable de solucionarlo
-
-Label - Gravedad del bug
-
 Cuando se solucione el bug, cerrar el issue con un commit que incluya "Solucionado #numero de issue"
