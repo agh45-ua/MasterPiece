@@ -2,7 +2,7 @@
 name: Bug report
 about: Reportar un error o fallo detectado en el juego
 title: "[BUG] "
-labels: bug
+labels: Bug
 assignees: ''
 ---
 
