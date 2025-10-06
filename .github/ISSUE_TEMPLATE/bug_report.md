@@ -1,3 +1,11 @@
+---
+name: Bug report
+about: Reportar un error o fallo detectado en el juego
+title: "[BUG] "
+labels: bug
+assignees: ''
+---
+
 ## DESCRIPCIÓN
 Descripción detallada del issue
 
