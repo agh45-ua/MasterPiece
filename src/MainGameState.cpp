@@ -51,6 +51,10 @@ void MainGameState::handleInput(){
         float speed = 500.0f;
         projectile.vel = {speed * cosf(angle), speed * sinf(angle)};
     }
+
+    // Movimiento del jugador
+    if (IsKeyDown(KEY_A) && player1.x > 0) player1.x -= 200 * GetFrameTime();
+    if (IsKeyDown(KEY_D) && player1.x + player1.width < screenWidth) player1.x += 200 * GetFrameTime();
 }
 
 void MainGameState::update(float deltaTime){
