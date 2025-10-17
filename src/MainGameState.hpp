@@ -1,5 +1,5 @@
 #pragma once
-#include <GameState.hpp>
+#include "GameState.hpp"
 #include <raylib.h>
 #include <cmath>
 extern "C" {
@@ -59,4 +59,11 @@ class MainGameState : public GameState
         float angle_2 = -30.0f * DEG2RAD, old_angle_2; // ángulo inicial (en radianes)
         const float arrowLength_2 = 60.0f;
         const float angleSpeed_2 = 60.0f * DEG2RAD; // velocidad de rotación en rad/s
+
+
+        //cuenta atrás
+        bool countdownActive = false;   // si la cuenta atrás está en marcha
+        float countdownTime = 3.0f;     // 3 segundos
+        bool gameBlocked = false;       // bloquea todo mientras dura la cuenta atrás
+
 };

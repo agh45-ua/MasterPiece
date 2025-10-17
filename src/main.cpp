@@ -1,5 +1,5 @@
-#include <StateMachine.hpp>
-#include <MainGameState.hpp>
+#include "StateMachine.hpp"
+#include "MainGameState.hpp"
 #include <memory>
 #include <chrono>
 extern "C" {
