@@ -1,5 +1,5 @@
 #include "StateMachine.hpp"
-#include "MainGameState.hpp"
+#include "InicioState.hpp"
 #include <memory>
 #include <chrono>
 extern "C" {
@@ -12,13 +12,13 @@ int main()
     const int screenHeight = 600;
 
     // --- Inicializar Raylib ---
-    InitWindow(screenWidth, screenHeight, "Raylib - Apuntado con W/S y disparo con gravedad");
+    InitWindow(screenWidth, screenHeight, "Master Piece Game - Cabras Absolutas");
     SetTargetFPS(60);
 
     // --- Máquina de estados ---
     StateMachine state_machine;
     float delta_time = 0.0f;
-    state_machine.add_state(std::make_unique<MainGameState>(), false);
+    state_machine.add_state(std::make_unique<InicioState>(), false);
     state_machine.handle_state_changes(delta_time);
 
     // --- Bucle principal ---
