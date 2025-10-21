@@ -131,12 +131,20 @@ void MainGameState::update(float deltaTime){
         }
         // Colisión con jugadores
 
-        if (CheckCollisionPointRec(projectile_1.pos, player2) || CheckCollisionPointRec(projectile_2.pos, player1)) {
+        int winnerId = 0;
+        if (projectile_1.active && CheckCollisionPointRec(projectile_1.pos, player2)) {
+            winnerId = 1;
+        } else if (projectile_2.active && CheckCollisionPointRec(projectile_2.pos, player1)) {
+            winnerId = 2;
+        }
+
+        if (winnerId != 0) {
             projectile_1.active = false;
             projectile_2.active = false;
 
-            // Cambiar al estado GameOver
-            this->state_machine->add_state(make_unique<GameOverState>(), true);
+            // Cambiar al estado GameOver con el ganador
+            this->state_machine->add_state(make_unique<GameOverState>(winnerId), true);
+            return;
         }
         
         //cuando los projectile acaben(false) siguiente turno y le toca al j1
