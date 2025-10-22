@@ -24,8 +24,15 @@ void PersonajesState::init(){
     confirmarJugador2 = false;
     colorConfirmar1 = GRAY;
     colorConfirmar2 = GRAY;
-    jugador1 = {1,"Jugador 1",colores[color1]};
-    jugador2 = {2,"Jugador 2",colores[color2]};
+
+    for (int i = 0; i < 6; i++) {
+        personajes[i] = LoadTexture(rutas[i].c_str());
+    }
+
+    color1 = 0;
+    color2 = 1;
+    jugador1 = {1, "Jugador 1", personajes[color1]};
+    jugador2 = {2, "Jugador 2", personajes[color2]};
 }
 
 void PersonajesState::handleInput(){
@@ -51,13 +58,13 @@ void PersonajesState::update(float deltaTime){
                 int c = (color1 - 1 + N) % N;
                 if (c == color2) c = (c - 1 + N) % N;
                 color1 = c;
-                jugador1.color = colores[color1];
+                jugador1.personaje = personajes[color1];
             }
             if (CheckCollisionPointRec(m, j1_der)) {
                 int c = (color1 + 1) % N;
                 if (c == color2) c = (c + 1) % N;
                 color1 = c;
-                jugador1.color = colores[color1];
+                jugador1.personaje = personajes[color1];
             }
         }
         if(confirmarJugador2 == false){
@@ -65,13 +72,13 @@ void PersonajesState::update(float deltaTime){
                 int c = (color2 - 1 + N) % N;
                 if (c == color1) c = (c - 1 + N) % N;
                 color2 = c;
-                jugador2.color = colores[color2];
+                jugador2.personaje = personajes[color2];
             }
             if (CheckCollisionPointRec(m, j2_der)) {
                 int c = (color2 + 1) % N;
                 if (c == color1) c = (c + 1) % N;
                 color2 = c;
-                jugador2.color = colores[color2];
+                jugador2.personaje = personajes[color2];
             }
         }
         //Comprobar quien quiere cambiar de nombre
@@ -189,8 +196,22 @@ void PersonajesState::render() {
     int x1 = 100;
     int x2 = 600;
 
-    DrawRectangle(x1, y, cuadrado, cuadrado, jugador1.color);
-    DrawRectangle(x2, y, cuadrado, cuadrado, jugador2.color);
+    DrawTexturePro(
+        jugador1.personaje,
+        { 0, 0, (float)jugador1.personaje.width, (float)jugador1.personaje.height },
+        { (float)x1, (float)y, (float)cuadrado, (float)cuadrado },
+        { 0, 0 },
+        0.0f,
+        WHITE
+    );
+    DrawTexturePro(
+        jugador2.personaje,
+        { 0, 0, (float)jugador2.personaje.width, (float)jugador2.personaje.height },
+        { (float)x2, (float)y, (float)cuadrado, (float)cuadrado },
+        { 0, 0 },
+        0.0f,
+        WHITE
+    );
 
     //Variables Nombres
     int anchoCaja = 200;

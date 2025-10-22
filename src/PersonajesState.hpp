@@ -12,7 +12,7 @@ using namespace std;
 struct Jugador{
     int id;
     string nombre;
-    Color color;
+    Texture2D personaje;
 };
 
 class PersonajesState: public GameState {
@@ -32,7 +32,8 @@ class PersonajesState: public GameState {
         Font poppins;
         Jugador jugador1;
         Jugador jugador2;
-        Color colores[6] = {RED, GREEN, SKYBLUE, YELLOW, ORANGE, PINK};
+        Texture2D personajes[6];
+        string rutas[6] = {"assets/Personaje1.png", "assets/Personaje2.png", "assets/Personaje3.png", "assets/Personaje4.png", "assets/Personaje5.png", "assets/Personaje6.png"};
         int color1;
         int color2;
         Rectangle Nombre1{}, Nombre2{};

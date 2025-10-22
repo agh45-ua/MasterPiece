@@ -186,23 +186,30 @@ void MainGameState::render(){
         DrawText(s1.c_str(),screenWidth/2,screenHeight/2,24,PURPLE);
         DrawText(s2.c_str(),100,screenHeight/2,24,PURPLE);
         // Jugadores para que sean ocultos los movimientos
-        switch (turno)
-        {
-            case '1':
-            DrawRectangleRec(player1, jugador1.color);
-            DrawRectangleRec(old_player2, jugador2.color);
-            break;
+        auto src1 = Rectangle{0, 0, (float)jugador1.personaje.width, (float)jugador1.personaje.height};
+auto src2 = Rectangle{0, 0, (float)jugador2.personaje.width, (float)jugador2.personaje.height};
 
-            case '2':
-            DrawRectangleRec(old_player1, jugador1.color);
-            DrawRectangleRec(player2, jugador2.color);
-            break;
+switch (turno)
+{
+    case '1':
+        // J1 activo, J2 “fantasma”
+        DrawTexturePro(jugador1.personaje, src1, player1, {0,0}, 0.0f, WHITE);
+        DrawTexturePro(jugador2.personaje, src2, old_player2, {0,0}, 0.0f, Fade(WHITE, 0.5f));
+        break;
 
-            case 'r':
-            DrawRectangleRec(player1, jugador1.color);
-            DrawRectangleRec(player2, jugador2.color);
-            break;
-        }
+    case '2':
+        // J2 activo, J1 “fantasma”
+        DrawTexturePro(jugador1.personaje, src1, old_player1, {0,0}, 0.0f, Fade(WHITE, 0.5f));
+        DrawTexturePro(jugador2.personaje, src2, player2, {0,0}, 0.0f, WHITE);
+        break;
+
+    case 'r':
+        // Ambos activos
+        DrawTexturePro(jugador1.personaje, src1, player1, {0,0}, 0.0f, WHITE);
+        DrawTexturePro(jugador2.personaje, src2, player2, {0,0}, 0.0f, WHITE);
+        break;
+}
+
         
 
         // Flecha de apuntado
