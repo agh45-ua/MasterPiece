@@ -3,14 +3,16 @@ extern "C" {
     #include <raylib.h>
 }
 #include <iostream>
-#include "GameOverState.hpp"
 #include "GameState.hpp"
+#include "PersonajesState.hpp"
+
 using namespace std;
 
 class GameOverState: public GameState
 {
     public:
         GameOverState(int winnerId);
+        GameOverState(const Jugador& p1, const Jugador& p2);
         ~GameOverState() override = default;
         
         //Sobreescribimos los metodos virtuales
@@ -23,4 +25,7 @@ class GameOverState: public GameState
     
     private:
         int winner_id = 0;
+        Jugador jugador1;
+        Jugador jugador2;
+        Texture2D fondo;
 };

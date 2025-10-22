@@ -8,14 +8,18 @@ extern "C" {
 #include <iostream>
 
 GameOverState::GameOverState(int winnerId): winner_id(winnerId){}
+using namespace std;
+
+GameOverState::GameOverState(const Jugador& a, const Jugador& b)
+: jugador1(a), jugador2(b) {}
 
 void GameOverState::init(){
-    
+    fondo = LoadTexture("assets/fondo-juego.png");    
 }
 
 void GameOverState::handleInput(){
     if(IsKeyPressed(KEY_SPACE)){
-        this->state_machine->add_state(make_unique<MainGameState>(), true);
+        this->state_machine->add_state(std::make_unique<MainGameState>(jugador1, jugador2), true);
     }
 }
 
@@ -25,7 +29,16 @@ void GameOverState::update(float deltaTime){
 
 void GameOverState::render(){
     BeginDrawing();
+
     ClearBackground(BLACK);
+    DrawTexturePro(
+        fondo,
+        { 0, 0, (float)fondo.width, (float)fondo.height },
+        { 0, 0, (float)GetScreenWidth(), (float)GetScreenHeight() },
+        { 0, 0 },
+        0.0f,
+        WHITE
+    );
 
     const int screenWidth = GetScreenWidth();
     const int screenHeight = GetScreenHeight();

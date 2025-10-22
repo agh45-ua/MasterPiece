@@ -7,10 +7,13 @@ extern "C" {
     #include <raylib.h>
 }
 
-MainGameState::MainGameState(){
-}
+using namespace std;
+
+MainGameState::MainGameState(const Jugador& a, const Jugador& b)
+: jugador1(a), jugador2(b) {}
 
 void MainGameState::init(){
+    fondo = LoadTexture("assets/fondo-juego.png");
     ground = {0, (float)screenHeight - groundHeight, (float)screenWidth, (float)groundHeight};
     player1 = {100, ground.y - 50, 50, 50};
     player2 = {screenWidth - 150.0f, ground.y - 50, 50, 50};
@@ -143,7 +146,10 @@ void MainGameState::update(float deltaTime){
             projectile_2.active = false;
 
             // Cambiar al estado GameOver con el ganador
-            this->state_machine->add_state(make_unique<GameOverState>(winnerId), true);
+            // this->state_machine->add_state(make_unique<GameOverState>(winnerId), true);
+            // Cambiar al estado GameOver
+            this->state_machine->add_state(std::make_unique<GameOverState>(jugador1, jugador2), true);
+
             return;
         }
         
@@ -162,7 +168,14 @@ void MainGameState::render(){
     BeginDrawing();
     
     ClearBackground(RAYWHITE);
-
+    DrawTexturePro(
+        fondo,
+        { 0, 0, (float)fondo.width, (float)fondo.height },
+        { 0, 0, (float)GetScreenWidth(), (float)GetScreenHeight() },
+        { 0, 0 },
+        0.0f,
+        WHITE
+    );
     if (countdownActive) {
         int secondsLeft = (int)ceil(countdownTime);
         string s = to_string(secondsLeft);
@@ -172,25 +185,22 @@ void MainGameState::render(){
         string s1 = "Turno "+ to_string( contador_turno),s2 = "Turno de "+ string(1, turno);
         DrawText(s1.c_str(),screenWidth/2,screenHeight/2,24,PURPLE);
         DrawText(s2.c_str(),100,screenHeight/2,24,PURPLE);
-        // Suelo
-        DrawRectangleRec(ground, DARKGREEN);
-
         // Jugadores para que sean ocultos los movimientos
         switch (turno)
         {
             case '1':
-            DrawRectangleRec(player1, BLUE);
-            DrawRectangleRec(old_player2, RED);
+            DrawRectangleRec(player1, jugador1.color);
+            DrawRectangleRec(old_player2, jugador2.color);
             break;
 
             case '2':
-            DrawRectangleRec(old_player1, BLUE);
-            DrawRectangleRec(player2, RED);
+            DrawRectangleRec(old_player1, jugador1.color);
+            DrawRectangleRec(player2, jugador2.color);
             break;
 
             case 'r':
-            DrawRectangleRec(player1, BLUE);
-            DrawRectangleRec(player2, RED);
+            DrawRectangleRec(player1, jugador1.color);
+            DrawRectangleRec(player2, jugador2.color);
             break;
         }
         
