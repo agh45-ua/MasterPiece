@@ -15,6 +15,7 @@ int main()
     // --- Inicializar Raylib ---
     InitWindow(screenWidth, screenHeight, "Master Piece Game - Cabras Absolutas");
     SetTargetFPS(60);
+    SetExitKey(KEY_NULL);
 
     // --- Máquina de estados ---
     StateMachine state_machine;

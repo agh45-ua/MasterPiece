@@ -74,4 +74,7 @@ class MainGameState : public GameState
         bool countdownActive = false;   // si la cuenta atrás está en marcha
         float countdownTime = 3.0f;     // 3 segundos
         bool gameBlocked = false;       // bloquea todo mientras dura la cuenta atrás
+
+        // Tiempo de juego
+        time_t startTime;
 };

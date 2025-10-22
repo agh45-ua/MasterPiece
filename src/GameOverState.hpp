@@ -11,8 +11,7 @@ using namespace std;
 class GameOverState: public GameState
 {
     public:
-        GameOverState(int winnerId);
-        GameOverState(const Jugador& p1, const Jugador& p2);
+        GameOverState(const Jugador& p1, const Jugador& p2, const int winnerId, time_t g_time);
         ~GameOverState() override = default;
         
         //Sobreescribimos los metodos virtuales
@@ -27,5 +26,6 @@ class GameOverState: public GameState
         int winner_id = 0;
         Jugador jugador1;
         Jugador jugador2;
+        time_t game_time;
         Texture2D fondo;
 };

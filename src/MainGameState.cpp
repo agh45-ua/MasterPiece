@@ -28,6 +28,8 @@ void MainGameState::init(){
     old_player2=player2;
 
     turno ='1';
+
+    startTime = time(nullptr);
 }
 
 void MainGameState::handleInput(){
@@ -146,9 +148,7 @@ void MainGameState::update(float deltaTime){
             projectile_2.active = false;
 
             // Cambiar al estado GameOver con el ganador
-            // this->state_machine->add_state(make_unique<GameOverState>(winnerId), true);
-            // Cambiar al estado GameOver
-            this->state_machine->add_state(std::make_unique<GameOverState>(jugador1, jugador2), true);
+            this->state_machine->add_state(std::make_unique<GameOverState>(jugador1, jugador2, winnerId, difftime(time(nullptr), startTime)), true);
 
             return;
         }
