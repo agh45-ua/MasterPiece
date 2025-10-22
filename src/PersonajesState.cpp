@@ -114,10 +114,19 @@ void PersonajesState::update(float deltaTime){
         float altoJugar = 60;
         float xJugar = (GetScreenWidth() - anchoJugar) / 2;
         float yJugar = (GetScreenHeight() - altoJugar) / 2;
+        
         Rectangle jugar = { xJugar, yJugar, anchoJugar, altoJugar };
         if (CheckCollisionPointRec(m, jugar) && confirmarJugador1 == true && confirmarJugador2 == true) {
             this->state_machine->add_state(std::make_unique<MainGameState>(jugador1, jugador2), true);
         }
+
+        // Botón Volver
+        Rectangle volver = { 20, 20, 120, 40 };
+        if (CheckCollisionPointRec(m, volver)) {
+            this->state_machine->add_state(std::make_unique<InicioState>(), true);
+            return;
+        }
+
     }
     //Escribir nuevo nombre
     if (editActivo != -1) {
@@ -211,26 +220,47 @@ void PersonajesState::render() {
         int w = MeasureText(jugador2.nombre.c_str(), 20);
         if (fmod(GetTime(), 1.0) < 0.5) DrawRectangle((int)Nombre2.x + padX + w + 2, (int)Nombre2.y + padY, 10, 20, BLACK);
     }
-    // Flechas jugador 1 (izquierda y derecha del cuadrado)
+    // Flechas jugador 1
     int centroY1 = y + cuadrado / 2;
+
+    //Flecha izquierda jugador 1
     Vector2 j1_izqA = { (float)(x1 - 40), (float)centroY1 };
     Vector2 j1_izqB = { (float)(x1 - 10), (float)(centroY1 + 20) };
     Vector2 j1_izqC = { (float)(x1 - 10), (float)(centroY1 - 20) };
-    DrawTriangle(j1_izqA, j1_izqB, j1_izqC, BLACK);
+    Rectangle j1_izq = { (float)(x1 - 60), (float)(centroY1 - 25), 50, 50 };
+    bool hover_j1_izq = CheckCollisionPointRec(mouse, j1_izq);
+    Color color_j1_izq = hover_j1_izq && confirmarJugador1 == false ? DARKGRAY : BLACK;
+    DrawTriangle(j1_izqA, j1_izqB, j1_izqC, color_j1_izq);
+
+    //Flecha derecha jugador 1
     Vector2 j1_derA = { (float)(x1 + cuadrado + 40), (float)centroY1 };
     Vector2 j1_derB = { (float)(x1 + cuadrado + 10), (float)(centroY1 - 20) };
     Vector2 j1_derC = { (float)(x1 + cuadrado + 10), (float)(centroY1 + 20) };
-    DrawTriangle(j1_derA, j1_derB, j1_derC, BLACK);
+    Rectangle j1_der = { (float)(x1 + cuadrado + 10), (float)(centroY1 - 25), 50, 50 };
+    bool hover_j1_der = CheckCollisionPointRec(mouse, j1_der);
+    Color color_j1_der = hover_j1_der && confirmarJugador1 == false ? DARKGRAY : BLACK;
+    DrawTriangle(j1_derA, j1_derB, j1_derC, color_j1_der);
+
     // Flechas jugador 2 (izquierda y derecha del cuadrado)
     int centroY2 = y + cuadrado / 2;
+
+    //Flecha izquierda jugador 2
     Vector2 j2_izqA = { (float)(x2 - 40), (float)centroY2 };
     Vector2 j2_izqB = { (float)(x2 - 10), (float)(centroY2 + 20) };
     Vector2 j2_izqC = { (float)(x2 - 10), (float)(centroY2 - 20) };
-    DrawTriangle(j2_izqA, j2_izqB, j2_izqC, BLACK);
+    Rectangle j2_izq = { (float)(x2 - 60), (float)(centroY1 - 25), 50, 50 };
+    bool hover_j2_izq = CheckCollisionPointRec(mouse, j2_izq);
+    Color color_j2_izq = hover_j2_izq && confirmarJugador2 == false ? DARKGRAY : BLACK;
+    DrawTriangle(j2_izqA, j2_izqB, j2_izqC, color_j2_izq);
+
+    //Flecha derecha jugador 2
     Vector2 j2_derA = { (float)(x2 + cuadrado + 40), (float)centroY2 };
     Vector2 j2_derB = { (float)(x2 + cuadrado + 10), (float)(centroY2 - 20) };
     Vector2 j2_derC = { (float)(x2 + cuadrado + 10), (float)(centroY2 + 20) };
-    DrawTriangle(j2_derA, j2_derB, j2_derC, BLACK);
+    Rectangle j2_der = { (float)(x2 + cuadrado + 10), (float)(centroY1 - 25), 50, 50 };
+    bool hover_j2_der = CheckCollisionPointRec(mouse, j2_der);
+    Color color_j2_der = hover_j2_der && confirmarJugador2 == false ? DARKGRAY : BLACK;
+    DrawTriangle(j2_derA, j2_derB, j2_derC, color_j2_der);
 
     //Botones de confirmar
     float anchoConfirmar = 200;
@@ -280,6 +310,25 @@ void PersonajesState::render() {
         float textYJugar = yJugar + (altoJugar - longitudJugar.y) / 2;
         DrawTextEx(poppins, "Jugar", { textXJugar, textYJugar }, fuenteJugar, espacioJugar, Fade(RAYWHITE, transicionAlpha));
     }
+    // Botón Volver
+    float anchoVolver = 120;
+    float altoVolver = 40;
+    float xVolver = 20;
+    float yVolver = 20;
+
+    Rectangle volver = { xVolver, yVolver, anchoVolver, altoVolver };
+    bool hoverVolver = CheckCollisionPointRec(mouse, volver);
+    Color colorVolver = hoverVolver ? MAROON : RED;
+
+    DrawRectangleRounded(volver, 0.3f, 8, colorVolver);
+
+    float fuenteVolver = 22.0f;
+    float espacioVolver = 2.0f;
+    Vector2 textoVolver = MeasureTextEx(poppins, "Volver", fuenteVolver, espacioVolver);
+    float textXVolver = xVolver + (anchoVolver - textoVolver.x) / 2;
+    float textYVolver = yVolver + (altoVolver - textoVolver.y) / 2;
+    DrawTextEx(poppins, "Volver", { textXVolver, textYVolver }, fuenteVolver, espacioVolver, RAYWHITE);
+
     EndDrawing();
 }
 
