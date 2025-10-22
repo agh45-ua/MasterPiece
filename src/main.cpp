@@ -1,5 +1,6 @@
 #include "StateMachine.hpp"
 #include "InicioState.hpp"
+#include "PersonajesState.hpp"
 #include <memory>
 #include <chrono>
 extern "C" {

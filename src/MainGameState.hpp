@@ -1,10 +1,15 @@
 #pragma once
 #include "GameState.hpp"
+
 #include <raylib.h>
+#include <string>
 #include <cmath>
 extern "C" {
     #include <raylib.h>
+#include "PersonajesState.hpp"
 }
+
+using namespace std;
 
 struct Projectile {
     Vector2 pos;
@@ -15,7 +20,7 @@ struct Projectile {
 class MainGameState : public GameState
 {
     public:
-        MainGameState();
+        MainGameState(const Jugador& p1, const Jugador& p2);
         ~MainGameState() = default;
 
         void init() override;
@@ -28,7 +33,11 @@ class MainGameState : public GameState
 
     
     private:
-        
+
+        Jugador jugador1;
+        Jugador jugador2;
+        Texture2D fondo;
+
         // Ventana
         const int screenWidth = 800;
         const int screenHeight = 600;
@@ -65,5 +74,4 @@ class MainGameState : public GameState
         bool countdownActive = false;   // si la cuenta atrás está en marcha
         float countdownTime = 3.0f;     // 3 segundos
         bool gameBlocked = false;       // bloquea todo mientras dura la cuenta atrás
-
 };

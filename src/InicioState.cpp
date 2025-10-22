@@ -1,4 +1,6 @@
 #include "InicioState.hpp"
+#include "PersonajesState.hpp"
+#include "MainGameState.hpp"
 #include "StateMachine.hpp"
 #include "GameState.hpp"
 #include <iostream>
@@ -14,7 +16,8 @@ InicioState::InicioState(){
 }
 
 void InicioState::init(){
-    
+    fondo = LoadTexture("assets/fondo-inicio.png");
+    poppins = LoadFontEx("assets/Poppins-Bold.ttf", 120, 0, 0);
 }
 
 void InicioState::handleInput(){
@@ -22,46 +25,46 @@ void InicioState::handleInput(){
 }
 
 void InicioState::update(float deltaTime){
+    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+        Vector2 m = GetMousePosition();
+        Rectangle Jugar = { (float)(GetScreenWidth()/2 - 150), 280, 300, 60 };
+        Rectangle Salir = { (float)(GetScreenWidth()/2 - 150), 360, 300, 60 };
+        if (CheckCollisionPointRec(m, Jugar)) {
+            this->state_machine->add_state(make_unique<PersonajesState>(), true);
+        }
+        if (CheckCollisionPointRec(m, Salir)) {
+            CloseWindow();
+            exit(0);
+        }
+    }
 
 }
 
 void InicioState::render() {
     BeginDrawing();
     ClearBackground(RAYWHITE);
-
-    int longitudTitulo = MeasureText("Master Piece", 100);
-    DrawText("Master Piece", (GetScreenWidth() - longitudTitulo) / 2 , 120, 100, BLACK);
-
-    Rectangle btnPlay = { (float)(GetScreenWidth()/2 - 150), 280, 300, 60 };
-    Rectangle btnExit = { (float)(GetScreenWidth()/2 - 150), 360, 300, 60 };
-
-    // Hover (visual)
+    DrawTexturePro(
+        fondo,
+        { 0, 0, (float)fondo.width, (float)fondo.height },
+        { 0, 0, (float)GetScreenWidth(), (float)GetScreenHeight() },
+        { 0, 0 },
+        0.0f,
+        WHITE
+    );
+    Rectangle Jugar = { (float)(GetScreenWidth()/2 - 150), 280, 300, 60 };
+    Rectangle Salir = { (float)(GetScreenWidth()/2 - 150), 360, 300, 60 };
     Vector2 m = GetMousePosition();
-    bool playHover = CheckCollisionPointRec(m, btnPlay);
-    bool exitHover = CheckCollisionPointRec(m, btnExit);
+    bool HoverJugar = CheckCollisionPointRec(m, Jugar);
+    bool HoverSalir = CheckCollisionPointRec(m, Salir);
+    DrawRectangleRounded(Jugar, 0.2f, 8, HoverJugar ? DARKGREEN : GREEN);
+    DrawRectangleRounded(Salir, 0.2f, 8, HoverSalir ? MAROON : RED);
 
-    // Fondo botones
-    DrawRectangleRounded(btnPlay, 0.2f, 8, playHover ? DARKGREEN : GREEN);
-    DrawRectangleRounded(btnExit, 0.2f, 8, exitHover ? MAROON : RED);
+    const int fuente = 24;
+    int anchoJugar = MeasureTextEx(poppins, "Jugar", fuente, 4).x;
+    int anchoSalir = MeasureTextEx(poppins, "Salir", fuente, 4).x;
 
-    // Texto botones (centrado)
-    const int fontBtn = 24;
-    const char* tPlay = "Jugar";
-    const char* tExit = "Salir";
-    int wPlay = MeasureText(tPlay, fontBtn);
-    int wExit = MeasureText(tExit, fontBtn);
-
-    DrawText(tPlay,
-             (int)(btnPlay.x + (btnPlay.width - wPlay) / 2),
-             (int)(btnPlay.y + (btnPlay.height - fontBtn) / 2),
-             fontBtn, RAYWHITE);
-
-    DrawText(tExit,
-             (int)(btnExit.x + (btnExit.width - wExit) / 2),
-             (int)(btnExit.y + (btnExit.height - fontBtn) / 2),
-             fontBtn, RAYWHITE);
-
-    DrawText("© 2025", 10, GetScreenHeight() - 26, 20, GRAY);
+    DrawTextEx(poppins, "Jugar",{ (float)(Jugar.x + (Jugar.width - anchoJugar) / 2),(float)(Jugar.y + (Jugar.height - fuente) / 2) },(float)fuente, 2, RAYWHITE);
+    DrawTextEx(poppins, "Salir",{ (float)(Salir.x + (Salir.width - anchoSalir) / 2),(float)(Salir.y + (Salir.height - fuente) / 2) },(float)fuente, 2, RAYWHITE);
 
     EndDrawing();
 }

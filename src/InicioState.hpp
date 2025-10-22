@@ -9,11 +9,6 @@ extern "C" {
 
 using namespace std;
 
-struct player {
-    string name;
-    int id;
-};
-
 class InicioState: public GameState {
     public:
         InicioState();
@@ -27,4 +22,6 @@ class InicioState: public GameState {
         void pause();
         void resume();
     private:
+        Texture2D fondo;
+        Font poppins;
 };
