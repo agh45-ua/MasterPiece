@@ -20,7 +20,6 @@ struct Projectile {
 struct Player {
   Rectangle rect;
   int health = 100;
-  Color color;  
 };
 
 class MainGameState : public GameState

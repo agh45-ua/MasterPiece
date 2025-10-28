@@ -15,11 +15,12 @@ MainGameState::MainGameState(const Jugador& a, const Jugador& b)
 void MainGameState::init(){
     fondo = LoadTexture("assets/fondo-juego.png");
     ground = {0, (float)screenHeight - groundHeight, (float)screenWidth, (float)groundHeight};
-    player1 = {{100, ground.y - 50, 50, 50}, 100, BLUE};
-    player2 = {{screenWidth - 150.0f, ground.y - 50, 50, 50}, 100, RED};
+    player1 = {{100, ground.y - 50, 50, 50}, 100};
+    player2 = {{screenWidth - 150.0f, ground.y - 50, 50, 50}, 100};
     
 
     projectile_1 = {{0,0},{0,0}, false};
+    projectile_2 = {{0,0},{0,0}, false};
     angle_1= -30.0f * DEG2RAD;
     angle_2= -30.0f * DEG2RAD;
     
@@ -146,6 +147,7 @@ void MainGameState::update(float deltaTime){
             player1.health -= 34;
         }
 
+        int winnerId = 0;
         //Si alguno de los dos jugadores pierde toda la vida cambiamos estado
         if (player1.health <= 0 || player2.health <= 0) {
             if(player1.health <= 0){
@@ -156,7 +158,15 @@ void MainGameState::update(float deltaTime){
                     winnerId = 2;
                 }
             }
-            this->state_machine->add_state(make_unique<GameOverState>(), true);
+            this->state_machine->add_state(
+                std::make_unique<GameOverState>(
+                    jugador1,
+                    jugador2,
+                    winnerId,
+                    static_cast<time_t>(difftime(time(nullptr), startTime))
+                ),
+                true
+            );
         }
 
         //cuando los projectile acaben(false) siguiente turno y le toca al j1
@@ -195,18 +205,18 @@ void MainGameState::render(){
         switch (turno)
         {
             case '1':
-            DrawRectangleRec(player1.rect, player1.color);
-            DrawRectangleRec(old_player2.rect, old_player2.color);
+            DrawRectangleRec(player1.rect, jugador1.color);
+            DrawRectangleRec(old_player2.rect, jugador2.color);
             break;
 
             case '2':
-            DrawRectangleRec(old_player1.rect, old_player1.color);
-            DrawRectangleRec(player2.rect, player2.color);
+            DrawRectangleRec(old_player1.rect, jugador1.color);
+            DrawRectangleRec(player2.rect, jugador2.color);
             break;
 
             case 'r':
-            DrawRectangleRec(player1.rect, player1.color);
-            DrawRectangleRec(player2.rect, player2.color);
+            DrawRectangleRec(player1.rect, jugador1.color);
+            DrawRectangleRec(player2.rect, jugador2.color);
             break;
         }
         
