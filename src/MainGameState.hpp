@@ -15,6 +15,12 @@ struct Projectile {
     Vector2 pos;
     Vector2 vel;
     bool active;
+    bool hasHit;
+};
+
+struct Player {
+  Rectangle rect;
+  int health = 100;
 };
 
 class MainGameState : public GameState
@@ -43,8 +49,8 @@ class MainGameState : public GameState
         const int screenHeight = 600;
 
         // --- Jugador 1 y 2 (cuadrado) ---
-        Rectangle player1, old_player1;
-        Rectangle player2, old_player2;
+        Player player1, old_player1;
+        Player player2, old_player2;
 
         // --- Suelo ---
         const int groundHeight = 100;
