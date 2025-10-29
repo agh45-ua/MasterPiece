@@ -1,55 +1,109 @@
 #include "MainGameState.hpp"
 #include "StateMachine.hpp"
 #include "GameOverState.hpp"
+#include <string>
 #include <iostream>
 extern "C" {
     #include <raylib.h>
 }
 
-MainGameState::MainGameState(){
-}
+using namespace std;
+
+MainGameState::MainGameState(const Jugador& a, const Jugador& b)
+: jugador1(a), jugador2(b) {}
 
 void MainGameState::init(){
+    fondo = LoadTexture("assets/fondo-juego.png");
     ground = {0, (float)screenHeight - groundHeight, (float)screenWidth, (float)groundHeight};
-    player1 = {100, ground.y - 50, 50, 50};
-    trianglePos = {screenWidth - 150.0f, ground.y - 50};
-    triangleSize = 50.0f;
+    player1 = {{100, ground.y - 50, 50, 50}, 100};
+    player2 = {{screenWidth - 150.0f, ground.y - 50, 50, 50}, 100};
+    
 
-    projectile = {{0,0},{0,0}, false};
-    angle = -30.0f * DEG2RAD;
+    projectile_1 = {{0,0},{0,0}, false, false};
+    projectile_2 = {{0,0},{0,0}, false, false};
+    angle_1= -30.0f * DEG2RAD;
+    angle_2= -30.0f * DEG2RAD;
+    
+    //para  la primera iteracion
+    old_player1=player1;
+    old_player2=player2;
+
+    turno ='1';
+
+    startTime = time(nullptr);
 }
 
 void MainGameState::handleInput(){
-    /*
-    // Apuntado con W/S
-    if (IsKeyDown(KEY_W)) angle -= angleSpeed * GetFrameTime();
-    if (IsKeyDown(KEY_S)) angle += angleSpeed * GetFrameTime();
+  
+    //si es el turno del jugador 1 vamos guardando lo que hace hasta que presione enter
+    if (turno =='1'){
+        
+        old_angle_1=angle_1;
+        // Calcular ángulo entre el jugador1 y el ratón
+        Vector2 mousePos = GetMousePosition();
+        Vector2 start = {player1.rect.x + player1.rect.width, player1.rect.y + player1.rect.height / 2};
+        angle_1= atan2f(mousePos.y - start.y, mousePos.x - start.x);
 
-    // Limitar el ángulo entre -80° y 0° (para no apuntar hacia abajo)
-    if (angle < -80 * DEG2RAD) angle = -80 * DEG2RAD;
-    if (angle > 0) angle = 0;
 
-    // Disparo
-    if (IsKeyPressed(KEY_SPACE) && !projectile.active) {
-        projectile.active = true; //Activamos el proyectil
-        projectile.pos = {player1.x + player1.width, player1.y + player1.height / 2}; //Posicionamos el proyectil en el borde derecho del jugador
-        float speed = 500.0f; //Velocidad inicial
-        projectile.vel = {speed * cosf(angle), speed * sinf(angle)};
+    
+        // Disparo con ESPACIO o clic izquierdo
+        if ((IsKeyPressed(KEY_SPACE) || IsMouseButtonPressed(MOUSE_LEFT_BUTTON))) {
+
+            
+            projectile_1.pos = start;
+            float speed = 500.0f;
+            projectile_1.vel = {speed * cosf(angle_1), speed * sinf(angle_1)};
+            projectile_1.active = true;
+            projectile_1.hasHit = false;
+        }
+
+        // Movimiento del jugador
+        if (IsKeyDown(KEY_A) && player1.rect.x > 0) player1.rect.x -= 200 * GetFrameTime();
+        if (IsKeyDown(KEY_D) && player1.rect.x + player1.rect.width < screenWidth) player1.rect.x += 200 * GetFrameTime();
+        
+        //ya no pillamos mas info del jugador 1 al pulsar enter
+        if(IsKeyPressed(KEY_ENTER)){
+            turno='2';
+           
+        }
     }
-    */
+    /////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////
+    //si es el turno del jugador 2 vamos guardando lo que hace hasta que presione enter
+    if (turno =='2'){
+        old_angle_2=angle_2;
+        // Calcular ángulo entre el jugador2 y el ratón
+        Vector2 mousePos = GetMousePosition();
+        Vector2 start = {player2.rect.x + player2.rect.width, player2.rect.y + player2.rect.height / 2};
+        angle_2= atan2f(mousePos.y - start.y, mousePos.x - start.x);
 
-    // Calcular ángulo entre el jugador y el ratón
-    Vector2 mousePos = GetMousePosition();
-    Vector2 start = {player1.x + player1.width, player1.y + player1.height / 2};
-    angle = atan2f(mousePos.y - start.y, mousePos.x - start.x);
 
-    // Disparo con ESPACIO o clic izquierdo
-    if ((IsKeyPressed(KEY_SPACE) || IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) && !projectile.active) {
+    
+        // Disparo con ESPACIO o clic izquierdo
+        if ((IsKeyPressed(KEY_SPACE) || IsMouseButtonPressed(MOUSE_LEFT_BUTTON))) {
 
-        projectile.active = true;
-        projectile.pos = start;
-        float speed = 500.0f;
-        projectile.vel = {speed * cosf(angle), speed * sinf(angle)};
+            projectile_2.pos = start;
+            float speed = 500.0f;
+            projectile_2.vel = {speed * cosf(angle_2), speed * sinf(angle_2)};
+            projectile_2.active = true;
+            projectile_2.hasHit = false;
+        }
+
+         // Movimiento del jugador
+        if (IsKeyDown(KEY_A) && player2.rect.x > 0) player2.rect.x -= 200 * GetFrameTime();
+        if (IsKeyDown(KEY_D) && player2.rect.x + player2.rect.width < screenWidth) player2.rect.x += 200 * GetFrameTime();
+
+        //ya no pillamos mas info del jugador 2
+        if(IsKeyPressed(KEY_Q)){
+
+            countdownActive = true;
+            countdownTime = 3.0f;  // reiniciar cuenta atrás
+            gameBlocked = true;    // bloquea el resto del juego
+            turno='r';
+        }
     }
 
     // Movimiento del jugador
@@ -58,30 +112,78 @@ void MainGameState::handleInput(){
 }
 
 void MainGameState::update(float deltaTime){
-    // --- LOGICA ---
-    if (projectile.active) { //Actualizamos el proyectil
-        projectile.vel.y += gravity * deltaTime;
-        projectile.pos.x += projectile.vel.x * deltaTime;
-        projectile.pos.y += projectile.vel.y * deltaTime;
 
+
+    if (countdownActive) {
+        countdownTime -= deltaTime;
+        if (countdownTime <= 0) {
+            countdownTime = 0;
+            countdownActive = false;
+            gameBlocked = false;  // desbloquea el juego
+        }
+        return; // mientras la cuenta atrás está activa, no actualizamos nada más
+    }
+    // --- LOGICA ---
+    if (turno=='r') { //Actualizamos los proyectiles cuando se entre en la resolucion del turno
+        //projectile_1.active = true;
+        //projectile_2.active = true;
+
+        projectile_1.vel.y += gravity_1 * deltaTime;
+        projectile_1.pos.x += projectile_1.vel.x * deltaTime;
+        projectile_1.pos.y += projectile_1.vel.y * deltaTime;
+
+        projectile_2.vel.y += gravity_2 * deltaTime;
+        projectile_2.pos.x += projectile_2.vel.x * deltaTime;
+        projectile_2.pos.y += projectile_2.vel.y * deltaTime;
         // Colisión con el suelo
-        if (projectile.pos.y > ground.y) {
-            projectile.active = false;
+        if (projectile_1.pos.y > ground.y) {
+            projectile_1.active = false;
+        }
+         if (projectile_2.pos.y > ground.y) {
+            projectile_2.active = false;
         }
 
-        // Colisión con triángulo
-        Rectangle triBounds = {
-            trianglePos.x - triangleSize,
-            trianglePos.y - triangleSize,
-            triangleSize * 2,
-            triangleSize * 2
-        };
+        // Colisión con jugadores
+        if (!projectile_1.hasHit && CheckCollisionPointRec(projectile_1.pos, player2.rect)) {
+            projectile_1.active = false;
+            projectile_1.hasHit = true;
+            player2.health -= 34;
+        }
 
-        if (CheckCollisionPointRec(projectile.pos, triBounds)) {
-            projectile.active = false;
-          
-            // Cambiar al estado GameOver
-            this->state_machine->add_state(make_unique<GameOverState>(), true);
+        if (!projectile_2.hasHit && CheckCollisionPointRec(projectile_2.pos, player1.rect)) {
+            projectile_2.active = false;
+            projectile_2.hasHit = true;
+            player1.health -= 34;
+        }
+
+        int winnerId = 0;
+        //Si alguno de los dos jugadores pierde toda la vida cambiamos estado
+        if (player1.health <= 0 || player2.health <= 0) {
+            if(player1.health <= 0){
+                winnerId = 2;
+            }
+            else{
+                if(player2.health <= 0){
+                    winnerId = 1;
+                }
+            }
+            this->state_machine->add_state(
+                std::make_unique<GameOverState>(
+                    jugador1,
+                    jugador2,
+                    winnerId,
+                    static_cast<time_t>(difftime(time(nullptr), startTime))
+                ),
+                true
+            );
+        }
+
+        //cuando los projectile acaben(false) siguiente turno y le toca al j1
+        if (projectile_1.active == false && projectile_2.active == false){ 
+            old_player1=player1;
+            old_player2=player2;
+            contador_turno++;
+            turno='1';
         }
     }
 }
@@ -91,38 +193,101 @@ void MainGameState::render(){
     BeginDrawing();
     
     ClearBackground(RAYWHITE);
-
-    // Suelo
-    DrawRectangleRec(ground, DARKGREEN);
-
-    // Jugador
-    DrawRectangleRec(player1, BLUE);
-
-    // Triángulo enemigo
-    DrawTriangle(
-        {trianglePos.x, trianglePos.y - triangleSize},
-        {trianglePos.x - triangleSize, trianglePos.y + triangleSize},
-        {trianglePos.x + triangleSize, trianglePos.y + triangleSize},
-        RED
+    DrawTexturePro(
+        fondo,
+        { 0, 0, (float)fondo.width, (float)fondo.height },
+        { 0, 0, (float)GetScreenWidth(), (float)GetScreenHeight() },
+        { 0, 0 },
+        0.0f,
+        WHITE
     );
+    if (countdownActive) {
+        int secondsLeft = (int)ceil(countdownTime);
+        string s = to_string(secondsLeft);
+        DrawText(s.c_str(), screenWidth/2 - 20, screenHeight/2 - 20, 50, PURPLE);
+    } else {
+        //Turno
+        string s1 = "Turno "+ to_string( contador_turno),s2 = "Turno de "+ string(1, turno);
+        DrawText(s1.c_str(),screenWidth/2,screenHeight/2,24,PURPLE);
+        DrawText(s2.c_str(),100,screenHeight/2,24,PURPLE);
+        // Jugadores para que sean ocultos los movimientos
+        auto src1 = Rectangle{0, 0, (float)jugador1.personaje.width, (float)jugador1.personaje.height};
+auto src2 = Rectangle{0, 0, (float)jugador2.personaje.width, (float)jugador2.personaje.height};
 
-    // Flecha de apuntado
-    Vector2 start = {player1.x + player1.width, player1.y + player1.height / 2};
-    Vector2 end = {start.x + arrowLength * cosf(angle), start.y + arrowLength * sinf(angle)};
-    DrawLineEx(start, end, 4, DARKGRAY);
-    DrawTriangle(
-        end,
-        {end.x - 10 * cosf(angle - 0.3f), end.y - 10 * sinf(angle - 0.3f)},
-        {end.x - 10 * cosf(angle + 0.3f), end.y - 10 * sinf(angle + 0.3f)},
-        DARKGRAY
-    );
+switch (turno)
+{
+    case '1':
+        // J1 activo, J2 “fantasma”
+        DrawTexturePro(jugador1.personaje, src1, player1.rect, {0,0}, 0.0f, WHITE);
+        DrawTexturePro(jugador2.personaje, src2, old_player2.rect, {0,0}, 0.0f, Fade(WHITE, 0.5f));
+        break;
 
-    // Proyectil
-    if (projectile.active)
-        DrawCircleV(projectile.pos, 5, BLACK);
+    case '2':
+        // J2 activo, J1 “fantasma”
+        DrawTexturePro(jugador1.personaje, src1, old_player1.rect, {0,0}, 0.0f, Fade(WHITE, 0.5f));
+        DrawTexturePro(jugador2.personaje, src2, player2.rect, {0,0}, 0.0f, WHITE);
+        break;
 
-    DrawText("W/S para apuntar", 20, 20, 20, DARKGRAY);
-    DrawText("ESPACIO para disparar", 20, 45, 20, DARKGRAY);
+    case 'r':
+        // Ambos activos
+        DrawTexturePro(jugador1.personaje, src1, player1.rect, {0,0}, 0.0f, WHITE);
+        DrawTexturePro(jugador2.personaje, src2, player2.rect, {0,0}, 0.0f, WHITE);
+        break;
+}
 
+
+        
+
+        // Flecha de apuntado
+        if(turno=='1' || turno=='r'){//flecha j1
+            Vector2 start = {player1.rect.x + player1.rect.width, player1.rect.y + player1.rect.height / 2};
+            Vector2 end = {start.x + arrowLength_1 * cosf(angle_1), start.y + arrowLength_1 * sinf(angle_1)};
+            DrawLineEx(start, end, 4, DARKGRAY);
+            DrawTriangle(
+                end,
+                {end.x - 10 * cosf(angle_1- 0.3f), end.y - 10 * sinf(angle_1- 0.3f)},
+                {end.x - 10 * cosf(angle_1+ 0.3f), end.y - 10 * sinf(angle_1+ 0.3f)},
+                DARKGRAY
+            );
+        }
+        if(turno=='2' || turno=='r'){//flecha j2
+            Vector2 start2 = {player2.rect.x, player2.rect.y + player2.rect.height / 2};
+            Vector2 end2 = {start2.x + arrowLength_2 * cosf(angle_2), start2.y + arrowLength_2 * sinf(angle_2)};
+            DrawLineEx(start2, end2, 4, DARKGRAY);
+            DrawTriangle(
+                end2,
+                {end2.x - 10 * cosf(angle_2- 0.3f), end2.y - 10 * sinf(angle_2- 0.3f)},
+                {end2.x - 10 * cosf(angle_2+ 0.3f), end2.y - 10 * sinf(angle_2+ 0.3f)},
+                DARKGRAY
+            );
+        }
+
+        // Proyectiles cuando sea resolucion
+        if (turno=='r'){
+            if(projectile_1.active) DrawCircleV(projectile_1.pos, 5, BLACK);
+
+            if (projectile_2.active) DrawCircleV(projectile_2.pos, 5, BLACK);
+
+        }
+        
+        // --- Barras de vida (HUD) ---
+        float maxBarWidth = 200;
+        float barHeight = 20;
+
+        // Jugador 1 - esquina superior izquierda
+        DrawText("Jugador 1", 30, 20, 20, BLACK);
+        DrawRectangle(30, 50, maxBarWidth, barHeight, GRAY);
+        DrawRectangle(30, 50, maxBarWidth * (player1.health / 100.0f), barHeight, GREEN);
+        DrawText(TextFormat("%d / 100", player1.health), 30, 50 + barHeight + 5, 20, DARKGREEN);
+
+        // Jugador 2 - esquina superior derecha
+        DrawText("Jugador 2", screenWidth - 230, 20, 20, BLACK);
+        DrawRectangle(screenWidth - 230, 50, maxBarWidth, barHeight, GRAY);
+        DrawRectangle(screenWidth - 230 + (maxBarWidth * (1 - player2.health / 100.0f)), 50,
+                    maxBarWidth * (player2.health / 100.0f), barHeight, GREEN);
+        DrawText(TextFormat("%d / 100", player2.health), screenWidth - 230, 50 + barHeight + 5, 20, DARKGREEN);
+
+        //DrawText("ESPACIO para disparar", 20, 45, 20, DARKGRAY);
+    }
     EndDrawing();
 }
