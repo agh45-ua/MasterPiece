@@ -15,11 +15,12 @@ MainGameState::MainGameState(const Jugador& a, const Jugador& b)
 void MainGameState::init(){
     fondo = LoadTexture("assets/fondo-juego.png");
     ground = {0, (float)screenHeight - groundHeight, (float)screenWidth, (float)groundHeight};
-    player1 = {100, ground.y - 50, 50, 50};
-    player2 = {screenWidth - 150.0f, ground.y - 50, 50, 50};
+    player1 = {{100, ground.y - 50, 50, 50}, 100};
+    player2 = {{screenWidth - 150.0f, ground.y - 50, 50, 50}, 100};
     
 
-    projectile_1 = {{0,0},{0,0}, false};
+    projectile_1 = {{0,0},{0,0}, false, false};
+    projectile_2 = {{0,0},{0,0}, false, false};
     angle_1= -30.0f * DEG2RAD;
     angle_2= -30.0f * DEG2RAD;
     
@@ -40,7 +41,7 @@ void MainGameState::handleInput(){
         old_angle_1=angle_1;
         // Calcular ángulo entre el jugador1 y el ratón
         Vector2 mousePos = GetMousePosition();
-        Vector2 start = {player1.x + player1.width, player1.y + player1.height / 2};
+        Vector2 start = {player1.rect.x + player1.rect.width, player1.rect.y + player1.rect.height / 2};
         angle_1= atan2f(mousePos.y - start.y, mousePos.x - start.x);
 
 
@@ -52,11 +53,13 @@ void MainGameState::handleInput(){
             projectile_1.pos = start;
             float speed = 500.0f;
             projectile_1.vel = {speed * cosf(angle_1), speed * sinf(angle_1)};
+            projectile_1.active = true;
+            projectile_1.hasHit = false;
         }
 
         // Movimiento del jugador
-        if (IsKeyDown(KEY_A) && player1.x > 0) player1.x -= 200 * GetFrameTime();
-        if (IsKeyDown(KEY_D) && player1.x + player1.width < screenWidth) player1.x += 200 * GetFrameTime();
+        if (IsKeyDown(KEY_A) && player1.rect.x > 0) player1.rect.x -= 200 * GetFrameTime();
+        if (IsKeyDown(KEY_D) && player1.rect.x + player1.rect.width < screenWidth) player1.rect.x += 200 * GetFrameTime();
         
         //ya no pillamos mas info del jugador 1 al pulsar enter
         if(IsKeyPressed(KEY_ENTER)){
@@ -74,7 +77,7 @@ void MainGameState::handleInput(){
         old_angle_2=angle_2;
         // Calcular ángulo entre el jugador2 y el ratón
         Vector2 mousePos = GetMousePosition();
-        Vector2 start = {player2.x + player2.width, player2.y + player2.height / 2};
+        Vector2 start = {player2.rect.x + player2.rect.width, player2.rect.y + player2.rect.height / 2};
         angle_2= atan2f(mousePos.y - start.y, mousePos.x - start.x);
 
 
@@ -85,12 +88,13 @@ void MainGameState::handleInput(){
             projectile_2.pos = start;
             float speed = 500.0f;
             projectile_2.vel = {speed * cosf(angle_2), speed * sinf(angle_2)};
-            projectile_2.active = false;
+            projectile_2.active = true;
+            projectile_2.hasHit = false;
         }
 
          // Movimiento del jugador
-        if (IsKeyDown(KEY_A) && player2.x > 0) player2.x -= 200 * GetFrameTime();
-        if (IsKeyDown(KEY_D) && player2.x + player2.width < screenWidth) player2.x += 200 * GetFrameTime();
+        if (IsKeyDown(KEY_A) && player2.rect.x > 0) player2.rect.x -= 200 * GetFrameTime();
+        if (IsKeyDown(KEY_D) && player2.rect.x + player2.rect.width < screenWidth) player2.rect.x += 200 * GetFrameTime();
 
         //ya no pillamos mas info del jugador 2
         if(IsKeyPressed(KEY_Q)){
@@ -117,8 +121,8 @@ void MainGameState::update(float deltaTime){
     }
     // --- LOGICA ---
     if (turno=='r') { //Actualizamos los proyectiles cuando se entre en la resolucion del turno
-        projectile_1.active = true;
-        projectile_2.active = true;
+        //projectile_1.active = true;
+        //projectile_2.active = true;
 
         projectile_1.vel.y += gravity_1 * deltaTime;
         projectile_1.pos.x += projectile_1.vel.x * deltaTime;
@@ -134,25 +138,42 @@ void MainGameState::update(float deltaTime){
          if (projectile_2.pos.y > ground.y) {
             projectile_2.active = false;
         }
+
         // Colisión con jugadores
+        if (!projectile_1.hasHit && CheckCollisionPointRec(projectile_1.pos, player2.rect)) {
+            projectile_1.active = false;
+            projectile_1.hasHit = true;
+            player2.health -= 34;
+        }
+
+        if (!projectile_2.hasHit && CheckCollisionPointRec(projectile_2.pos, player1.rect)) {
+            projectile_2.active = false;
+            projectile_2.hasHit = true;
+            player1.health -= 34;
+        }
 
         int winnerId = 0;
-        if (projectile_1.active && CheckCollisionPointRec(projectile_1.pos, player2)) {
-            winnerId = 1;
-        } else if (projectile_2.active && CheckCollisionPointRec(projectile_2.pos, player1)) {
-            winnerId = 2;
+        //Si alguno de los dos jugadores pierde toda la vida cambiamos estado
+        if (player1.health <= 0 || player2.health <= 0) {
+            if(player1.health <= 0){
+                winnerId = 2;
+            }
+            else{
+                if(player2.health <= 0){
+                    winnerId = 1;
+                }
+            }
+            this->state_machine->add_state(
+                std::make_unique<GameOverState>(
+                    jugador1,
+                    jugador2,
+                    winnerId,
+                    static_cast<time_t>(difftime(time(nullptr), startTime))
+                ),
+                true
+            );
         }
 
-        if (winnerId != 0) {
-            projectile_1.active = false;
-            projectile_2.active = false;
-
-            // Cambiar al estado GameOver con el ganador
-            this->state_machine->add_state(std::make_unique<GameOverState>(jugador1, jugador2, winnerId, difftime(time(nullptr), startTime)), true);
-
-            return;
-        }
-        
         //cuando los projectile acaben(false) siguiente turno y le toca al j1
         if (projectile_1.active == false && projectile_2.active == false){ 
             old_player1=player1;
@@ -193,28 +214,29 @@ switch (turno)
 {
     case '1':
         // J1 activo, J2 “fantasma”
-        DrawTexturePro(jugador1.personaje, src1, player1, {0,0}, 0.0f, WHITE);
-        DrawTexturePro(jugador2.personaje, src2, old_player2, {0,0}, 0.0f, Fade(WHITE, 0.5f));
+        DrawTexturePro(jugador1.personaje, src1, player1.rect, {0,0}, 0.0f, WHITE);
+        DrawTexturePro(jugador2.personaje, src2, old_player2.rect, {0,0}, 0.0f, Fade(WHITE, 0.5f));
         break;
 
     case '2':
         // J2 activo, J1 “fantasma”
-        DrawTexturePro(jugador1.personaje, src1, old_player1, {0,0}, 0.0f, Fade(WHITE, 0.5f));
-        DrawTexturePro(jugador2.personaje, src2, player2, {0,0}, 0.0f, WHITE);
+        DrawTexturePro(jugador1.personaje, src1, old_player1.rect, {0,0}, 0.0f, Fade(WHITE, 0.5f));
+        DrawTexturePro(jugador2.personaje, src2, player2.rect, {0,0}, 0.0f, WHITE);
         break;
 
     case 'r':
         // Ambos activos
-        DrawTexturePro(jugador1.personaje, src1, player1, {0,0}, 0.0f, WHITE);
-        DrawTexturePro(jugador2.personaje, src2, player2, {0,0}, 0.0f, WHITE);
+        DrawTexturePro(jugador1.personaje, src1, player1.rect, {0,0}, 0.0f, WHITE);
+        DrawTexturePro(jugador2.personaje, src2, player2.rect, {0,0}, 0.0f, WHITE);
         break;
 }
+
 
         
 
         // Flecha de apuntado
         if(turno=='1' || turno=='r'){//flecha j1
-            Vector2 start = {player1.x + player1.width, player1.y + player1.height / 2};
+            Vector2 start = {player1.rect.x + player1.rect.width, player1.rect.y + player1.rect.height / 2};
             Vector2 end = {start.x + arrowLength_1 * cosf(angle_1), start.y + arrowLength_1 * sinf(angle_1)};
             DrawLineEx(start, end, 4, DARKGRAY);
             DrawTriangle(
@@ -225,7 +247,7 @@ switch (turno)
             );
         }
         if(turno=='2' || turno=='r'){//flecha j2
-            Vector2 start2 = {player2.x + player2.width, player2.y + player2.height / 2};
+            Vector2 start2 = {player2.rect.x, player2.rect.y + player2.rect.height / 2};
             Vector2 end2 = {start2.x + arrowLength_2 * cosf(angle_2), start2.y + arrowLength_2 * sinf(angle_2)};
             DrawLineEx(start2, end2, 4, DARKGRAY);
             DrawTriangle(
@@ -243,9 +265,25 @@ switch (turno)
             if (projectile_2.active) DrawCircleV(projectile_2.pos, 5, BLACK);
 
         }
+        
+        // --- Barras de vida (HUD) ---
+        float maxBarWidth = 200;
+        float barHeight = 20;
 
-        DrawText("W/S para apuntar", 20, 20, 20, DARKGRAY);
-        DrawText("ESPACIO para disparar", 20, 45, 20, DARKGRAY);
+        // Jugador 1 - esquina superior izquierda
+        DrawText("Jugador 1", 30, 20, 20, BLACK);
+        DrawRectangle(30, 50, maxBarWidth, barHeight, GRAY);
+        DrawRectangle(30, 50, maxBarWidth * (player1.health / 100.0f), barHeight, GREEN);
+        DrawText(TextFormat("%d / 100", player1.health), 30, 50 + barHeight + 5, 20, DARKGREEN);
+
+        // Jugador 2 - esquina superior derecha
+        DrawText("Jugador 2", screenWidth - 230, 20, 20, BLACK);
+        DrawRectangle(screenWidth - 230, 50, maxBarWidth, barHeight, GRAY);
+        DrawRectangle(screenWidth - 230 + (maxBarWidth * (1 - player2.health / 100.0f)), 50,
+                    maxBarWidth * (player2.health / 100.0f), barHeight, GREEN);
+        DrawText(TextFormat("%d / 100", player2.health), screenWidth - 230, 50 + barHeight + 5, 20, DARKGREEN);
+
+        //DrawText("ESPACIO para disparar", 20, 45, 20, DARKGRAY);
     }
     EndDrawing();
 }
