@@ -19,8 +19,8 @@ void MainGameState::init(){
     player2 = {{screenWidth - 150.0f, ground.y - 50, 50, 50}, 100};
     
 
-    projectile_1 = {{0,0},{0,0}, false};
-    projectile_2 = {{0,0},{0,0}, false};
+    projectile_1 = {{0,0},{0,0}, false, false};
+    projectile_2 = {{0,0},{0,0}, false, false};
     angle_1= -30.0f * DEG2RAD;
     angle_2= -30.0f * DEG2RAD;
     
@@ -53,6 +53,8 @@ void MainGameState::handleInput(){
             projectile_1.pos = start;
             float speed = 500.0f;
             projectile_1.vel = {speed * cosf(angle_1), speed * sinf(angle_1)};
+            projectile_1.active = true;
+            projectile_1.hasHit = false;
         }
 
         // Movimiento del jugador
@@ -86,7 +88,8 @@ void MainGameState::handleInput(){
             projectile_2.pos = start;
             float speed = 500.0f;
             projectile_2.vel = {speed * cosf(angle_2), speed * sinf(angle_2)};
-            projectile_2.active = false;
+            projectile_2.active = true;
+            projectile_2.hasHit = false;
         }
 
          // Movimiento del jugador
@@ -118,8 +121,8 @@ void MainGameState::update(float deltaTime){
     }
     // --- LOGICA ---
     if (turno=='r') { //Actualizamos los proyectiles cuando se entre en la resolucion del turno
-        projectile_1.active = true;
-        projectile_2.active = true;
+        //projectile_1.active = true;
+        //projectile_2.active = true;
 
         projectile_1.vel.y += gravity_1 * deltaTime;
         projectile_1.pos.x += projectile_1.vel.x * deltaTime;
@@ -137,13 +140,15 @@ void MainGameState::update(float deltaTime){
         }
 
         // Colisión con jugadores
-        if (CheckCollisionPointRec(projectile_1.pos, player2.rect)) {
+        if (!projectile_1.hasHit && CheckCollisionPointRec(projectile_1.pos, player2.rect)) {
             projectile_1.active = false;
+            projectile_1.hasHit = true;
             player2.health -= 34;
         }
 
-        if (CheckCollisionPointRec(projectile_2.pos, player1.rect)) {
+        if (!projectile_2.hasHit && CheckCollisionPointRec(projectile_2.pos, player1.rect)) {
             projectile_2.active = false;
+            projectile_2.hasHit = true;
             player1.health -= 34;
         }
 
@@ -155,7 +160,7 @@ void MainGameState::update(float deltaTime){
             }
             else{
                 if(player2.health <= 0){
-                    winnerId = 2;
+                    winnerId = 1;
                 }
             }
             this->state_machine->add_state(

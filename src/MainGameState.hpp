@@ -15,6 +15,7 @@ struct Projectile {
     Vector2 pos;
     Vector2 vel;
     bool active;
+    bool hasHit;
 };
 
 struct Player {
