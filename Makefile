@@ -1,10 +1,8 @@
-# ====================
 # Makefile Masterpiece
-# ====================
 
 # --- Compilador y flags ---
 CXX := ccache g++
-CXXFLAGS := -Wall -Wextra -std=c++17
+CXXFLAGS := -Wall -std=c++17
 CXXFLAGS += -I./src/core -I./src/states -I./vendor/include
 
 # --- Librerías externas (Raylib) ---
@@ -20,9 +18,8 @@ TARGET := $(BIN_DIR)/masterpiece
 SRCS := $(shell find $(SRC_DIR) -name '*.cpp')
 OBJS := $(SRCS:$(SRC_DIR)/%.cpp=$(BUILD_DIR)/%.o)
 
-# =============================================
-#               REGLAS PRINCIPALES
-# =============================================
+
+### REGLAS PRINCIPALES ###
 
 # Compilación por defecto
 all: $(TARGET)
@@ -43,16 +40,3 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
 clean:
 	@echo "Limpiando..."
 	rm -rf $(BUILD_DIR) $(BIN_DIR)
-
-# Información sobre los archivos que se compilan
-info:
-	@echo "Fuentes:"
-	@echo "$(SRCS)"
-	@echo ""
-	@echo "Objetos:"
-	@echo "$(OBJS)"
-	@echo ""
-	@echo "Ejecutable:"
-	@echo "$(TARGET)"
-
-.PHONY: all clean info
