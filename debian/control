@@ -1,0 +1,24 @@
+Source: masterpiece
+Section: games
+Priority: optional
+Maintainer: agh45-ua <agh45@alu.ua.es>
+Build-Depends: debhelper-compat (= 10), g++, libgl1-mesa-dev, libx11-dev, make
+Standards-Version: 4.6.0
+Homepage: https://github.com/agh45-ua/MasterPiece
+Rules-Requires-Root: no
+
+Package: masterpiece
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Juego de duelo por turnos 2D
+ MasterPiece es un juego PvP local donde dos jugadores se enfrentan
+ en duelos tácticos por turnos. Cada jugador debe predecir los
+ movimientos del rival y elegir estratégicamente su posición y ángulo
+ de disparo para reducir la vida del oponente a cero.
+ .
+ Características:
+  - Sistema de turnos alternos con disparos parabólicos
+  - Movimiento táctico limitado por turno
+  - Sistema de vida (3 puntos por jugador)
+  - Gráficos 2D con Raylib
+  - Inspirado en Worms de Team17

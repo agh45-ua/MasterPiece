@@ -1,0 +1,28 @@
+#!/bin/bash
+# prerm - Script ejecutado antes de eliminar el paquete
+
+set -e
+
+case "$1" in
+    remove|upgrade|deconfigure)
+        echo "Desinstalando MasterPiece..."
+        
+        # Cerrar instancias en ejecución
+        if pgrep -x "masterpiece" > /dev/null; then
+            echo "Cerrando instancias de MasterPiece..."
+            pkill -x "masterpiece" || true
+        fi
+        ;;
+    
+    failed-upgrade)
+        ;;
+    
+    *)
+        echo "prerm llamado con argumento desconocido \`$1'" >&2
+        exit 1
+        ;;
+esac
+
+#DEBHELPER#
+
+exit 0
