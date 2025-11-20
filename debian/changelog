@@ -1,0 +1,10 @@
+masterpiece (1.0-1) unstable; urgency=medium
+
+  * Versión inicial del paquete MasterPiece
+  * Implementación del sistema de turnos
+  * Sistema de vida y detección de impactos funcional
+  * Interfaz gráfica básica con Raylib
+  * Movimiento táctico y disparos parabólicos
+  * Menú inicial con opciones de jugar y salir
+
+ -- agh45-ua <agh45@alu.ua.es>  Fri, 15 Nov 2025 17:56:30 +0000
