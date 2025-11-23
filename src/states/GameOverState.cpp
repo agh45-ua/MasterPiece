@@ -1,6 +1,7 @@
 extern "C" {
     #include <raylib.h>
 }
+#include "../core/config.h"
 #include "StateMachine.hpp"
 #include "MainGameState.hpp"
 #include "GameOverState.hpp"
@@ -15,7 +16,7 @@ GameOverState::GameOverState(const Jugador& a, const Jugador& b, const int winne
 : jugador1(a), jugador2(b), winner_id(winnerId), game_time(g_time) {}
 
 void GameOverState::init(){
-    fondo = LoadTexture("assets/fondo-juego.png");    
+    fondo = LoadTexture(GetAssetPath("fondo-juego.png").c_str());
 }
 
 void GameOverState::handleInput(){
