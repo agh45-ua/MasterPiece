@@ -33,7 +33,7 @@ class PersonajesState: public GameState {
         Jugador jugador1;
         Jugador jugador2;
         Texture2D personajes[6];
-        string rutas[6] = {"assets/Personaje1.png", "assets/Personaje2.png", "assets/Personaje3.png", "assets/Personaje4.png", "assets/Personaje5.png", "assets/Personaje6.png"};
+        string rutas[6] = {"Personaje1.png", "Personaje2.png", "Personaje3.png", "Personaje4.png", "Personaje5.png", "Personaje6.png"};
         int color1;
         int color2;
         Rectangle Nombre1{}, Nombre2{};

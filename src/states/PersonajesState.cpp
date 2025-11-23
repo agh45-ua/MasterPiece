@@ -5,6 +5,7 @@
 #include "GameState.hpp"
 #include <iostream>
 #include <string>
+#include "../core/config.h"
 extern "C" {
     #include <raylib.h>
 }
@@ -16,8 +17,8 @@ PersonajesState::PersonajesState(){
 }
 
 void PersonajesState::init(){
-    fondo = LoadTexture("assets/fondo-juego.png");
-    poppins = LoadFontEx("assets/Poppins-Bold.ttf", 120, 0, 0);
+    fondo = LoadTexture(GetAssetPath("fondo-juego.png").c_str());
+    poppins = LoadFontEx(GetAssetPath("Poppins-Bold.ttf").c_str(), 120, 0, 0);
     color1 = 0;
     color2 = 1;
     confirmarJugador1 = false;
@@ -26,7 +27,7 @@ void PersonajesState::init(){
     colorConfirmar2 = GRAY;
 
     for (int i = 0; i < 6; i++) {
-        personajes[i] = LoadTexture(rutas[i].c_str());
+        personajes[i] = LoadTexture(GetAssetPath(rutas[i]).c_str());
     }
 
     color1 = 0;
