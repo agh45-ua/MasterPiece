@@ -60,18 +60,14 @@ endif()
 # ==========================================
 file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
 
-# ==========================================
-# PACKAGING AUTOMÁTICO
-# ==========================================
-include(CPack)
 
-set(CPACK_PACKAGE_NAME "MasterPiece")
-set(CPACK_PACKAGE_VERSION "1.0.0")
-
+# Solo empaquetamos con CPack en Windows
 if (WIN32)
+    set(CPACK_PACKAGE_NAME "MasterPiece")
+    set(CPACK_PACKAGE_VERSION "1.0.0")
     set(CPACK_GENERATOR "ZIP")
-else()
-    set(CPACK_GENERATOR "TGZ")
-endif()
 
-cpack_add_component(MasterPiece)
+    include(CPack)
+
+    cpack_add_component(MasterPiece)
+endif()
