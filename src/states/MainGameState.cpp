@@ -3,6 +3,7 @@
 #include "GameOverState.hpp"
 #include <string>
 #include <iostream>
+#include "../core/config.h"
 extern "C" {
     #include <raylib.h>
 }
@@ -13,7 +14,7 @@ MainGameState::MainGameState(const Jugador& a, const Jugador& b)
 : jugador1(a), jugador2(b) {}
 
 void MainGameState::init(){
-    fondo = LoadTexture("assets/fondo-juego.png");
+    fondo = LoadTexture(GetAssetPath("fondo-juego.png").c_str());
     ground = {0, (float)screenHeight - groundHeight, (float)screenWidth, (float)groundHeight};
     player1 = {{100, ground.y - 50, 50, 50}, 100};
     player2 = {{screenWidth - 150.0f, ground.y - 50, 50, 50}, 100};

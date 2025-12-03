@@ -5,6 +5,7 @@
 #include "GameState.hpp"
 #include <iostream>
 #include <string>
+#include "../core/config.h"
 extern "C" {
     #include <raylib.h>
 }
@@ -16,8 +17,8 @@ InicioState::InicioState(){
 }
 
 void InicioState::init(){
-    fondo = LoadTexture("assets/fondo-inicio.png");
-    poppins = LoadFontEx("assets/Poppins-Bold.ttf", 120, 0, 0);
+    fondo = LoadTexture(GetAssetPath("fondo-inicio.png").c_str());
+    poppins = LoadFontEx(GetAssetPath("Poppins-Bold.ttf").c_str(), 120, 0, 0);
 }
 
 void InicioState::handleInput(){
