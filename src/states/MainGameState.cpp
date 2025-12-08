@@ -30,7 +30,6 @@ void MainGameState::init(){
     old_player2=player2;
 
     turno ='1';
-
     startTime = time(nullptr);
 }
 
@@ -38,21 +37,19 @@ void MainGameState::handleInput(){
   
     //si es el turno del jugador 1 vamos guardando lo que hace hasta que presione enter
     if (turno =='1'){
-        
         old_angle_1=angle_1;
         // Calcular ángulo entre el jugador1 y el ratón
         Vector2 mousePos = GetMousePosition();
         Vector2 start = {player1.rect.x + player1.rect.width, player1.rect.y + player1.rect.height / 2};
         angle_1= atan2f(mousePos.y - start.y, mousePos.x - start.x);
 
-
-    
         // Disparo con ESPACIO o clic izquierdo
         if ((IsKeyPressed(KEY_SPACE) || IsMouseButtonPressed(MOUSE_LEFT_BUTTON))) {
-
-            
             projectile_1.pos = start;
-            float speed = 500.0f;
+            
+            // Velocidad del arma elegida
+            float speed = jugador1.arma.speed;
+        
             projectile_1.vel = {speed * cosf(angle_1), speed * sinf(angle_1)};
             projectile_1.active = true;
             projectile_1.hasHit = false;
@@ -85,9 +82,10 @@ void MainGameState::handleInput(){
     
         // Disparo con ESPACIO o clic izquierdo
         if ((IsKeyPressed(KEY_SPACE) || IsMouseButtonPressed(MOUSE_LEFT_BUTTON))) {
-
             projectile_2.pos = start;
-            float speed = 500.0f;
+
+            float speed = jugador2.arma.speed;
+
             projectile_2.vel = {speed * cosf(angle_2), speed * sinf(angle_2)};
             projectile_2.active = true;
             projectile_2.hasHit = false;
@@ -99,7 +97,6 @@ void MainGameState::handleInput(){
 
         //ya no pillamos mas info del jugador 2
         if(IsKeyPressed(KEY_Q)){
-
             countdownActive = true;
             countdownTime = 3.0f;  // reiniciar cuenta atrás
             gameBlocked = true;    // bloquea el resto del juego
@@ -110,7 +107,6 @@ void MainGameState::handleInput(){
 
 void MainGameState::update(float deltaTime){
 
-
     if (countdownActive) {
         countdownTime -= deltaTime;
         if (countdownTime <= 0) {
@@ -120,18 +116,18 @@ void MainGameState::update(float deltaTime){
         }
         return; // mientras la cuenta atrás está activa, no actualizamos nada más
     }
+
     // --- LOGICA ---
     if (turno=='r') { //Actualizamos los proyectiles cuando se entre en la resolucion del turno
-        //projectile_1.active = true;
-        //projectile_2.active = true;
 
-        projectile_1.vel.y += gravity_1 * deltaTime;
+        projectile_1.vel.y += jugador1.arma.gravity * deltaTime;
         projectile_1.pos.x += projectile_1.vel.x * deltaTime;
         projectile_1.pos.y += projectile_1.vel.y * deltaTime;
 
-        projectile_2.vel.y += gravity_2 * deltaTime;
+        projectile_2.vel.y += jugador2.arma.gravity * deltaTime;
         projectile_2.pos.x += projectile_2.vel.x * deltaTime;
         projectile_2.pos.y += projectile_2.vel.y * deltaTime;
+        
         // Colisión con el suelo
         if (projectile_1.pos.y > ground.y) {
             projectile_1.active = false;
@@ -144,13 +140,13 @@ void MainGameState::update(float deltaTime){
         if (!projectile_1.hasHit && CheckCollisionPointRec(projectile_1.pos, player2.rect)) {
             projectile_1.active = false;
             projectile_1.hasHit = true;
-            player2.health -= 34;
+            player2.health -= jugador1.arma.damage;
         }
 
         if (!projectile_2.hasHit && CheckCollisionPointRec(projectile_2.pos, player1.rect)) {
             projectile_2.active = false;
             projectile_2.hasHit = true;
-            player1.health -= 34;
+            player1.health -= jugador2.arma.damage;
         }
 
         int winnerId = 0;
@@ -164,6 +160,7 @@ void MainGameState::update(float deltaTime){
                     winnerId = 1;
                 }
             }
+
             this->state_machine->add_state(
                 std::make_unique<GameOverState>(
                     jugador1,
@@ -209,31 +206,28 @@ void MainGameState::render(){
         DrawText(s2.c_str(),100,screenHeight/2,24,PURPLE);
         // Jugadores para que sean ocultos los movimientos
         auto src1 = Rectangle{0, 0, (float)jugador1.personaje.width, (float)jugador1.personaje.height};
-auto src2 = Rectangle{0, 0, (float)jugador2.personaje.width, (float)jugador2.personaje.height};
+        auto src2 = Rectangle{0, 0, (float)jugador2.personaje.width, (float)jugador2.personaje.height};
 
-switch (turno)
-{
-    case '1':
-        // J1 activo, J2 “fantasma”
-        DrawTexturePro(jugador1.personaje, src1, player1.rect, {0,0}, 0.0f, WHITE);
-        DrawTexturePro(jugador2.personaje, src2, old_player2.rect, {0,0}, 0.0f, Fade(WHITE, 0.5f));
-        break;
+        switch (turno)
+        {
+            case '1':
+                // J1 activo, J2 “fantasma”
+                DrawTexturePro(jugador1.personaje, src1, player1.rect, {0,0}, 0.0f, WHITE);
+                DrawTexturePro(jugador2.personaje, src2, old_player2.rect, {0,0}, 0.0f, Fade(WHITE, 0.5f));
+                break;
 
-    case '2':
-        // J2 activo, J1 “fantasma”
-        DrawTexturePro(jugador1.personaje, src1, old_player1.rect, {0,0}, 0.0f, Fade(WHITE, 0.5f));
-        DrawTexturePro(jugador2.personaje, src2, player2.rect, {0,0}, 0.0f, WHITE);
-        break;
+            case '2':
+                // J2 activo, J1 “fantasma”
+                DrawTexturePro(jugador1.personaje, src1, old_player1.rect, {0,0}, 0.0f, Fade(WHITE, 0.5f));
+                DrawTexturePro(jugador2.personaje, src2, player2.rect, {0,0}, 0.0f, WHITE);
+                break;
 
-    case 'r':
-        // Ambos activos
-        DrawTexturePro(jugador1.personaje, src1, player1.rect, {0,0}, 0.0f, WHITE);
-        DrawTexturePro(jugador2.personaje, src2, player2.rect, {0,0}, 0.0f, WHITE);
-        break;
-}
-
-
-        
+            case 'r':
+                // Ambos activos
+                DrawTexturePro(jugador1.personaje, src1, player1.rect, {0,0}, 0.0f, WHITE);
+                DrawTexturePro(jugador2.personaje, src2, player2.rect, {0,0}, 0.0f, WHITE);
+                break;
+        }
 
         // Flecha de apuntado
         if(turno=='1' || turno=='r'){//flecha j1
@@ -261,9 +255,8 @@ switch (turno)
 
         // Proyectiles cuando sea resolucion
         if (turno=='r'){
-            if(projectile_1.active) DrawCircleV(projectile_1.pos, 5, BLACK);
-
-            if (projectile_2.active) DrawCircleV(projectile_2.pos, 5, BLACK);
+            if(projectile_1.active) DrawCircleV(projectile_1.pos, 5, jugador1.arma.colorProyectil);
+            if (projectile_2.active) DrawCircleV(projectile_2.pos, 5, jugador2.arma.colorProyectil);
 
         }
         

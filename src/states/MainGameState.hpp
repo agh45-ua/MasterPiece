@@ -1,12 +1,13 @@
 #pragma once
 #include "GameState.hpp"
+#include "PersonajesState.hpp"
 
 #include <raylib.h>
 #include <string>
 #include <cmath>
+
 extern "C" {
     #include <raylib.h>
-#include "PersonajesState.hpp"
 }
 
 using namespace std;
@@ -62,9 +63,7 @@ class MainGameState : public GameState
 
         // --- Proyectiles ---
         Projectile projectile_1 = {{0, 0}, {0, 0}, false};
-        const float gravity_1 = 400.0f;
         Projectile projectile_2 = {{0, 0}, {0, 0}, false};
-        const float gravity_2 = 400.0f;
 
         // --- Apuntado ---
         float angle_1 = -30.0f * DEG2RAD, old_angle_1; // ángulo inicial (en radianes)
