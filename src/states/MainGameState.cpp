@@ -128,11 +128,19 @@ void MainGameState::update(float deltaTime){
         projectile_2.pos.x += projectile_2.vel.x * deltaTime;
         projectile_2.pos.y += projectile_2.vel.y * deltaTime;
         
+        //Comprobar limite pantalla
+        if (projectile_1.pos.x < 0 || projectile_1.pos.x > screenWidth || projectile_1.pos.y > screenHeight){
+            projectile_1.active = false;
+        }
+        if (projectile_2.pos.x < 0 || projectile_2.pos.x > screenWidth || projectile_2.pos.y > screenHeight) {
+            projectile_2.active = false;
+        }
+
         // Colisión con el suelo
         if (projectile_1.pos.y > ground.y) {
             projectile_1.active = false;
         }
-         if (projectile_2.pos.y > ground.y) {
+        if (projectile_2.pos.y > ground.y) {
             projectile_2.active = false;
         }
 

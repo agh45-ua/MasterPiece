@@ -73,7 +73,7 @@ void PersonajesState::update(float deltaTime){
     Rectangle j2_der = { (float)(x2 + cuadrado + 5), (float)(centroY - 20), 40, 40 }; 
 
     // --- HITBOXES ARMA (MÁS SEPARADOS) ---
-    int yArma = y + 140; 
+    int yArma = y + 170; 
     
     // Jugador 1
     // Separamos 20px más hacia fuera
@@ -266,11 +266,21 @@ void PersonajesState::render() {
     }
 
     // --- SELECCIÓN ARMAS ---
-    int yArma = y + 140; 
+    int yArma = y + 170;
     int tamTexto = 30;
 
+    // Cajas arma
+    int anchoCajaArma = 200;
+    int altoCajaArma = 40;
+    int yCaja = y + 120;
+
+    Rectangle cajaTitulo1 = { (float)cx1 - anchoCajaArma/2, (float)yCaja, (float)anchoCajaArma, (float)altoCajaArma };
+    Rectangle cajaTitulo2 = { (float)cx2 - anchoCajaArma/2, (float)yCaja, (float)anchoCajaArma, (float)altoCajaArma };
+
     // -- Jugador 1 --
-    DrawText("Arma:", x1, yArma - 35, tamTexto, RED);
+    DrawRectangleRec(cajaTitulo1, LIGHTGRAY);
+    DrawRectangleLinesEx(cajaTitulo1, 2, DARKGRAY);
+    DrawText("Arma:", (int)cajaTitulo1.x + (anchoCajaArma - MeasureText("Arma:", 20))/2, (int)cajaTitulo1.y + 10, 20, BLACK);
     const char* nArma1 = jugador1.arma.nombre.c_str();
     int wArma1 = MeasureText(nArma1, tamTexto);
     DrawText(nArma1, x1 + (cuadrado - wArma1)/2, yArma + 5, tamTexto, BLACK);
@@ -290,7 +300,9 @@ void PersonajesState::render() {
     }
 
     // -- Jugador 2 --
-    DrawText("Arma:", x2, yArma - 35, tamTexto, RED);
+    DrawRectangleRec(cajaTitulo2, LIGHTGRAY);
+    DrawRectangleLinesEx(cajaTitulo2, 2, DARKGRAY);
+    DrawText("Arma:", (int)cajaTitulo2.x + (anchoCajaArma - MeasureText("Arma:", 20))/2, (int)cajaTitulo2.y + 10, 20, BLACK);
     const char* nArma2 = jugador2.arma.nombre.c_str();
     int wArma2 = MeasureText(nArma2, tamTexto);
     DrawText(nArma2, x2 + (cuadrado - wArma2)/2, yArma + 5, tamTexto, BLACK);
