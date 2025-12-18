@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/test_gameplay.dir/test_gameplay.cpp.o -o test_gameplay  ../libGameLogic.a "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/vendor/lib/libraylib.a" 

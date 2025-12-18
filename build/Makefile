@@ -178,6 +178,19 @@ test_states/fast:
 	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/test_states.dir/build.make tests/CMakeFiles/test_states.dir/build
 .PHONY : test_states/fast
 
+#=============================================================================
+# Target rules for targets named test_gameplay
+
+# Build rule for target.
+test_gameplay: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_gameplay
+.PHONY : test_gameplay
+
+# fast build rule for target.
+test_gameplay/fast:
+	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/test_gameplay.dir/build.make tests/CMakeFiles/test_gameplay.dir/build
+.PHONY : test_gameplay/fast
+
 src/core/GameState.o: src/core/GameState.cpp.o
 .PHONY : src/core/GameState.o
 
@@ -357,6 +370,7 @@ help:
 	@echo "... test"
 	@echo "... GameLogic"
 	@echo "... MasterPiece"
+	@echo "... test_gameplay"
 	@echo "... test_statemachine"
 	@echo "... test_states"
 	@echo "... src/core/GameState.o"

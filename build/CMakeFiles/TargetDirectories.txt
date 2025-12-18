@@ -5,6 +5,7 @@
 /home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/CMakeFiles/rebuild_cache.dir
 /home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/tests/CMakeFiles/test_statemachine.dir
 /home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/tests/CMakeFiles/test_states.dir
+/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/tests/CMakeFiles/test_gameplay.dir
 /home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/tests/CMakeFiles/test.dir
 /home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/tests/CMakeFiles/edit_cache.dir
 /home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/tests/CMakeFiles/rebuild_cache.dir

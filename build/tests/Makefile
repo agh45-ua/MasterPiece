@@ -154,6 +154,44 @@ test_states/fast:
 	cd "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build" && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/test_states.dir/build.make tests/CMakeFiles/test_states.dir/build
 .PHONY : test_states/fast
 
+# Convenience name for target.
+tests/CMakeFiles/test_gameplay.dir/rule:
+	cd "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build" && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 tests/CMakeFiles/test_gameplay.dir/rule
+.PHONY : tests/CMakeFiles/test_gameplay.dir/rule
+
+# Convenience name for target.
+test_gameplay: tests/CMakeFiles/test_gameplay.dir/rule
+.PHONY : test_gameplay
+
+# fast build rule for target.
+test_gameplay/fast:
+	cd "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build" && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/test_gameplay.dir/build.make tests/CMakeFiles/test_gameplay.dir/build
+.PHONY : test_gameplay/fast
+
+test_gameplay.o: test_gameplay.cpp.o
+.PHONY : test_gameplay.o
+
+# target to build an object file
+test_gameplay.cpp.o:
+	cd "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build" && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/test_gameplay.dir/build.make tests/CMakeFiles/test_gameplay.dir/test_gameplay.cpp.o
+.PHONY : test_gameplay.cpp.o
+
+test_gameplay.i: test_gameplay.cpp.i
+.PHONY : test_gameplay.i
+
+# target to preprocess a source file
+test_gameplay.cpp.i:
+	cd "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build" && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/test_gameplay.dir/build.make tests/CMakeFiles/test_gameplay.dir/test_gameplay.cpp.i
+.PHONY : test_gameplay.cpp.i
+
+test_gameplay.s: test_gameplay.cpp.s
+.PHONY : test_gameplay.s
+
+# target to generate assembly for a file
+test_gameplay.cpp.s:
+	cd "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build" && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/test_gameplay.dir/build.make tests/CMakeFiles/test_gameplay.dir/test_gameplay.cpp.s
+.PHONY : test_gameplay.cpp.s
+
 test_statemachine.o: test_statemachine.cpp.o
 .PHONY : test_statemachine.o
 
@@ -211,8 +249,12 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... test"
+	@echo "... test_gameplay"
 	@echo "... test_statemachine"
 	@echo "... test_states"
+	@echo "... test_gameplay.o"
+	@echo "... test_gameplay.i"
+	@echo "... test_gameplay.s"
 	@echo "... test_statemachine.o"
 	@echo "... test_statemachine.i"
 	@echo "... test_statemachine.s"

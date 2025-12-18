@@ -1,5 +1,5 @@
 #pragma once
-#include "core/GameState.hpp"
+#include "GameState.hpp"
 #include <raylib.h>
 #include <cmath>
 #include <string>

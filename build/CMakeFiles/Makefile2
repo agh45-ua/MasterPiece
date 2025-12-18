@@ -84,6 +84,7 @@ clean: tests/clean
 # Recursive "all" directory target.
 tests/all: tests/CMakeFiles/test_statemachine.dir/all
 tests/all: tests/CMakeFiles/test_states.dir/all
+tests/all: tests/CMakeFiles/test_gameplay.dir/all
 .PHONY : tests/all
 
 # Recursive "preinstall" directory target.
@@ -93,6 +94,7 @@ tests/preinstall:
 # Recursive "clean" directory target.
 tests/clean: tests/CMakeFiles/test_statemachine.dir/clean
 tests/clean: tests/CMakeFiles/test_states.dir/clean
+tests/clean: tests/CMakeFiles/test_gameplay.dir/clean
 .PHONY : tests/clean
 
 #=============================================================================
@@ -154,7 +156,7 @@ CMakeFiles/MasterPiece.dir/clean:
 tests/CMakeFiles/test_statemachine.dir/all: CMakeFiles/GameLogic.dir/all
 	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/test_statemachine.dir/build.make tests/CMakeFiles/test_statemachine.dir/depend
 	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/test_statemachine.dir/build.make tests/CMakeFiles/test_statemachine.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/CMakeFiles" --progress-num=10,11 "Built target test_statemachine"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/CMakeFiles" --progress-num=12,13 "Built target test_statemachine"
 .PHONY : tests/CMakeFiles/test_statemachine.dir/all
 
 # Build rule for subdir invocation for target.
@@ -180,7 +182,7 @@ tests/CMakeFiles/test_statemachine.dir/clean:
 tests/CMakeFiles/test_states.dir/all: CMakeFiles/GameLogic.dir/all
 	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/test_states.dir/build.make tests/CMakeFiles/test_states.dir/depend
 	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/test_states.dir/build.make tests/CMakeFiles/test_states.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/CMakeFiles" --progress-num=12,13 "Built target test_states"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/CMakeFiles" --progress-num=14,15 "Built target test_states"
 .PHONY : tests/CMakeFiles/test_states.dir/all
 
 # Build rule for subdir invocation for target.
@@ -198,6 +200,32 @@ test_states: tests/CMakeFiles/test_states.dir/rule
 tests/CMakeFiles/test_states.dir/clean:
 	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/test_states.dir/build.make tests/CMakeFiles/test_states.dir/clean
 .PHONY : tests/CMakeFiles/test_states.dir/clean
+
+#=============================================================================
+# Target rules for target tests/CMakeFiles/test_gameplay.dir
+
+# All Build rule for target.
+tests/CMakeFiles/test_gameplay.dir/all: CMakeFiles/GameLogic.dir/all
+	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/test_gameplay.dir/build.make tests/CMakeFiles/test_gameplay.dir/depend
+	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/test_gameplay.dir/build.make tests/CMakeFiles/test_gameplay.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/CMakeFiles" --progress-num=10,11 "Built target test_gameplay"
+.PHONY : tests/CMakeFiles/test_gameplay.dir/all
+
+# Build rule for subdir invocation for target.
+tests/CMakeFiles/test_gameplay.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/CMakeFiles" 9
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 tests/CMakeFiles/test_gameplay.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/CMakeFiles" 0
+.PHONY : tests/CMakeFiles/test_gameplay.dir/rule
+
+# Convenience name for target.
+test_gameplay: tests/CMakeFiles/test_gameplay.dir/rule
+.PHONY : test_gameplay
+
+# clean rule for target.
+tests/CMakeFiles/test_gameplay.dir/clean:
+	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/test_gameplay.dir/build.make tests/CMakeFiles/test_gameplay.dir/clean
+.PHONY : tests/CMakeFiles/test_gameplay.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

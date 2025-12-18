@@ -15,3 +15,7 @@ add_executable(test_states test_states.cpp)
 target_link_libraries(test_states PRIVATE GameLogic ${RAYLIB_LIB})
 
 add_test(NAME GameStateTests COMMAND test_states)
+
+add_executable(test_gameplay test_gameplay.cpp)
+target_link_libraries(test_gameplay PRIVATE GameLogic ${RAYLIB_LIB})
+add_test(NAME GameplayTests COMMAND test_gameplay)

@@ -65,10 +65,10 @@ test:
 	@echo "===> Configurando CMake..."
 	@cd $(BUILD_DIR) && cmake ..
 	@echo "===> Compilando ejecutables de test..."
-	@cd $(BUILD_DIR) && make test_statemachine test_states
+	@cd $(BUILD_DIR) && make test_statemachine test_states test_gameplay
 	@echo "===> Ejecutando CTest..."
 	@cd $(BUILD_DIR) && ctest --output-on-failure
-
+	
 # Limpiar compilación
 clean:
 	@echo "Limpiando..."
