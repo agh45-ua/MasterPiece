@@ -3,8 +3,8 @@ extern "C" {
     #include <raylib.h>
 }
 #include <iostream>
-#include "GameState.hpp"
-#include "PersonajesState.hpp"
+#include "core/GameState.hpp"
+#include "states/PersonajesState.hpp"
 
 using namespace std;
 

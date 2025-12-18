@@ -83,49 +83,19 @@ tests/CMakeFiles/test_statemachine.dir/test_statemachine.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/test_statemachine.dir/test_statemachine.cpp.s"
 	cd "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/tests" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/tests/test_statemachine.cpp" -o CMakeFiles/test_statemachine.dir/test_statemachine.cpp.s
 
-tests/CMakeFiles/test_statemachine.dir/__/src/core/StateMachine.cpp.o: tests/CMakeFiles/test_statemachine.dir/flags.make
-tests/CMakeFiles/test_statemachine.dir/__/src/core/StateMachine.cpp.o: /home/luis/Escritorio/UA/4º\ Carrera/DCA/MasterPiece/src/core/StateMachine.cpp
-tests/CMakeFiles/test_statemachine.dir/__/src/core/StateMachine.cpp.o: tests/CMakeFiles/test_statemachine.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object tests/CMakeFiles/test_statemachine.dir/__/src/core/StateMachine.cpp.o"
-	cd "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/tests" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT tests/CMakeFiles/test_statemachine.dir/__/src/core/StateMachine.cpp.o -MF CMakeFiles/test_statemachine.dir/__/src/core/StateMachine.cpp.o.d -o CMakeFiles/test_statemachine.dir/__/src/core/StateMachine.cpp.o -c "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/src/core/StateMachine.cpp"
-
-tests/CMakeFiles/test_statemachine.dir/__/src/core/StateMachine.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/test_statemachine.dir/__/src/core/StateMachine.cpp.i"
-	cd "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/tests" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/src/core/StateMachine.cpp" > CMakeFiles/test_statemachine.dir/__/src/core/StateMachine.cpp.i
-
-tests/CMakeFiles/test_statemachine.dir/__/src/core/StateMachine.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/test_statemachine.dir/__/src/core/StateMachine.cpp.s"
-	cd "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/tests" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/src/core/StateMachine.cpp" -o CMakeFiles/test_statemachine.dir/__/src/core/StateMachine.cpp.s
-
-tests/CMakeFiles/test_statemachine.dir/__/src/core/GameState.cpp.o: tests/CMakeFiles/test_statemachine.dir/flags.make
-tests/CMakeFiles/test_statemachine.dir/__/src/core/GameState.cpp.o: /home/luis/Escritorio/UA/4º\ Carrera/DCA/MasterPiece/src/core/GameState.cpp
-tests/CMakeFiles/test_statemachine.dir/__/src/core/GameState.cpp.o: tests/CMakeFiles/test_statemachine.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object tests/CMakeFiles/test_statemachine.dir/__/src/core/GameState.cpp.o"
-	cd "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/tests" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT tests/CMakeFiles/test_statemachine.dir/__/src/core/GameState.cpp.o -MF CMakeFiles/test_statemachine.dir/__/src/core/GameState.cpp.o.d -o CMakeFiles/test_statemachine.dir/__/src/core/GameState.cpp.o -c "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/src/core/GameState.cpp"
-
-tests/CMakeFiles/test_statemachine.dir/__/src/core/GameState.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/test_statemachine.dir/__/src/core/GameState.cpp.i"
-	cd "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/tests" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/src/core/GameState.cpp" > CMakeFiles/test_statemachine.dir/__/src/core/GameState.cpp.i
-
-tests/CMakeFiles/test_statemachine.dir/__/src/core/GameState.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/test_statemachine.dir/__/src/core/GameState.cpp.s"
-	cd "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/tests" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/src/core/GameState.cpp" -o CMakeFiles/test_statemachine.dir/__/src/core/GameState.cpp.s
-
 # Object files for target test_statemachine
 test_statemachine_OBJECTS = \
-"CMakeFiles/test_statemachine.dir/test_statemachine.cpp.o" \
-"CMakeFiles/test_statemachine.dir/__/src/core/StateMachine.cpp.o" \
-"CMakeFiles/test_statemachine.dir/__/src/core/GameState.cpp.o"
+"CMakeFiles/test_statemachine.dir/test_statemachine.cpp.o"
 
 # External object files for target test_statemachine
 test_statemachine_EXTERNAL_OBJECTS =
 
 tests/test_statemachine: tests/CMakeFiles/test_statemachine.dir/test_statemachine.cpp.o
-tests/test_statemachine: tests/CMakeFiles/test_statemachine.dir/__/src/core/StateMachine.cpp.o
-tests/test_statemachine: tests/CMakeFiles/test_statemachine.dir/__/src/core/GameState.cpp.o
 tests/test_statemachine: tests/CMakeFiles/test_statemachine.dir/build.make
+tests/test_statemachine: libGameLogic.a
+tests/test_statemachine: /home/luis/Escritorio/UA/4º\ Carrera/DCA/MasterPiece/vendor/lib/libraylib.a
 tests/test_statemachine: tests/CMakeFiles/test_statemachine.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir="/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable test_statemachine"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir="/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable test_statemachine"
 	cd "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/tests" && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/test_statemachine.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

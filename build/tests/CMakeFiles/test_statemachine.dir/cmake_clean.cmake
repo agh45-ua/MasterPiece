@@ -1,8 +1,4 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/test_statemachine.dir/__/src/core/GameState.cpp.o"
-  "CMakeFiles/test_statemachine.dir/__/src/core/GameState.cpp.o.d"
-  "CMakeFiles/test_statemachine.dir/__/src/core/StateMachine.cpp.o"
-  "CMakeFiles/test_statemachine.dir/__/src/core/StateMachine.cpp.o.d"
   "CMakeFiles/test_statemachine.dir/test_statemachine.cpp.o"
   "CMakeFiles/test_statemachine.dir/test_statemachine.cpp.o.d"
   "test_statemachine"

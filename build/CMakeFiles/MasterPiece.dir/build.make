@@ -69,38 +69,10 @@ include CMakeFiles/MasterPiece.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/MasterPiece.dir/flags.make
 
-CMakeFiles/MasterPiece.dir/src/core/GameState.cpp.o: CMakeFiles/MasterPiece.dir/flags.make
-CMakeFiles/MasterPiece.dir/src/core/GameState.cpp.o: /home/luis/Escritorio/UA/4º\ Carrera/DCA/MasterPiece/src/core/GameState.cpp
-CMakeFiles/MasterPiece.dir/src/core/GameState.cpp.o: CMakeFiles/MasterPiece.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/MasterPiece.dir/src/core/GameState.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MasterPiece.dir/src/core/GameState.cpp.o -MF CMakeFiles/MasterPiece.dir/src/core/GameState.cpp.o.d -o CMakeFiles/MasterPiece.dir/src/core/GameState.cpp.o -c "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/src/core/GameState.cpp"
-
-CMakeFiles/MasterPiece.dir/src/core/GameState.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/MasterPiece.dir/src/core/GameState.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/src/core/GameState.cpp" > CMakeFiles/MasterPiece.dir/src/core/GameState.cpp.i
-
-CMakeFiles/MasterPiece.dir/src/core/GameState.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/MasterPiece.dir/src/core/GameState.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/src/core/GameState.cpp" -o CMakeFiles/MasterPiece.dir/src/core/GameState.cpp.s
-
-CMakeFiles/MasterPiece.dir/src/core/StateMachine.cpp.o: CMakeFiles/MasterPiece.dir/flags.make
-CMakeFiles/MasterPiece.dir/src/core/StateMachine.cpp.o: /home/luis/Escritorio/UA/4º\ Carrera/DCA/MasterPiece/src/core/StateMachine.cpp
-CMakeFiles/MasterPiece.dir/src/core/StateMachine.cpp.o: CMakeFiles/MasterPiece.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/MasterPiece.dir/src/core/StateMachine.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MasterPiece.dir/src/core/StateMachine.cpp.o -MF CMakeFiles/MasterPiece.dir/src/core/StateMachine.cpp.o.d -o CMakeFiles/MasterPiece.dir/src/core/StateMachine.cpp.o -c "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/src/core/StateMachine.cpp"
-
-CMakeFiles/MasterPiece.dir/src/core/StateMachine.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/MasterPiece.dir/src/core/StateMachine.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/src/core/StateMachine.cpp" > CMakeFiles/MasterPiece.dir/src/core/StateMachine.cpp.i
-
-CMakeFiles/MasterPiece.dir/src/core/StateMachine.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/MasterPiece.dir/src/core/StateMachine.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/src/core/StateMachine.cpp" -o CMakeFiles/MasterPiece.dir/src/core/StateMachine.cpp.s
-
 CMakeFiles/MasterPiece.dir/src/core/main.cpp.o: CMakeFiles/MasterPiece.dir/flags.make
 CMakeFiles/MasterPiece.dir/src/core/main.cpp.o: /home/luis/Escritorio/UA/4º\ Carrera/DCA/MasterPiece/src/core/main.cpp
 CMakeFiles/MasterPiece.dir/src/core/main.cpp.o: CMakeFiles/MasterPiece.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/MasterPiece.dir/src/core/main.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/MasterPiece.dir/src/core/main.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MasterPiece.dir/src/core/main.cpp.o -MF CMakeFiles/MasterPiece.dir/src/core/main.cpp.o.d -o CMakeFiles/MasterPiece.dir/src/core/main.cpp.o -c "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/src/core/main.cpp"
 
 CMakeFiles/MasterPiece.dir/src/core/main.cpp.i: cmake_force
@@ -111,85 +83,19 @@ CMakeFiles/MasterPiece.dir/src/core/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/MasterPiece.dir/src/core/main.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/src/core/main.cpp" -o CMakeFiles/MasterPiece.dir/src/core/main.cpp.s
 
-CMakeFiles/MasterPiece.dir/src/states/GameOverState.cpp.o: CMakeFiles/MasterPiece.dir/flags.make
-CMakeFiles/MasterPiece.dir/src/states/GameOverState.cpp.o: /home/luis/Escritorio/UA/4º\ Carrera/DCA/MasterPiece/src/states/GameOverState.cpp
-CMakeFiles/MasterPiece.dir/src/states/GameOverState.cpp.o: CMakeFiles/MasterPiece.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/MasterPiece.dir/src/states/GameOverState.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MasterPiece.dir/src/states/GameOverState.cpp.o -MF CMakeFiles/MasterPiece.dir/src/states/GameOverState.cpp.o.d -o CMakeFiles/MasterPiece.dir/src/states/GameOverState.cpp.o -c "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/src/states/GameOverState.cpp"
-
-CMakeFiles/MasterPiece.dir/src/states/GameOverState.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/MasterPiece.dir/src/states/GameOverState.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/src/states/GameOverState.cpp" > CMakeFiles/MasterPiece.dir/src/states/GameOverState.cpp.i
-
-CMakeFiles/MasterPiece.dir/src/states/GameOverState.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/MasterPiece.dir/src/states/GameOverState.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/src/states/GameOverState.cpp" -o CMakeFiles/MasterPiece.dir/src/states/GameOverState.cpp.s
-
-CMakeFiles/MasterPiece.dir/src/states/InicioState.cpp.o: CMakeFiles/MasterPiece.dir/flags.make
-CMakeFiles/MasterPiece.dir/src/states/InicioState.cpp.o: /home/luis/Escritorio/UA/4º\ Carrera/DCA/MasterPiece/src/states/InicioState.cpp
-CMakeFiles/MasterPiece.dir/src/states/InicioState.cpp.o: CMakeFiles/MasterPiece.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/MasterPiece.dir/src/states/InicioState.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MasterPiece.dir/src/states/InicioState.cpp.o -MF CMakeFiles/MasterPiece.dir/src/states/InicioState.cpp.o.d -o CMakeFiles/MasterPiece.dir/src/states/InicioState.cpp.o -c "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/src/states/InicioState.cpp"
-
-CMakeFiles/MasterPiece.dir/src/states/InicioState.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/MasterPiece.dir/src/states/InicioState.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/src/states/InicioState.cpp" > CMakeFiles/MasterPiece.dir/src/states/InicioState.cpp.i
-
-CMakeFiles/MasterPiece.dir/src/states/InicioState.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/MasterPiece.dir/src/states/InicioState.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/src/states/InicioState.cpp" -o CMakeFiles/MasterPiece.dir/src/states/InicioState.cpp.s
-
-CMakeFiles/MasterPiece.dir/src/states/MainGameState.cpp.o: CMakeFiles/MasterPiece.dir/flags.make
-CMakeFiles/MasterPiece.dir/src/states/MainGameState.cpp.o: /home/luis/Escritorio/UA/4º\ Carrera/DCA/MasterPiece/src/states/MainGameState.cpp
-CMakeFiles/MasterPiece.dir/src/states/MainGameState.cpp.o: CMakeFiles/MasterPiece.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/MasterPiece.dir/src/states/MainGameState.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MasterPiece.dir/src/states/MainGameState.cpp.o -MF CMakeFiles/MasterPiece.dir/src/states/MainGameState.cpp.o.d -o CMakeFiles/MasterPiece.dir/src/states/MainGameState.cpp.o -c "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/src/states/MainGameState.cpp"
-
-CMakeFiles/MasterPiece.dir/src/states/MainGameState.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/MasterPiece.dir/src/states/MainGameState.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/src/states/MainGameState.cpp" > CMakeFiles/MasterPiece.dir/src/states/MainGameState.cpp.i
-
-CMakeFiles/MasterPiece.dir/src/states/MainGameState.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/MasterPiece.dir/src/states/MainGameState.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/src/states/MainGameState.cpp" -o CMakeFiles/MasterPiece.dir/src/states/MainGameState.cpp.s
-
-CMakeFiles/MasterPiece.dir/src/states/PersonajesState.cpp.o: CMakeFiles/MasterPiece.dir/flags.make
-CMakeFiles/MasterPiece.dir/src/states/PersonajesState.cpp.o: /home/luis/Escritorio/UA/4º\ Carrera/DCA/MasterPiece/src/states/PersonajesState.cpp
-CMakeFiles/MasterPiece.dir/src/states/PersonajesState.cpp.o: CMakeFiles/MasterPiece.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/MasterPiece.dir/src/states/PersonajesState.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MasterPiece.dir/src/states/PersonajesState.cpp.o -MF CMakeFiles/MasterPiece.dir/src/states/PersonajesState.cpp.o.d -o CMakeFiles/MasterPiece.dir/src/states/PersonajesState.cpp.o -c "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/src/states/PersonajesState.cpp"
-
-CMakeFiles/MasterPiece.dir/src/states/PersonajesState.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/MasterPiece.dir/src/states/PersonajesState.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/src/states/PersonajesState.cpp" > CMakeFiles/MasterPiece.dir/src/states/PersonajesState.cpp.i
-
-CMakeFiles/MasterPiece.dir/src/states/PersonajesState.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/MasterPiece.dir/src/states/PersonajesState.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/src/states/PersonajesState.cpp" -o CMakeFiles/MasterPiece.dir/src/states/PersonajesState.cpp.s
-
 # Object files for target MasterPiece
 MasterPiece_OBJECTS = \
-"CMakeFiles/MasterPiece.dir/src/core/GameState.cpp.o" \
-"CMakeFiles/MasterPiece.dir/src/core/StateMachine.cpp.o" \
-"CMakeFiles/MasterPiece.dir/src/core/main.cpp.o" \
-"CMakeFiles/MasterPiece.dir/src/states/GameOverState.cpp.o" \
-"CMakeFiles/MasterPiece.dir/src/states/InicioState.cpp.o" \
-"CMakeFiles/MasterPiece.dir/src/states/MainGameState.cpp.o" \
-"CMakeFiles/MasterPiece.dir/src/states/PersonajesState.cpp.o"
+"CMakeFiles/MasterPiece.dir/src/core/main.cpp.o"
 
 # External object files for target MasterPiece
 MasterPiece_EXTERNAL_OBJECTS =
 
-MasterPiece: CMakeFiles/MasterPiece.dir/src/core/GameState.cpp.o
-MasterPiece: CMakeFiles/MasterPiece.dir/src/core/StateMachine.cpp.o
 MasterPiece: CMakeFiles/MasterPiece.dir/src/core/main.cpp.o
-MasterPiece: CMakeFiles/MasterPiece.dir/src/states/GameOverState.cpp.o
-MasterPiece: CMakeFiles/MasterPiece.dir/src/states/InicioState.cpp.o
-MasterPiece: CMakeFiles/MasterPiece.dir/src/states/MainGameState.cpp.o
-MasterPiece: CMakeFiles/MasterPiece.dir/src/states/PersonajesState.cpp.o
 MasterPiece: CMakeFiles/MasterPiece.dir/build.make
+MasterPiece: libGameLogic.a
+MasterPiece: /home/luis/Escritorio/UA/4º\ Carrera/DCA/MasterPiece/vendor/lib/libraylib.a
 MasterPiece: CMakeFiles/MasterPiece.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir="/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_8) "Linking CXX executable MasterPiece"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir="/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable MasterPiece"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/MasterPiece.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

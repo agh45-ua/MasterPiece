@@ -198,6 +198,9 @@ MasterPiece_IS_TOP_LEVEL:STATIC=ON
 //Value Computed by CMake
 MasterPiece_SOURCE_DIR:STATIC=/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece
 
+//Path to a library.
+RAYLIB_LIB:FILEPATH=/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/vendor/lib/libraylib.a
+
 //The directory containing a CMake configuration file for raylib.
 raylib_DIR:PATH=raylib_DIR-NOTFOUND
 

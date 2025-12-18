@@ -1,6 +1,6 @@
 #pragma once
 #include "GameState.hpp"
-#include "PersonajesState.hpp"
+#include "states/PersonajesState.hpp"
 
 #include <raylib.h>
 #include <string>

@@ -10,64 +10,65 @@ else()
     add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
-# ==========================================
-# BUSCAR RAYLIB DEL SISTEMA
-# ==========================================
+# 1. BUSCAR DEPENDENCIAS (Raylib)
+# ------------------------------------------
 find_package(raylib QUIET)
 
-# Si no existe raylib instalado, usar vendor/
 if (NOT raylib_FOUND)
-    message(STATUS "Raylib no encontrado, usando vendor/include y vendor/lib")
-
-    include_directories(${CMAKE_SOURCE_DIR}/vendor/include)
-    link_directories(${CMAKE_SOURCE_DIR}/vendor/lib)
-
-    set(RAYLIB_LIB raylib)
+    # Buscamos la librería específica en vendor/ para no usar rutas globales
+    find_library(RAYLIB_LIB raylib PATHS ${CMAKE_SOURCE_DIR}/vendor/lib NO_DEFAULT_PATH)
 else()
     set(RAYLIB_LIB raylib)
 endif()
 
-# ==========================================
-# ARCHIVOS FUENTE
-# ==========================================
-file(GLOB_RECURSE SOURCE_FILES src/*.cpp)
+# 2. DEFINIR FUENTES Y CREAR LIBRERÍA (Target GameLogic)
+# ------------------------------------------
+# Listado explícito para evitar GLOB (Práctica recomendada por el profesor)
+set(GAME_SOURCES
+    src/core/GameState.cpp
+    src/core/StateMachine.cpp
+    src/states/InicioState.cpp
+    src/states/PersonajesState.cpp
+    src/states/GameOverState.cpp
+    src/states/MainGameState.cpp
+)
 
-add_executable(MasterPiece ${SOURCE_FILES})
+# Primero creamos la librería...
+add_library(GameLogic STATIC ${GAME_SOURCES})
 
-# ==========================================
-# INCLUDES
-# ==========================================
-target_include_directories(MasterPiece PRIVATE
+# ...y DESPUÉS le asignamos sus directorios de inclusión
+target_include_directories(GameLogic PUBLIC
     ${CMAKE_SOURCE_DIR}/src
     ${CMAKE_SOURCE_DIR}/src/core
     ${CMAKE_SOURCE_DIR}/src/states
     ${CMAKE_SOURCE_DIR}/vendor/include
 )
 
-# Enlace con raylib + librerías necesarias
+# 3. CREAR EJECUTABLE PRINCIPAL (Target MasterPiece)
+# ------------------------------------------
+# El ejecutable depende de main.cpp
+add_executable(MasterPiece src/core/main.cpp)
+
+# Enlazamos a la lógica y a raylib. 
+# NOTA: MasterPiece hereda los INCLUDES de GameLogic automáticamente por ser PUBLIC.
+target_link_libraries(MasterPiece PRIVATE GameLogic ${RAYLIB_LIB})
+
+# Librerías adicionales para Linux
 if (UNIX AND NOT APPLE)
-    target_link_libraries(MasterPiece
-        PRIVATE
-        ${RAYLIB_LIB}
-        m dl pthread GL X11 Xrandr Xi Xcursor Xxf86vm
-    )
-elseif (WIN32)
-    target_link_libraries(MasterPiece PRIVATE ${RAYLIB_LIB})
+    target_link_libraries(MasterPiece PRIVATE m dl pthread GL X11 Xrandr Xi Xcursor Xxf86vm)
 endif()
 
-# ==========================================
-# COPIAR ASSETS AUTOMÁTICAMENTE
-# ==========================================
+# 4. RECURSOS, TESTS Y EMPAQUETADO
+# ------------------------------------------
 file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
 
+enable_testing()
+add_subdirectory(tests)
 
-# Solo empaquetamos con CPack en Windows
 if (WIN32)
     set(CPACK_PACKAGE_NAME "MasterPiece")
     set(CPACK_PACKAGE_VERSION "1.0.0")
     set(CPACK_GENERATOR "ZIP")
-
     include(CPack)
-
     cpack_add_component(MasterPiece)
 endif()

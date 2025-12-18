@@ -42,6 +42,7 @@ set(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
+  "CMakeFiles/GameLogic.dir/DependInfo.cmake"
   "CMakeFiles/MasterPiece.dir/DependInfo.cmake"
   "tests/CMakeFiles/test_statemachine.dir/DependInfo.cmake"
   "tests/CMakeFiles/test_states.dir/DependInfo.cmake"

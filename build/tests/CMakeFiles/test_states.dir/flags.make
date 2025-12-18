@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I"/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/vendor/include" -I"/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/src" -I"/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/src/core" -I"/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/src/states"
+CXX_INCLUDES = -I"/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/src" -I"/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/src/core" -I"/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/src/states" -I"/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/vendor/include"
 
 CXX_FLAGS = -std=gnu++17 -Wall -Wextra -Wpedantic
 

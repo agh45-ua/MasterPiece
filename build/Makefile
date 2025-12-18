@@ -127,6 +127,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named GameLogic
+
+# Build rule for target.
+GameLogic: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 GameLogic
+.PHONY : GameLogic
+
+# fast build rule for target.
+GameLogic/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameLogic.dir/build.make CMakeFiles/GameLogic.dir/build
+.PHONY : GameLogic/fast
+
+#=============================================================================
 # Target rules for targets named MasterPiece
 
 # Build rule for target.
@@ -170,7 +183,7 @@ src/core/GameState.o: src/core/GameState.cpp.o
 
 # target to build an object file
 src/core/GameState.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MasterPiece.dir/build.make CMakeFiles/MasterPiece.dir/src/core/GameState.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameLogic.dir/build.make CMakeFiles/GameLogic.dir/src/core/GameState.cpp.o
 .PHONY : src/core/GameState.cpp.o
 
 src/core/GameState.i: src/core/GameState.cpp.i
@@ -178,7 +191,7 @@ src/core/GameState.i: src/core/GameState.cpp.i
 
 # target to preprocess a source file
 src/core/GameState.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MasterPiece.dir/build.make CMakeFiles/MasterPiece.dir/src/core/GameState.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameLogic.dir/build.make CMakeFiles/GameLogic.dir/src/core/GameState.cpp.i
 .PHONY : src/core/GameState.cpp.i
 
 src/core/GameState.s: src/core/GameState.cpp.s
@@ -186,7 +199,7 @@ src/core/GameState.s: src/core/GameState.cpp.s
 
 # target to generate assembly for a file
 src/core/GameState.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MasterPiece.dir/build.make CMakeFiles/MasterPiece.dir/src/core/GameState.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameLogic.dir/build.make CMakeFiles/GameLogic.dir/src/core/GameState.cpp.s
 .PHONY : src/core/GameState.cpp.s
 
 src/core/StateMachine.o: src/core/StateMachine.cpp.o
@@ -194,7 +207,7 @@ src/core/StateMachine.o: src/core/StateMachine.cpp.o
 
 # target to build an object file
 src/core/StateMachine.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MasterPiece.dir/build.make CMakeFiles/MasterPiece.dir/src/core/StateMachine.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameLogic.dir/build.make CMakeFiles/GameLogic.dir/src/core/StateMachine.cpp.o
 .PHONY : src/core/StateMachine.cpp.o
 
 src/core/StateMachine.i: src/core/StateMachine.cpp.i
@@ -202,7 +215,7 @@ src/core/StateMachine.i: src/core/StateMachine.cpp.i
 
 # target to preprocess a source file
 src/core/StateMachine.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MasterPiece.dir/build.make CMakeFiles/MasterPiece.dir/src/core/StateMachine.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameLogic.dir/build.make CMakeFiles/GameLogic.dir/src/core/StateMachine.cpp.i
 .PHONY : src/core/StateMachine.cpp.i
 
 src/core/StateMachine.s: src/core/StateMachine.cpp.s
@@ -210,7 +223,7 @@ src/core/StateMachine.s: src/core/StateMachine.cpp.s
 
 # target to generate assembly for a file
 src/core/StateMachine.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MasterPiece.dir/build.make CMakeFiles/MasterPiece.dir/src/core/StateMachine.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameLogic.dir/build.make CMakeFiles/GameLogic.dir/src/core/StateMachine.cpp.s
 .PHONY : src/core/StateMachine.cpp.s
 
 src/core/main.o: src/core/main.cpp.o
@@ -242,7 +255,7 @@ src/states/GameOverState.o: src/states/GameOverState.cpp.o
 
 # target to build an object file
 src/states/GameOverState.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MasterPiece.dir/build.make CMakeFiles/MasterPiece.dir/src/states/GameOverState.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameLogic.dir/build.make CMakeFiles/GameLogic.dir/src/states/GameOverState.cpp.o
 .PHONY : src/states/GameOverState.cpp.o
 
 src/states/GameOverState.i: src/states/GameOverState.cpp.i
@@ -250,7 +263,7 @@ src/states/GameOverState.i: src/states/GameOverState.cpp.i
 
 # target to preprocess a source file
 src/states/GameOverState.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MasterPiece.dir/build.make CMakeFiles/MasterPiece.dir/src/states/GameOverState.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameLogic.dir/build.make CMakeFiles/GameLogic.dir/src/states/GameOverState.cpp.i
 .PHONY : src/states/GameOverState.cpp.i
 
 src/states/GameOverState.s: src/states/GameOverState.cpp.s
@@ -258,7 +271,7 @@ src/states/GameOverState.s: src/states/GameOverState.cpp.s
 
 # target to generate assembly for a file
 src/states/GameOverState.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MasterPiece.dir/build.make CMakeFiles/MasterPiece.dir/src/states/GameOverState.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameLogic.dir/build.make CMakeFiles/GameLogic.dir/src/states/GameOverState.cpp.s
 .PHONY : src/states/GameOverState.cpp.s
 
 src/states/InicioState.o: src/states/InicioState.cpp.o
@@ -266,7 +279,7 @@ src/states/InicioState.o: src/states/InicioState.cpp.o
 
 # target to build an object file
 src/states/InicioState.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MasterPiece.dir/build.make CMakeFiles/MasterPiece.dir/src/states/InicioState.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameLogic.dir/build.make CMakeFiles/GameLogic.dir/src/states/InicioState.cpp.o
 .PHONY : src/states/InicioState.cpp.o
 
 src/states/InicioState.i: src/states/InicioState.cpp.i
@@ -274,7 +287,7 @@ src/states/InicioState.i: src/states/InicioState.cpp.i
 
 # target to preprocess a source file
 src/states/InicioState.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MasterPiece.dir/build.make CMakeFiles/MasterPiece.dir/src/states/InicioState.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameLogic.dir/build.make CMakeFiles/GameLogic.dir/src/states/InicioState.cpp.i
 .PHONY : src/states/InicioState.cpp.i
 
 src/states/InicioState.s: src/states/InicioState.cpp.s
@@ -282,7 +295,7 @@ src/states/InicioState.s: src/states/InicioState.cpp.s
 
 # target to generate assembly for a file
 src/states/InicioState.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MasterPiece.dir/build.make CMakeFiles/MasterPiece.dir/src/states/InicioState.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameLogic.dir/build.make CMakeFiles/GameLogic.dir/src/states/InicioState.cpp.s
 .PHONY : src/states/InicioState.cpp.s
 
 src/states/MainGameState.o: src/states/MainGameState.cpp.o
@@ -290,7 +303,7 @@ src/states/MainGameState.o: src/states/MainGameState.cpp.o
 
 # target to build an object file
 src/states/MainGameState.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MasterPiece.dir/build.make CMakeFiles/MasterPiece.dir/src/states/MainGameState.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameLogic.dir/build.make CMakeFiles/GameLogic.dir/src/states/MainGameState.cpp.o
 .PHONY : src/states/MainGameState.cpp.o
 
 src/states/MainGameState.i: src/states/MainGameState.cpp.i
@@ -298,7 +311,7 @@ src/states/MainGameState.i: src/states/MainGameState.cpp.i
 
 # target to preprocess a source file
 src/states/MainGameState.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MasterPiece.dir/build.make CMakeFiles/MasterPiece.dir/src/states/MainGameState.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameLogic.dir/build.make CMakeFiles/GameLogic.dir/src/states/MainGameState.cpp.i
 .PHONY : src/states/MainGameState.cpp.i
 
 src/states/MainGameState.s: src/states/MainGameState.cpp.s
@@ -306,7 +319,7 @@ src/states/MainGameState.s: src/states/MainGameState.cpp.s
 
 # target to generate assembly for a file
 src/states/MainGameState.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MasterPiece.dir/build.make CMakeFiles/MasterPiece.dir/src/states/MainGameState.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameLogic.dir/build.make CMakeFiles/GameLogic.dir/src/states/MainGameState.cpp.s
 .PHONY : src/states/MainGameState.cpp.s
 
 src/states/PersonajesState.o: src/states/PersonajesState.cpp.o
@@ -314,7 +327,7 @@ src/states/PersonajesState.o: src/states/PersonajesState.cpp.o
 
 # target to build an object file
 src/states/PersonajesState.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MasterPiece.dir/build.make CMakeFiles/MasterPiece.dir/src/states/PersonajesState.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameLogic.dir/build.make CMakeFiles/GameLogic.dir/src/states/PersonajesState.cpp.o
 .PHONY : src/states/PersonajesState.cpp.o
 
 src/states/PersonajesState.i: src/states/PersonajesState.cpp.i
@@ -322,7 +335,7 @@ src/states/PersonajesState.i: src/states/PersonajesState.cpp.i
 
 # target to preprocess a source file
 src/states/PersonajesState.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MasterPiece.dir/build.make CMakeFiles/MasterPiece.dir/src/states/PersonajesState.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameLogic.dir/build.make CMakeFiles/GameLogic.dir/src/states/PersonajesState.cpp.i
 .PHONY : src/states/PersonajesState.cpp.i
 
 src/states/PersonajesState.s: src/states/PersonajesState.cpp.s
@@ -330,7 +343,7 @@ src/states/PersonajesState.s: src/states/PersonajesState.cpp.s
 
 # target to generate assembly for a file
 src/states/PersonajesState.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MasterPiece.dir/build.make CMakeFiles/MasterPiece.dir/src/states/PersonajesState.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameLogic.dir/build.make CMakeFiles/GameLogic.dir/src/states/PersonajesState.cpp.s
 .PHONY : src/states/PersonajesState.cpp.s
 
 # Help Target
@@ -342,6 +355,7 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... test"
+	@echo "... GameLogic"
 	@echo "... MasterPiece"
 	@echo "... test_statemachine"
 	@echo "... test_states"

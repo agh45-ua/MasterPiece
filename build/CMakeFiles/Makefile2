@@ -63,6 +63,7 @@ CMAKE_BINARY_DIR = "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build"
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
+all: CMakeFiles/GameLogic.dir/all
 all: CMakeFiles/MasterPiece.dir/all
 all: tests/all
 .PHONY : all
@@ -72,6 +73,7 @@ preinstall: tests/preinstall
 .PHONY : preinstall
 
 # The main recursive "clean" target.
+clean: CMakeFiles/GameLogic.dir/clean
 clean: CMakeFiles/MasterPiece.dir/clean
 clean: tests/clean
 .PHONY : clean
@@ -94,18 +96,44 @@ tests/clean: tests/CMakeFiles/test_states.dir/clean
 .PHONY : tests/clean
 
 #=============================================================================
+# Target rules for target CMakeFiles/GameLogic.dir
+
+# All Build rule for target.
+CMakeFiles/GameLogic.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameLogic.dir/build.make CMakeFiles/GameLogic.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameLogic.dir/build.make CMakeFiles/GameLogic.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/CMakeFiles" --progress-num=1,2,3,4,5,6,7 "Built target GameLogic"
+.PHONY : CMakeFiles/GameLogic.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/GameLogic.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/CMakeFiles" 7
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/GameLogic.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/CMakeFiles" 0
+.PHONY : CMakeFiles/GameLogic.dir/rule
+
+# Convenience name for target.
+GameLogic: CMakeFiles/GameLogic.dir/rule
+.PHONY : GameLogic
+
+# clean rule for target.
+CMakeFiles/GameLogic.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameLogic.dir/build.make CMakeFiles/GameLogic.dir/clean
+.PHONY : CMakeFiles/GameLogic.dir/clean
+
+#=============================================================================
 # Target rules for target CMakeFiles/MasterPiece.dir
 
 # All Build rule for target.
-CMakeFiles/MasterPiece.dir/all:
+CMakeFiles/MasterPiece.dir/all: CMakeFiles/GameLogic.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/MasterPiece.dir/build.make CMakeFiles/MasterPiece.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/MasterPiece.dir/build.make CMakeFiles/MasterPiece.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/CMakeFiles" --progress-num=1,2,3,4,5,6,7,8 "Built target MasterPiece"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/CMakeFiles" --progress-num=8,9 "Built target MasterPiece"
 .PHONY : CMakeFiles/MasterPiece.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/MasterPiece.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/CMakeFiles" 8
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/CMakeFiles" 9
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/MasterPiece.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/CMakeFiles" 0
 .PHONY : CMakeFiles/MasterPiece.dir/rule
@@ -123,15 +151,15 @@ CMakeFiles/MasterPiece.dir/clean:
 # Target rules for target tests/CMakeFiles/test_statemachine.dir
 
 # All Build rule for target.
-tests/CMakeFiles/test_statemachine.dir/all:
+tests/CMakeFiles/test_statemachine.dir/all: CMakeFiles/GameLogic.dir/all
 	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/test_statemachine.dir/build.make tests/CMakeFiles/test_statemachine.dir/depend
 	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/test_statemachine.dir/build.make tests/CMakeFiles/test_statemachine.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/CMakeFiles" --progress-num=9,10,11,12 "Built target test_statemachine"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/CMakeFiles" --progress-num=10,11 "Built target test_statemachine"
 .PHONY : tests/CMakeFiles/test_statemachine.dir/all
 
 # Build rule for subdir invocation for target.
 tests/CMakeFiles/test_statemachine.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/CMakeFiles" 4
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/CMakeFiles" 9
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 tests/CMakeFiles/test_statemachine.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/CMakeFiles" 0
 .PHONY : tests/CMakeFiles/test_statemachine.dir/rule
@@ -149,15 +177,15 @@ tests/CMakeFiles/test_statemachine.dir/clean:
 # Target rules for target tests/CMakeFiles/test_states.dir
 
 # All Build rule for target.
-tests/CMakeFiles/test_states.dir/all:
+tests/CMakeFiles/test_states.dir/all: CMakeFiles/GameLogic.dir/all
 	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/test_states.dir/build.make tests/CMakeFiles/test_states.dir/depend
 	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/test_states.dir/build.make tests/CMakeFiles/test_states.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/CMakeFiles" --progress-num=13,14,15,16,17,18,19,20 "Built target test_states"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/CMakeFiles" --progress-num=12,13 "Built target test_states"
 .PHONY : tests/CMakeFiles/test_states.dir/all
 
 # Build rule for subdir invocation for target.
 tests/CMakeFiles/test_states.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/CMakeFiles" 8
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/CMakeFiles" 9
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 tests/CMakeFiles/test_states.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/CMakeFiles" 0
 .PHONY : tests/CMakeFiles/test_states.dir/rule
