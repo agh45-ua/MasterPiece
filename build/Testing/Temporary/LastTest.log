@@ -1,0 +1,33 @@
+Start testing: Dec 18 13:26 CET
+----------------------------------------------------------
+1/2 Testing: StateMachineTests
+1/2 Test: StateMachineTests
+Command: "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/tests/test_statemachine"
+Directory: /home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/tests
+"StateMachineTests" start time: Dec 18 13:26 CET
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"StateMachineTests" end time: Dec 18 13:26 CET
+"StateMachineTests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+2/2 Testing: GameStateTests
+2/2 Test: GameStateTests
+Command: "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/tests/test_states"
+Directory: /home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/tests
+"GameStateTests" start time: Dec 18 13:26 CET
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"GameStateTests" end time: Dec 18 13:26 CET
+"GameStateTests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Dec 18 13:26 CET
