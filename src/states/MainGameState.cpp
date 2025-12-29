@@ -18,7 +18,6 @@ void MainGameState::init(){
     ground = {0, (float)screenHeight - groundHeight, (float)screenWidth, (float)groundHeight};
     player1 = {{100, ground.y - 50, 50, 50}, 100};
     player2 = {{screenWidth - 150.0f, ground.y - 50, 50, 50}, 100};
-    
 
     projectile_1 = {{0,0},{0,0}, false, false};
     projectile_2 = {{0,0},{0,0}, false, false};
@@ -201,7 +200,7 @@ void MainGameState::render(){
         { 0, 0, (float)GetScreenWidth(), (float)GetScreenHeight() },
         { 0, 0 },
         0.0f,
-        WHITE
+        Fade(WHITE, 0.8f)
     );
     if (countdownActive) {
         int secondsLeft = (int)ceil(countdownTime);
@@ -237,34 +236,80 @@ void MainGameState::render(){
                 break;
         }
 
-        // Flecha de apuntado
-        if(turno=='1' || turno=='r'){//flecha j1
-            Vector2 start = {player1.rect.x + player1.rect.width, player1.rect.y + player1.rect.height / 2};
-            Vector2 end = {start.x + arrowLength_1 * cosf(angle_1), start.y + arrowLength_1 * sinf(angle_1)};
-            DrawLineEx(start, end, 4, DARKGRAY);
-            DrawTriangle(
-                end,
-                {end.x - 10 * cosf(angle_1- 0.3f), end.y - 10 * sinf(angle_1- 0.3f)},
-                {end.x - 10 * cosf(angle_1+ 0.3f), end.y - 10 * sinf(angle_1+ 0.3f)},
-                DARKGRAY
+        if (turno == '1' || turno == 'r') {
+
+            Texture2D arma = jugador1.arma.sprite;
+
+            Vector2 mano = {
+                player1.rect.x + player1.rect.width,
+                player1.rect.y + player1.rect.height * 0.55f
+            };
+
+            float escala = (player1.rect.height * 0.9f) / arma.height;
+            float ancho  = arma.width  * escala;
+            float alto   = arma.height * escala;
+
+            bool apuntaAtras = cosf(angle_1) < 0;
+
+            Rectangle src;
+            if (!apuntaAtras) {
+                src = { 0, 0, (float)arma.width, (float)arma.height };
+            } else {
+                src = { 0, (float)arma.height, (float)arma.width, -(float)arma.height };
+            }
+
+            Rectangle dst = { mano.x, mano.y, ancho, alto };
+            Vector2 origin = { 0.0f, alto * 0.5f };
+
+            DrawTexturePro(
+                arma,
+                src,
+                dst,
+                origin,
+                angle_1 * RAD2DEG,
+                WHITE
             );
         }
-        if(turno=='2' || turno=='r'){//flecha j2
-            Vector2 start2 = {player2.rect.x, player2.rect.y + player2.rect.height / 2};
-            Vector2 end2 = {start2.x + arrowLength_2 * cosf(angle_2), start2.y + arrowLength_2 * sinf(angle_2)};
-            DrawLineEx(start2, end2, 4, DARKGRAY);
-            DrawTriangle(
-                end2,
-                {end2.x - 10 * cosf(angle_2- 0.3f), end2.y - 10 * sinf(angle_2- 0.3f)},
-                {end2.x - 10 * cosf(angle_2+ 0.3f), end2.y - 10 * sinf(angle_2+ 0.3f)},
-                DARKGRAY
+
+        if (turno == '2' || turno == 'r') {
+
+            Texture2D arma = jugador2.arma.sprite;
+
+            Vector2 mano = {
+                player2.rect.x,
+                player2.rect.y + player2.rect.height * 0.55f
+            };
+
+            float escala = (player2.rect.height * 0.9f) / arma.height;
+            float ancho  = arma.width  * escala;
+            float alto   = arma.height * escala;
+
+            bool apuntaAtras = cosf(angle_2) < 0;
+
+            Rectangle src;
+            if (!apuntaAtras) {
+                src = { 0, 0, (float)arma.width, (float)arma.height };
+            } else {
+                src = { 0, (float)arma.height, (float)arma.width, -(float)arma.height };
+            }
+
+            Rectangle dst = { mano.x, mano.y, ancho, alto };
+            Vector2 origin = { 0.0f, alto * 0.5f };
+
+            DrawTexturePro(
+                arma,
+                src,
+                dst,
+                origin,
+                angle_2 * RAD2DEG,
+                WHITE
             );
         }
 
         // Proyectiles cuando sea resolucion
         if (turno=='r'){
-            if(projectile_1.active) DrawCircleV(projectile_1.pos, 5, jugador1.arma.colorProyectil);
-            if (projectile_2.active) DrawCircleV(projectile_2.pos, 5, jugador2.arma.colorProyectil);
+            if(projectile_1.active) DrawCircleV(projectile_1.pos, 5, RED);
+            if (projectile_2.active) DrawCircleV(projectile_2.pos, 5, RED);
 
         }
         

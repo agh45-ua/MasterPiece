@@ -26,20 +26,26 @@ void PersonajesState::init(){
     color2 = 1;
     confirmarJugador1 = false;
     confirmarJugador2 = false;
-    colorConfirmar1 = GRAY;
-    colorConfirmar2 = GRAY;
+    colorConfirmar1 = RED;
+    colorConfirmar2 = RED;
 
     // TEXTURAS PERSONAJES
     for (int i = 0; i < 6; i++) {
         personajes[i] = LoadTexture(GetAssetPath(rutas[i]).c_str());
     }
 
+    // TEXTURAS ARMAS
+    escopeta = LoadTexture(GetAssetPath("armas/escopeta.png").c_str());
+    lanzacohetes = LoadTexture(GetAssetPath("armas/lanzacohetes.png").c_str());
+    pistola = LoadTexture(GetAssetPath("armas/pistola.png").c_str());
+    sniper = LoadTexture(GetAssetPath("armas/sniper.png").c_str());
+
     // DEFINICIÓN DE ARMAS
     armasDisponibles = {
-        Arma{"Estandar", 34, 500.0f, 400.0f, BLACK},
-        Arma{"Sniper", 25, 1000.0f, 50.0f, RED},       // Rápida, poca caída, menos daño
-        Arma{"Mortero", 50, 400.0f, 900.0f, DARKGREEN}, // Mucho daño, mucha gravedad
-        Arma{"Pesada", 40, 300.0f, 200.0f, PURPLE}      // Lenta, flota más, buen daño
+        Arma{"Pistola", 30, 750.0f, 400.0f, pistola},
+        Arma{"Sniper", 20, 1000.0f, 50.0f, sniper},       // Rápida, poca caída, menos daño
+        Arma{"Lanzacohetes", 35, 500.0f, 500.0f, lanzacohetes}, // Mucho daño, mucha gravedad
+        Arma{"Escopeta", 20, 800.0f, 400.0f, escopeta}      // Lenta, flota más, buen daño
     };
 
     indiceArma1 = 0;
@@ -59,30 +65,49 @@ void PersonajesState::handleInput(){
 void PersonajesState::update(float deltaTime){
     Vector2 m = GetMousePosition();
 
-    // 1. DEFINICIÓN DE POSICIONES
+    // DEFINICIÓN DE POSICIONES
     int cuadrado = 100;
     int y = 200;
     int x1 = 100;
     int x2 = 600;
     int centroY = y + cuadrado / 2;
 
-    // Hitboxes Flechas Personaje (Skin)
+    // Hitbox Flechas Personaje (Skin)
     Rectangle j1_izq = { (float)(x1 - 45), (float)(centroY - 20), 40, 40 };
     Rectangle j1_der = { (float)(x1 + cuadrado + 5), (float)(centroY - 20), 40, 40 };
     Rectangle j2_izq = { (float)(x2 - 45), (float)(centroY - 20), 40, 40 };
     Rectangle j2_der = { (float)(x2 + cuadrado + 5), (float)(centroY - 20), 40, 40 }; 
 
-    // --- HITBOXES ARMA (MÁS SEPARADOS) ---
-    int yArma = y + 170; 
-    
+    // Hitbox armas
+    float armaAreaWidth = 220.0f;
+    float armaAreaY = y + cuadrado + 40;
+
     // Jugador 1
-    // Separamos 20px más hacia fuera
-    Rectangle j1_arma_izq = { (float)(x1 - 60), (float)(yArma - 5), 40, 40 };
-    Rectangle j1_arma_der = { (float)(x1 + 120), (float)(yArma - 5), 40, 40 };
-    
+    Texture2D armaTex1 = jugador1.arma.sprite;
+    float escala1 = armaAreaWidth / (float)armaTex1.width;
+    escala1 *= 1.05f;
+    float anchoFinal1 = armaTex1.width * escala1;
+    float altoFinal1  = armaTex1.height * escala1;
+    float xFinal1 = x1 + (cuadrado - anchoFinal1) / 2;
+    float yFinal1 = armaAreaY - 20;
+    float armaCentroY1 = yFinal1 + altoFinal1 / 2;
+
+    float flechaOffsetX = 100.0f;
+    Rectangle j1_arma_izq = { (float)(x1 - flechaOffsetX - 20), (float)(armaCentroY1 - 20), 40, 40 };
+    Rectangle j1_arma_der = { (float)(x1 + cuadrado + flechaOffsetX - 20), (float)(armaCentroY1 - 20), 40, 40 };
+
     // Jugador 2
-    Rectangle j2_arma_izq = { (float)(x2 - 60), (float)(yArma - 5), 40, 40 };
-    Rectangle j2_arma_der = { (float)(x2 + 120), (float)(yArma - 5), 40, 40 };
+    Texture2D armaTex2 = jugador2.arma.sprite;
+    float escala2 = armaAreaWidth / (float)armaTex2.width;
+    escala2 *= 1.05f;
+    float anchoFinal2 = armaTex2.width * escala2;
+    float altoFinal2  = armaTex2.height * escala2;
+    float xFinal2 = x2 + (cuadrado - anchoFinal2) / 2;
+    float yFinal2 = armaAreaY - 20;
+    float armaCentroY2 = yFinal2 + altoFinal2 / 2;
+
+    Rectangle j2_arma_izq = { (float)(x2 - flechaOffsetX - 20), (float)(armaCentroY2 - 20), 40, 40 };
+    Rectangle j2_arma_der = { (float)(x2 + cuadrado + flechaOffsetX - 20), (float)(armaCentroY2 - 20), 40, 40 };
 
     // Rectángulos Nombres
     int anchoCaja = 200; int altoCaja = 40; int sepY = 20;
@@ -93,8 +118,8 @@ void PersonajesState::update(float deltaTime){
     Nombre2 = { (float)(cx2 - anchoCaja/2), (float)yNombre, (float)anchoCaja, (float)altoCaja };
 
     // Botones Confirmar
-    Rectangle confirmar1 ={50, 420, 200, 40};
-    Rectangle confirmar2 ={550, 420, 200, 40};
+    Rectangle confirmar1 = { 50, 480, 200, 40 };
+    Rectangle confirmar2 = { 550, 480, 200, 40 };
 
     // 2. DETECCIÓN DE CLICS
     if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
@@ -160,11 +185,11 @@ void PersonajesState::update(float deltaTime){
         // Confirmar
         if (CheckCollisionPointRec(m, confirmar1)) {
             confirmarJugador1 = !confirmarJugador1;
-            colorConfirmar1 = confirmarJugador1 ? GREEN : GRAY;
+            colorConfirmar1 = confirmarJugador1 ? GREEN : RED;
         }
         if (CheckCollisionPointRec(m, confirmar2)) {
             confirmarJugador2 = !confirmarJugador2;
-            colorConfirmar2 = confirmarJugador2 ? GREEN : GRAY;
+            colorConfirmar2 = confirmarJugador2 ? GREEN : RED;
         }
 
         // Jugar y Volver
@@ -266,59 +291,117 @@ void PersonajesState::render() {
     }
 
     // --- SELECCIÓN ARMAS ---
-    int yArma = y + 170;
-    int tamTexto = 30;
+float armaAreaWidth = 220.0f;
+float armaAreaY = y + cuadrado + 40;
 
-    // Cajas arma
-    int anchoCajaArma = 200;
-    int altoCajaArma = 40;
-    int yCaja = y + 120;
+// =======================
+// JUGADOR 1
+// =======================
+Texture2D armaTex1 = jugador1.arma.sprite;
 
-    Rectangle cajaTitulo1 = { (float)cx1 - anchoCajaArma/2, (float)yCaja, (float)anchoCajaArma, (float)altoCajaArma };
-    Rectangle cajaTitulo2 = { (float)cx2 - anchoCajaArma/2, (float)yCaja, (float)anchoCajaArma, (float)altoCajaArma };
+// Escala basada en ancho real
+float escala1 = armaAreaWidth / armaTex1.width;
+escala1 *= 1.05f;
 
-    // -- Jugador 1 --
-    DrawRectangleRec(cajaTitulo1, LIGHTGRAY);
-    DrawRectangleLinesEx(cajaTitulo1, 2, DARKGRAY);
-    DrawText("Arma:", (int)cajaTitulo1.x + (anchoCajaArma - MeasureText("Arma:", 20))/2, (int)cajaTitulo1.y + 10, 20, BLACK);
-    const char* nArma1 = jugador1.arma.nombre.c_str();
-    int wArma1 = MeasureText(nArma1, tamTexto);
-    DrawText(nArma1, x1 + (cuadrado - wArma1)/2, yArma + 5, tamTexto, BLACK);
+float anchoFinal1 = armaTex1.width * escala1;
+float altoFinal1  = armaTex1.height * escala1;
 
-    if (!confirmarJugador1) {
-        // Hitbox separado (coincide con update)
-        Rectangle rectIzq = { (float)(x1 - 60), (float)(yArma - 5), 40, 40 };
-        Rectangle rectDer = { (float)(x1 + 120), (float)(yArma - 5), 40, 40 };
-        bool hA1 = CheckCollisionPointRec(mouse, rectIzq);
-        bool hA2 = CheckCollisionPointRec(mouse, rectDer);
-        
-        // Visual más separado
-        // Izq: Punta x-45, Base x-30
-        DrawTriangle({(float)x1 - 45, (float)yArma + 15}, {(float)x1 - 30, (float)yArma + 25}, {(float)x1 - 30, (float)yArma + 5}, hA1 ? DARKGRAY : BLACK);
-        // Der: Punta x+145, Base x+130
-        DrawTriangle({(float)x1 + 145, (float)yArma + 15}, {(float)x1 + 130, (float)yArma + 5}, {(float)x1 + 130, (float)yArma + 25}, hA2 ? DARKGRAY : BLACK);
-    }
+// Posición centrada + un poco más arriba
+float xFinal1 = x1 + (cuadrado - anchoFinal1) / 2;
+float yFinal1 = armaAreaY - 20;
 
-    // -- Jugador 2 --
-    DrawRectangleRec(cajaTitulo2, LIGHTGRAY);
-    DrawRectangleLinesEx(cajaTitulo2, 2, DARKGRAY);
-    DrawText("Arma:", (int)cajaTitulo2.x + (anchoCajaArma - MeasureText("Arma:", 20))/2, (int)cajaTitulo2.y + 10, 20, BLACK);
-    const char* nArma2 = jugador2.arma.nombre.c_str();
-    int wArma2 = MeasureText(nArma2, tamTexto);
-    DrawText(nArma2, x2 + (cuadrado - wArma2)/2, yArma + 5, tamTexto, BLACK);
+// Dibujar arma
+DrawTexturePro(
+    armaTex1,
+    { 0, 0, (float)armaTex1.width, (float)armaTex1.height },
+    { xFinal1, yFinal1, anchoFinal1, altoFinal1 },
+    { 0, 0 },
+    0.0f,
+    WHITE
+);
 
-    if (!confirmarJugador2) {
-        Rectangle rectIzq2 = { (float)(x2 - 60), (float)(yArma - 5), 40, 40 };
-        Rectangle rectDer2 = { (float)(x2 + 120), (float)(yArma - 5), 40, 40 };
-        bool hA3 = CheckCollisionPointRec(mouse, rectIzq2);
-        bool hA4 = CheckCollisionPointRec(mouse, rectDer2);
-        
-        DrawTriangle({(float)x2 - 45, (float)yArma + 15}, {(float)x2 - 30, (float)yArma + 25}, {(float)x2 - 30, (float)yArma + 5}, hA3 ? DARKGRAY : BLACK);
-        DrawTriangle({(float)x2 + 145, (float)yArma + 15}, {(float)x2 + 130, (float)yArma + 5}, {(float)x2 + 130, (float)yArma + 25}, hA4 ? DARKGRAY : BLACK);
-    }
+// Centro vertical del arma
+float armaCentroY1 = yFinal1 + altoFinal1 / 2;
+
+// Flechas más separadas
+float flechaOffsetX = 100.0f;
+
+// Hitboxes flechas J1
+Rectangle rectIzq1 = { x1 - 120, armaCentroY1 - 20, 40, 40 };
+Rectangle rectDer1 = { x1 + cuadrado + 80, armaCentroY1 - 20, 40, 40 };
+
+bool hA1 = CheckCollisionPointRec(mouse, rectIzq1);
+bool hA2 = CheckCollisionPointRec(mouse, rectDer1);
+
+// Flechas J1
+if (!confirmarJugador1) {
+    DrawTriangle(
+        { x1 - flechaOffsetX, armaCentroY1 },
+        { x1 - flechaOffsetX + 20, armaCentroY1 + 15 },
+        { x1 - flechaOffsetX + 20, armaCentroY1 - 15 },
+        hA1 ? ROJO_CLARO : RED
+    );
+
+    DrawTriangle(
+        { x1 + cuadrado + flechaOffsetX, armaCentroY1 },
+        { x1 + cuadrado + flechaOffsetX - 20, armaCentroY1 - 15 },
+        { x1 + cuadrado + flechaOffsetX - 20, armaCentroY1 + 15 },
+        hA2 ? ROJO_CLARO : RED
+    );
+}
+
+// =======================
+// JUGADOR 2
+// =======================
+Texture2D armaTex2 = jugador2.arma.sprite;
+
+float escala2 = armaAreaWidth / armaTex2.width;
+escala2 *= 1.05f;
+
+float anchoFinal2 = armaTex2.width * escala2;
+float altoFinal2  = armaTex2.height * escala2;
+
+float xFinal2 = x2 + (cuadrado - anchoFinal2) / 2;
+float yFinal2 = armaAreaY - 20;
+
+DrawTexturePro(
+    armaTex2,
+    { 0, 0, (float)armaTex2.width, (float)armaTex2.height },
+    { xFinal2, yFinal2, anchoFinal2, altoFinal2 },
+    { 0, 0 },
+    0.0f,
+    WHITE
+);
+
+float armaCentroY2 = yFinal2 + altoFinal2 / 2;
+
+// Hitboxes flechas J2
+Rectangle rectIzq2 = { x2 - 120, armaCentroY2 - 20, 40, 40 };
+Rectangle rectDer2 = { x2 + cuadrado + 80, armaCentroY2 - 20, 40, 40 };
+
+bool hA3 = CheckCollisionPointRec(mouse, rectIzq2);
+bool hA4 = CheckCollisionPointRec(mouse, rectDer2);
+
+// Flechas J2
+if (!confirmarJugador2) {
+    DrawTriangle(
+        { x2 - flechaOffsetX, armaCentroY2 },
+        { x2 - flechaOffsetX + 20, armaCentroY2 + 15 },
+        { x2 - flechaOffsetX + 20, armaCentroY2 - 15 },
+        hA3 ? ROJO_CLARO : RED
+    );
+
+    DrawTriangle(
+        { x2 + cuadrado + flechaOffsetX, armaCentroY2 },
+        { x2 + cuadrado + flechaOffsetX - 20, armaCentroY2 - 15 },
+        { x2 + cuadrado + flechaOffsetX - 20, armaCentroY2 + 15 },
+        hA4 ? ROJO_CLARO : RED
+    );
+}
+
 
     // Botones Confirmar
-    float yConfirmar = 420; 
+    float yConfirmar = 480; 
     float anchoConfirmar = 200; float altoConfirmar = 40;
     
     Rectangle confirmar1 ={50, yConfirmar, anchoConfirmar, altoConfirmar};
