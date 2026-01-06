@@ -56,8 +56,8 @@ void MainGameState::handleInput(){
         }
 
         // Movimiento del jugador
-        if (IsKeyDown(KEY_A) && player1.rect.x > 0) player1.rect.x -= 200 * GetFrameTime();
-        if (IsKeyDown(KEY_D) && player1.rect.x + player1.rect.width < screenWidth) player1.rect.x += 200 * GetFrameTime();
+        if (IsKeyDown(KEY_A) && player1.rect.x > 0 && player1.rect.x > (old_player1.rect.x - 200)) player1.rect.x -= 200 * GetFrameTime();
+        if (IsKeyDown(KEY_D) && player1.rect.x + player1.rect.width < screenWidth && player1.rect.x < (old_player1.rect.x + 200)) player1.rect.x += 200 * GetFrameTime();
         
         //ya no pillamos mas info del jugador 1 al pulsar enter
         if(IsKeyPressed(KEY_ENTER)){
@@ -91,9 +91,9 @@ void MainGameState::handleInput(){
             projectile_2.hasHit = false;
         }
 
-         // Movimiento del jugador
-        if (IsKeyDown(KEY_A) && player2.rect.x > 0) player2.rect.x -= 200 * GetFrameTime();
-        if (IsKeyDown(KEY_D) && player2.rect.x + player2.rect.width < screenWidth) player2.rect.x += 200 * GetFrameTime();
+        // Movimiento del jugador
+        if (IsKeyDown(KEY_A) && player2.rect.x > 0 && player2.rect.x > (old_player2.rect.x - 200)) player2.rect.x -= 200 * GetFrameTime();
+        if (IsKeyDown(KEY_D) && player2.rect.x + player2.rect.width < screenWidth && player2.rect.x < (old_player2.rect.x + 200)) player2.rect.x += 200 * GetFrameTime();
 
         //ya no pillamos mas info del jugador 2
         if(IsKeyPressed(KEY_Q)){
