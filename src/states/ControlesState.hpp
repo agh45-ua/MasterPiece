@@ -1,7 +1,10 @@
 #pragma once
 #include "GameState.hpp"
-#include <vector>
 #include <string>
+#include <optional>
+
+#include "../core/ControlBindings.hpp"
+
 extern "C" {
     #include <raylib.h>
 }
@@ -20,16 +23,16 @@ class ControlesState : public GameState {
         void resume() override;
 
     private:
-        struct ControlItem {
-            std::string title;
-            std::string detail;
-        };
-
         Rectangle getBackButtonBounds() const;
+        Rectangle getPanelBounds() const;
+        Rectangle getActionBounds(ControlAction action) const;
+        void startRebinding(ControlAction action);
+        void processRebindingInput();
+        void cancelRebinding();
 
         Texture2D fondo;
         Font poppins;
-        std::vector<ControlItem> common_controls;
-        std::vector<ControlItem> player1_controls;
-        std::vector<ControlItem> player2_controls;
+        std::optional<ControlAction> editingAction;
+        std::string toastMessage;
+        float toastTimer = 0.0f;
 };

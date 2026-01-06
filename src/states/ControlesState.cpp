@@ -4,6 +4,7 @@
 #include "../core/config.h"
 #include <memory>
 #include <sstream>
+#include <array>
 
 float DrawWrappedText(Font font, const std::string& text, Vector2 position, float fontSize, float spacing, float maxWidth, Color color) {
     std::istringstream stream(text);
@@ -34,35 +35,50 @@ float DrawWrappedText(Font font, const std::string& text, Vector2 position, floa
 void ControlesState::init(){
     fondo = LoadTexture(GetAssetPath("fondo-inicio.png").c_str());
     poppins = LoadFontEx(GetAssetPath("Poppins-Bold.ttf").c_str(), 64, 0, 0);
-    common_controls = {
-        {"Movimiento", "Ambos jugadores se desplazan con A y D (max 200px por turno)"},
-        {"Fijacion del disparo", "Espacio o clic izquierdo para fijar el disparo"},
-    };
-    player1_controls = {
-        {"Terminar preparacion", "ENTER cede el turno al jugador 2"},
-    };
-    player2_controls = {
-        {"Resolver turno", "Q inicia la cuenta atras y resuelve los disparos"},
-    };
+    editingAction.reset();
+    toastMessage.clear();
+    toastTimer = 0.0f;
 }
 
 void ControlesState::handleInput(){
-    Rectangle backButton = getBackButtonBounds();
-
-    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-        Vector2 mouse = GetMousePosition();
-        if (CheckCollisionPointRec(mouse, backButton)) {
-            this->state_machine->add_state(std::make_unique<InicioState>(), true);
-        }
+    if (editingAction.has_value()) {
+        processRebindingInput();
+        return;
     }
 
-    if (IsKeyPressed(KEY_ESCAPE) || IsKeyPressed(KEY_ENTER)) {
-        this->state_machine->add_state(std::make_unique<InicioState>(), true);
+    Rectangle backButton = getBackButtonBounds();
+    Vector2 mouse = GetMousePosition();
+    bool click = IsMouseButtonPressed(MOUSE_BUTTON_LEFT);
+    if (click) {
+        if (CheckCollisionPointRec(mouse, backButton)) {
+            this->state_machine->add_state(std::make_unique<InicioState>(), true);
+            return;
+        }
+
+        static const std::array<ControlAction, static_cast<size_t>(ControlAction::Count)> actions = {
+            ControlAction::MoveLeft,
+            ControlAction::MoveRight,
+            ControlAction::FixShot,
+            ControlAction::EndTurnP1,
+            ControlAction::EndTurnP2
+        };
+        for (ControlAction action : actions) {
+            if (CheckCollisionPointRec(mouse, getActionBounds(action))) {
+                startRebinding(action);
+                return;
+            }
+        }
     }
 }
 
 void ControlesState::update(float deltaTime){
-
+    if (toastTimer > 0.0f) {
+        toastTimer -= deltaTime;
+        if (toastTimer <= 0.0f) {
+            toastTimer = 0.0f;
+            toastMessage.clear();
+        }
+    }
 }
 
 void ControlesState::render(){
@@ -78,12 +94,7 @@ void ControlesState::render(){
     );
     DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), Fade(BLACK, 0.8f));
 
-    Rectangle panel = {
-        (float)(GetScreenWidth()/2 - 330),
-        (float)(GetScreenHeight()/2 - 220),
-        660.0f,
-        440.0f
-    };
+    Rectangle panel = getPanelBounds();
     DrawRectangleRounded(panel, 0.12f, 8, Fade(BLACK, 0.65f));
     DrawRectangleRoundedLines(panel, 0.12f, 8, Fade(RAYWHITE, 0.6f));
 
@@ -92,64 +103,49 @@ void ControlesState::render(){
     Vector2 titlePos = {panel.x + 50.0f, panel.y + 40.0f};
     DrawTextEx(poppins, "Configuracion de teclas", titlePos, titleSize, 2, RAYWHITE);
 
-    float currentY = titlePos.y + titleSize + 20.0f;
-    DrawTextEx(poppins, "Controles comunes", {panel.x + 40.0f, currentY}, textSize + 4.0f, 2, GOLD);
-    currentY += textSize + 16.0f;
-    for (const auto& item : common_controls) {
-        DrawTextEx(poppins, item.title.c_str(), {panel.x + 40.0f, currentY}, textSize, 2, SKYBLUE);
-        currentY += textSize + 8.0f;
-        float used = DrawWrappedText(
+    float columnsTop = titlePos.y + titleSize + 30.0f;
+    float leftColumnX = panel.x + 40.0f;
+    float rightColumnX = panel.x + panel.width / 2.0f + 40.0f;
+    DrawTextEx(poppins, "Controles comunes", {leftColumnX, columnsTop}, textSize + 4.0f, 2, GOLD);
+    DrawTextEx(poppins, "Controles por jugador", {rightColumnX, columnsTop}, textSize + 4.0f, 2, PINK);
+
+    ControlBindings &bindings = ControlBindings::Instance();
+    Vector2 currentMouse = GetMousePosition();
+    auto drawActionRow = [&](ControlAction action) {
+        Rectangle bounds = getActionBounds(action);
+        bool hover = CheckCollisionPointRec(currentMouse, bounds);
+        bool editing = editingAction.has_value() && editingAction.value() == action;
+        Color base = Fade(BLACK, editing ? 0.7f : (hover ? 0.55f : 0.4f));
+        DrawRectangleRounded(bounds, 0.18f, 6, base);
+
+        const char *label = ControlBindings::GetActionLabel(action);
+        DrawTextEx(
             poppins,
-            item.detail,
-            {panel.x + 60.0f, currentY},
-            textSize - 2.0f,
+            label,
+            {bounds.x + 18.0f, bounds.y + 14.0f},
+            textSize,
             2.0f,
-            panel.width - 120.0f,
             RAYWHITE
         );
-        currentY += used + 12.0f;
-    }
-    currentY += 12.0f;
 
-    float columnsTop = currentY;
-    float leftColumnX = panel.x + 50.0f;
-    float rightColumnX = panel.x + panel.width / 2.0f + 30.0f;
-    float columnWidth = panel.width / 2.0f - 80.0f;
-
-    DrawTextEx(poppins, "Jugador 1", {leftColumnX, columnsTop}, textSize + 4.0f, 2, SKYBLUE);
-    DrawTextEx(poppins, "Jugador 2", {rightColumnX, columnsTop}, textSize + 4.0f, 2, PINK);
-
-    float leftY = columnsTop + textSize + 10.0f;
-    for (const auto& item : player1_controls) {
-        DrawTextEx(poppins, item.title.c_str(), {leftColumnX, leftY}, textSize, 2, RAYWHITE);
-        leftY += textSize + 6.0f;
-        float used = DrawWrappedText(
+        std::string bindingText = bindings.get(action).toDisplayString();
+        Color bindingColor = editing ? YELLOW : SKYBLUE;
+        Vector2 size = MeasureTextEx(poppins, bindingText.c_str(), textSize, 2.0f);
+        DrawTextEx(
             poppins,
-            item.detail,
-            {leftColumnX + 20.0f, leftY},
-            textSize - 2.0f,
+            bindingText.c_str(),
+            {bounds.x + bounds.width - size.x - 18.0f, bounds.y + 14.0f},
+            textSize,
             2.0f,
-            columnWidth,
-            LIGHTGRAY
+            bindingColor
         );
-        leftY += used + 10.0f;
-    }
+    };
 
-    float rightY = columnsTop + textSize + 10.0f;
-    for (const auto& item : player2_controls) {
-        DrawTextEx(poppins, item.title.c_str(), {rightColumnX, rightY}, textSize, 2, RAYWHITE);
-        rightY += textSize + 6.0f;
-        float used = DrawWrappedText(
-            poppins,
-            item.detail,
-            {rightColumnX + 20.0f, rightY},
-            textSize - 2.0f,
-            2.0f,
-            columnWidth,
-            LIGHTGRAY
-        );
-        rightY += used + 10.0f;
-    }
+    drawActionRow(ControlAction::MoveLeft);
+    drawActionRow(ControlAction::MoveRight);
+    drawActionRow(ControlAction::FixShot);
+    drawActionRow(ControlAction::EndTurnP1);
+    drawActionRow(ControlAction::EndTurnP2);
 
     Rectangle backButton = getBackButtonBounds();
     Vector2 mouse = GetMousePosition();
@@ -166,6 +162,40 @@ void ControlesState::render(){
         2.0f,
         RAYWHITE
     );
+
+    const Rectangle lastLeft = getActionBounds(ControlAction::FixShot);
+    const Rectangle lastRight = getActionBounds(ControlAction::EndTurnP2);
+    float helperY = std::max(lastLeft.y + lastLeft.height, lastRight.y + lastRight.height) + 30.0f;
+    helperY = std::min(helperY, panel.y + panel.height - 120.0f);
+
+    std::string helperText;
+    if (editingAction.has_value()) {
+        helperText = "Pulsa una tecla o boton del raton para asignarla (ESC para cancelar)";
+    } else {
+        helperText = "Haz clic sobre un control para reasignarlo.";
+    }
+    DrawWrappedText(
+        poppins,
+        helperText,
+        {panel.x + 40.0f, helperY},
+        textSize - 2.0f,
+        2.0f,
+        panel.width - 80.0f,
+        LIGHTGRAY
+    );
+
+    if (toastTimer > 0.0f && !toastMessage.empty()) {
+        float toastY = helperY + 40.0f;
+        toastY = std::min(toastY, panel.y + panel.height - 60.0f);
+        DrawTextEx(
+            poppins,
+            toastMessage.c_str(),
+            {panel.x + 40.0f, toastY},
+            textSize - 2.0f,
+            2.0f,
+            SKYBLUE
+        );
+    }
 
     EndDrawing();
 }
@@ -187,4 +217,104 @@ Rectangle ControlesState::getBackButtonBounds() const {
         width,
         height
     };
+}
+
+Rectangle ControlesState::getPanelBounds() const {
+    const float width = 720.0f;
+    const float height = 520.0f;
+    return {
+        (float)(GetScreenWidth() / 2.0f - width / 2.0f),
+        (float)(GetScreenHeight() / 2.0f - height / 2.0f),
+        width,
+        height
+    };
+}
+
+Rectangle ControlesState::getActionBounds(ControlAction action) const {
+    Rectangle panel = getPanelBounds();
+    const float columnWidth = panel.width / 2.0f - 80.0f;
+    const float leftX = panel.x + 40.0f;
+    const float rightX = panel.x + panel.width / 2.0f + 40.0f;
+    const float startY = panel.y + 150.0f;
+    const float rowHeight = 64.0f;
+    const float gap = 18.0f;
+
+    auto findIndex = [](const ControlAction *values, size_t count, ControlAction target) -> int {
+        for (size_t idx = 0; idx < count; ++idx) {
+            if (values[idx] == target) {
+                return static_cast<int>(idx);
+            }
+        }
+        return -1;
+    };
+
+    static constexpr ControlAction leftColumn[] = {
+        ControlAction::MoveLeft,
+        ControlAction::MoveRight,
+        ControlAction::FixShot
+    };
+    static constexpr ControlAction rightColumn[] = {
+        ControlAction::EndTurnP1,
+        ControlAction::EndTurnP2
+    };
+
+    int index = findIndex(leftColumn, sizeof(leftColumn) / sizeof(ControlAction), action);
+    if (index >= 0) {
+        return {leftX, startY + index * (rowHeight + gap), columnWidth, rowHeight};
+    }
+
+    index = findIndex(rightColumn, sizeof(rightColumn) / sizeof(ControlAction), action);
+    if (index >= 0) {
+        return {rightX, startY + index * (rowHeight + gap), columnWidth, rowHeight};
+    }
+
+    return {panel.x, panel.y, 0.0f, 0.0f};
+}
+
+void ControlesState::startRebinding(ControlAction action) {
+    editingAction = action;
+}
+
+void ControlesState::processRebindingInput() {
+    if (!editingAction.has_value()) {
+        return;
+    }
+
+    int key = GetKeyPressed();
+    if (key != KEY_NULL) {
+        if (key == KEY_ESCAPE) {
+            cancelRebinding();
+            return;
+        }
+
+        ControlBindings::Instance().set(editingAction.value(), InputBinding::Keyboard(static_cast<KeyboardKey>(key)));
+        toastMessage = std::string(ControlBindings::GetActionLabel(editingAction.value())) + " -> " + DescribeKeyboardKey(key);
+        toastTimer = 3.0f;
+        editingAction.reset();
+        return;
+    }
+
+    static const MouseButton mouseButtons[] = {
+        MOUSE_BUTTON_LEFT,
+        MOUSE_BUTTON_RIGHT,
+        MOUSE_BUTTON_MIDDLE,
+        MOUSE_BUTTON_SIDE,
+        MOUSE_BUTTON_EXTRA,
+        MOUSE_BUTTON_FORWARD,
+        MOUSE_BUTTON_BACK
+    };
+
+    for (MouseButton button : mouseButtons) {
+        if (IsMouseButtonPressed(button)) {
+            ControlBindings::Instance().set(editingAction.value(), InputBinding::Mouse(button));
+            toastMessage = std::string(ControlBindings::GetActionLabel(editingAction.value())) + " -> " + DescribeMouseButton(button);
+            toastTimer = 3.0f;
+            editingAction.reset();
+            return;
+        }
+    }
+}
+
+void ControlesState::cancelRebinding() {
+    editingAction.reset();
 }

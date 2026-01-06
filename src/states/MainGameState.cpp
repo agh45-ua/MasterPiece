@@ -4,6 +4,7 @@
 #include <string>
 #include <iostream>
 #include "../core/config.h"
+#include "../core/ControlBindings.hpp"
 extern "C" {
     #include <raylib.h>
 }
@@ -34,7 +35,20 @@ void MainGameState::init(){
 }
 
 void MainGameState::handleInput(){
-  
+    ControlBindings &bindings = ControlBindings::Instance();
+    const InputBinding &moveLeft = bindings.get(ControlAction::MoveLeft);
+    const InputBinding &moveRight = bindings.get(ControlAction::MoveRight);
+    const InputBinding &shotBinding = bindings.get(ControlAction::FixShot);
+    const InputBinding &endTurnP1 = bindings.get(ControlAction::EndTurnP1);
+    const InputBinding &endTurnP2 = bindings.get(ControlAction::EndTurnP2);
+
+    auto isShotPressed = [&]() {
+        if (shotBinding.isPressed()) {
+            return true;
+        }
+        return bindings.fixShotUsesMouseFallback() && IsMouseButtonPressed(MOUSE_BUTTON_LEFT);
+    };
+
     //si es el turno del jugador 1 vamos guardando lo que hace hasta que presione enter
     if (turno =='1'){
         old_angle_1=angle_1;
@@ -43,8 +57,8 @@ void MainGameState::handleInput(){
         Vector2 start = {player1.rect.x + player1.rect.width, player1.rect.y + player1.rect.height / 2};
         angle_1= atan2f(mousePos.y - start.y, mousePos.x - start.x);
 
-        // Disparo con ESPACIO o clic izquierdo
-        if ((IsKeyPressed(KEY_SPACE) || IsMouseButtonPressed(MOUSE_LEFT_BUTTON))) {
+        // Disparo configurable
+        if (isShotPressed()) {
             projectile_1.pos = start;
             
             // Velocidad del arma elegida
@@ -56,13 +70,13 @@ void MainGameState::handleInput(){
         }
 
         // Movimiento del jugador
-        if (IsKeyDown(KEY_A) && player1.rect.x > 0 && player1.rect.x > (old_player1.rect.x - 200)) player1.rect.x -= 200 * GetFrameTime();
-        if (IsKeyDown(KEY_D) && player1.rect.x + player1.rect.width < screenWidth && player1.rect.x < (old_player1.rect.x + 200)) player1.rect.x += 200 * GetFrameTime();
+        if (moveLeft.isDown() && player1.rect.x > 0 && player1.rect.x > (old_player1.rect.x - 200)) player1.rect.x -= 200 * GetFrameTime();
+        if (moveRight.isDown() && player1.rect.x + player1.rect.width < screenWidth && player1.rect.x < (old_player1.rect.x + 200)) player1.rect.x += 200 * GetFrameTime();
         
         //ya no pillamos mas info del jugador 1 al pulsar enter
-        if(IsKeyPressed(KEY_ENTER)){
+        if(endTurnP1.isPressed()){
             turno='2';
-           
+            return;
         }
     }
     /////////////////////////////////////////////////////////////////////////////////////////////
@@ -80,8 +94,8 @@ void MainGameState::handleInput(){
 
 
     
-        // Disparo con ESPACIO o clic izquierdo
-        if ((IsKeyPressed(KEY_SPACE) || IsMouseButtonPressed(MOUSE_LEFT_BUTTON))) {
+        // Disparo configurable
+        if (isShotPressed()) {
             projectile_2.pos = start;
 
             float speed = jugador2.arma.speed;
@@ -92,11 +106,11 @@ void MainGameState::handleInput(){
         }
 
         // Movimiento del jugador
-        if (IsKeyDown(KEY_A) && player2.rect.x > 0 && player2.rect.x > (old_player2.rect.x - 200)) player2.rect.x -= 200 * GetFrameTime();
-        if (IsKeyDown(KEY_D) && player2.rect.x + player2.rect.width < screenWidth && player2.rect.x < (old_player2.rect.x + 200)) player2.rect.x += 200 * GetFrameTime();
+        if (moveLeft.isDown() && player2.rect.x > 0 && player2.rect.x > (old_player2.rect.x - 200)) player2.rect.x -= 200 * GetFrameTime();
+        if (moveRight.isDown() && player2.rect.x + player2.rect.width < screenWidth && player2.rect.x < (old_player2.rect.x + 200)) player2.rect.x += 200 * GetFrameTime();
 
         //ya no pillamos mas info del jugador 2
-        if(IsKeyPressed(KEY_Q)){
+        if(endTurnP2.isPressed()){
             countdownActive = true;
             countdownTime = 3.0f;  // reiniciar cuenta atrás
             gameBlocked = true;    // bloquea el resto del juego
