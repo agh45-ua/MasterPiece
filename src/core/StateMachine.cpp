@@ -37,7 +37,9 @@ void StateMachine::handle_state_changes(float& deltaTime)
     if (this->is_Adding)
     {
         if(!this->states_machine.empty())
-        {
+        {   
+            this->states_machine.top()->pause();
+            
             if (this->is_Replacing)
             {
                 this->states_machine.pop();
