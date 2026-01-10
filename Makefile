@@ -16,9 +16,18 @@ ASSETS_DIR := assets
 TARGET := $(BIN_DIR)/masterpiece
 
 # --- Buscar recursivamente todos los .cpp ---
-CORE_OBJS := $(BUILD_DIR)/core/GameState.o $(BUILD_DIR)/core/StateMachine.o
-STATE_OBJS := $(BUILD_DIR)/states/InicioState.o $(BUILD_DIR)/states/PersonajesState.o \
-              $(BUILD_DIR)/states/GameOverState.o $(BUILD_DIR)/states/MainGameState.o
+CORE_OBJS := \
+	$(BUILD_DIR)/core/GameState.o \
+	$(BUILD_DIR)/core/StateMachine.o \
+	$(BUILD_DIR)/core/ControlBindings.o
+
+STATE_OBJS := \
+	$(BUILD_DIR)/states/InicioState.o \
+	$(BUILD_DIR)/states/PersonajesState.o \
+	$(BUILD_DIR)/states/GameOverState.o \
+	$(BUILD_DIR)/states/MainGameState.o \
+	$(BUILD_DIR)/states/ControlesState.o
+
 MAIN_OBJ := $(BUILD_DIR)/core/main.o
 
 OBJS := $(CORE_OBJS) $(STATE_OBJS) $(MAIN_OBJ)

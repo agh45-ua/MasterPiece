@@ -27,10 +27,13 @@ endif()
 set(GAME_SOURCES
     src/core/GameState.cpp
     src/core/StateMachine.cpp
+    src/core/ControlBindings.cpp
+
     src/states/InicioState.cpp
     src/states/PersonajesState.cpp
     src/states/GameOverState.cpp
     src/states/MainGameState.cpp
+    src/states/ControlesState.cpp
 )
 
 # Primero creamos la librería...

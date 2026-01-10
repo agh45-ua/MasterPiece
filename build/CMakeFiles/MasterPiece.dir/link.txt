@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/MasterPiece.dir/src/core/main.cpp.o -o MasterPiece  libGameLogic.a "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/vendor/lib/libraylib.a" -lm -ldl -lpthread -lGL -lX11 -lXrandr -lXi -lXcursor -lXxf86vm 

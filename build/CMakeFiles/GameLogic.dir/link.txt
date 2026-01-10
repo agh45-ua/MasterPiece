@@ -1,2 +1,0 @@
-/usr/bin/ar qc libGameLogic.a CMakeFiles/GameLogic.dir/src/core/GameState.cpp.o CMakeFiles/GameLogic.dir/src/core/StateMachine.cpp.o CMakeFiles/GameLogic.dir/src/states/InicioState.cpp.o CMakeFiles/GameLogic.dir/src/states/PersonajesState.cpp.o CMakeFiles/GameLogic.dir/src/states/GameOverState.cpp.o CMakeFiles/GameLogic.dir/src/states/MainGameState.cpp.o
-/usr/bin/ranlib libGameLogic.a
