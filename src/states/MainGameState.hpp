@@ -5,7 +5,8 @@
 #include <raylib.h>
 #include <string>
 #include <cmath>
-
+#include <libintl.h>
+#define _(STRING) gettext(STRING)
 extern "C" {
     #include <raylib.h>
 }

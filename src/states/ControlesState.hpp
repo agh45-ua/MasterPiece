@@ -2,7 +2,8 @@
 #include "GameState.hpp"
 #include <string>
 #include <optional>
-
+#include <libintl.h>
+#define _(STRING) gettext(STRING)
 #include "../core/ControlBindings.hpp"
 
 extern "C" {

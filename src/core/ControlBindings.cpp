@@ -88,15 +88,15 @@ void ControlBindings::resetDefaults() {
 const char *ControlBindings::GetActionLabel(ControlAction action) {
     switch (action) {
     case ControlAction::MoveLeft:
-        return "Movimiento izquierda";
+        return _("Movimiento izquierda");
     case ControlAction::MoveRight:
-        return "Movimiento derecha";
+        return _("Movimiento derecha");
     case ControlAction::FixShot:
-        return "Fijar lanzamiento";
+        return _("Fijar lanzamiento");
     case ControlAction::EndTurnP1:
-        return "Finalizar turno J1";
+        return _("Finalizar turno J1");
     case ControlAction::EndTurnP2:
-        return "Finalizar turno J2";
+        return _("Finalizar turno J2");
     case ControlAction::Count:
         break;
     }
@@ -109,7 +109,7 @@ bool ControlBindings::fixShotUsesMouseFallback() const {
 
 std::string DescribeKeyboardKey(int key) {
     if (key == KEY_NULL) {
-        return "Sin asignar";
+        return _("Sin asignar");
     }
 
     const char *name = GetKeyName(key);
@@ -123,35 +123,35 @@ std::string DescribeKeyboardKey(int key) {
 
     switch (key) {
     case KEY_SPACE:
-        return "Espacio";
+        return _("Espacio");
     case KEY_ENTER:
-        return "Enter";
+        return _("Intro");
     case KEY_TAB:
-        return "Tab";
+        return _("Tab");
     case KEY_LEFT_CONTROL:
-        return "Ctrl izq";
+        return _("Ctrl izq");
     case KEY_RIGHT_CONTROL:
-        return "Ctrl der";
+        return _("Ctrl der");
     case KEY_LEFT_SHIFT:
-        return "Shift izq";
+        return _("Shift izq");
     case KEY_RIGHT_SHIFT:
-        return "Shift der";
+        return _("Shift der");
     case KEY_LEFT_ALT:
-        return "Alt izq";
+        return _("Alt izq");
     case KEY_RIGHT_ALT:
-        return "Alt der";
+        return _("Alt der");
     case KEY_BACKSPACE:
-        return "Backspace";
+        return _("Backspace");
     case KEY_DELETE:
-        return "Delete";
+        return _("Delete");
     case KEY_UP:
-        return "Flecha arriba";
+        return _("Flecha arriba");
     case KEY_DOWN:
-        return "Flecha abajo";
+        return _("Flecha abajo");
     case KEY_LEFT:
-        return "Flecha izq";
+        return _("Flecha izq");
     case KEY_RIGHT:
-        return "Flecha der";
+        return _("Flecha der");
     default:
         break;
     }
@@ -160,27 +160,27 @@ std::string DescribeKeyboardKey(int key) {
         return "F" + std::to_string(1 + key - KEY_F1);
     }
 
-    return "Tecla " + std::to_string(key);
+    return std::string(_("Tecla ")) + std::to_string(key);
 }
 
 std::string DescribeMouseButton(int button) {
     switch (button) {
     case MOUSE_BUTTON_LEFT:
-        return "Click izq";
+        return _("Click izq");
     case MOUSE_BUTTON_RIGHT:
-        return "Click der";
+        return _("Click der");
     case MOUSE_BUTTON_MIDDLE:
-        return "Click medio";
+        return _("Click medio");
     case MOUSE_BUTTON_SIDE:
-        return "Mouse lateral";
+        return _("Mouse lateral");
     case MOUSE_BUTTON_EXTRA:
-        return "Mouse extra";
+        return _("Mouse extra");
     case MOUSE_BUTTON_FORWARD:
-        return "Mouse adelante";
+        return _("Mouse adelante");
     case MOUSE_BUTTON_BACK:
-        return "Mouse atrás";
+        return _("Mouse atrás");
     default:
         break;
     }
-    return "Boton " + std::to_string(button);
+    return std::string(_("Boton ")) + std::to_string(button);
 }

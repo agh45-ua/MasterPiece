@@ -280,7 +280,7 @@ void PersonajesState::render() {
     // -- Jugador 1 --
     DrawRectangleRec(cajaTitulo1, LIGHTGRAY);
     DrawRectangleLinesEx(cajaTitulo1, 2, DARKGRAY);
-    DrawText("Arma:", (int)cajaTitulo1.x + (anchoCajaArma - MeasureText("Arma:", 20))/2, (int)cajaTitulo1.y + 10, 20, BLACK);
+    DrawText(_("Arma:"), (int)cajaTitulo1.x + (anchoCajaArma - MeasureText(_("Arma:"), 20))/2, (int)cajaTitulo1.y + 10, 20, BLACK);
     const char* nArma1 = jugador1.arma.nombre.c_str();
     int wArma1 = MeasureText(nArma1, tamTexto);
     DrawText(nArma1, x1 + (cuadrado - wArma1)/2, yArma + 5, tamTexto, BLACK);
@@ -302,7 +302,7 @@ void PersonajesState::render() {
     // -- Jugador 2 --
     DrawRectangleRec(cajaTitulo2, LIGHTGRAY);
     DrawRectangleLinesEx(cajaTitulo2, 2, DARKGRAY);
-    DrawText("Arma:", (int)cajaTitulo2.x + (anchoCajaArma - MeasureText("Arma:", 20))/2, (int)cajaTitulo2.y + 10, 20, BLACK);
+    DrawText(_("Arma:"), (int)cajaTitulo2.x + (anchoCajaArma - MeasureText(_("Arma:"), 20))/2, (int)cajaTitulo2.y + 10, 20, BLACK);
     const char* nArma2 = jugador2.arma.nombre.c_str();
     int wArma2 = MeasureText(nArma2, tamTexto);
     DrawText(nArma2, x2 + (cuadrado - wArma2)/2, yArma + 5, tamTexto, BLACK);
@@ -328,9 +328,9 @@ void PersonajesState::render() {
     DrawRectangleRounded(confirmar2, 0.3f, 8, colorConfirmar2);
 
     float fuenteConfirmar = 24.0f;
-    Vector2 longConf = MeasureTextEx(poppins, "Confirmar", fuenteConfirmar, 2.0f);
-    DrawTextEx(poppins, "Confirmar", { 50 + (anchoConfirmar - longConf.x) / 2, yConfirmar + (altoConfirmar - longConf.y) / 2 }, fuenteConfirmar, 2.0f, RAYWHITE);
-    DrawTextEx(poppins, "Confirmar", { 550 + (anchoConfirmar - longConf.x) / 2, yConfirmar + (altoConfirmar - longConf.y) / 2 }, fuenteConfirmar, 2.0f, RAYWHITE);
+    Vector2 longConf = MeasureTextEx(poppins, _("Confirmar"), fuenteConfirmar, 2.0f);
+    DrawTextEx(poppins, _("Confirmar"), { 50 + (anchoConfirmar - longConf.x) / 2, yConfirmar + (altoConfirmar - longConf.y) / 2 }, fuenteConfirmar, 2.0f, RAYWHITE);
+    DrawTextEx(poppins, _("Confirmar"), { 550 + (anchoConfirmar - longConf.x) / 2, yConfirmar + (altoConfirmar - longConf.y) / 2 }, fuenteConfirmar, 2.0f, RAYWHITE);
 
     // Jugar
     if(transicionAlpha > 0.0f){
@@ -348,8 +348,8 @@ void PersonajesState::render() {
     Rectangle volver = { 20, 20, 120, 40 };
     bool hoverVolver = CheckCollisionPointRec(mouse, volver);
     DrawRectangleRounded(volver, 0.3f, 8, hoverVolver ? MAROON : RED);
-    Vector2 txtVolver = MeasureTextEx(poppins, "Volver", 22.0f, 2.0f);
-    DrawTextEx(poppins, "Volver", { 20 + (120 - txtVolver.x) / 2, 20 + (40 - txtVolver.y) / 2 }, 22.0f, 2.0f, RAYWHITE);
+    Vector2 txtVolver = MeasureTextEx(poppins, _("Volver"), 22.0f, 2.0f);
+    DrawTextEx(poppins, _("Volver"), { 20 + (120 - txtVolver.x) / 2, 20 + (40 - txtVolver.y) / 2 }, 22.0f, 2.0f, RAYWHITE);
 
     EndDrawing();
 }

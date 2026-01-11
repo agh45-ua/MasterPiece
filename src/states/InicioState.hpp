@@ -3,6 +3,8 @@
 #include <raylib.h>
 #include <cmath>
 #include <string>
+#include <libintl.h>
+#define _(STRING) gettext(STRING)
 extern "C" {
     #include <raylib.h>
 }
