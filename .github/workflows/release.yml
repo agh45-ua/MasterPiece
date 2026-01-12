@@ -8,11 +8,9 @@ permissions:
   contents: write
 
 jobs:
-
   linux-deb:
     name: Build .deb package (Linux)
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -26,46 +24,32 @@ jobs:
             libxcursor-dev libxxf86vm-dev libasound2-dev
 
       - name: Build Debian package
-        run: |
-          dpkg-buildpackage -us -uc -b
+        run: make dist
 
       - name: Upload .deb to release
         uses: softprops/action-gh-release@v2
+        with:
+          files: ../masterpiece_*.deb
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ../masterpiece_*_amd64.deb
-          asset_name: masterpiece-linux.deb
-          asset_content_type: application/vnd.debian.binary-package
-
-
 
   windows-zip:
     name: Build ZIP package (Windows)
     runs-on: windows-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
       - name: Configure CMake
         run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
-
       - name: Build
         run: cmake --build build --config Release
-
       - name: Package with CPack
         run: |
           cd build
           cpack
-
       - name: Upload ZIP to release
-        uses: actions/upload-release-asset@v1
+        uses: softprops/action-gh-release@v2
+        with:
+          files: build/*.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: build/*.zip
-          asset_name: MasterPiece-windows.zip
-          asset_content_type: application/zip

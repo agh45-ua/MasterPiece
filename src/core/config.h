@@ -16,22 +16,16 @@
 inline std::string GetAssetPath(const std::string& assetName) {
     // Primero intenta la ruta local (para desarrollo)
     std::string localPath = "assets/" + assetName;
-    std::cout << localPath << std::endl;
     if (std::filesystem::exists(localPath)) {
-        std::cout << "Asset in local path exists" << std::endl;
         return localPath;
     }
     // Luego se prueba la ruta relativa al ejecutable (por si se está ejecutando desde el directorio bin/)
-    localPath = "../assets/" + assetName;;
-    std::cout << localPath << std::endl;
-    if (std::filesystem::exists(localPath)) {
-        std::cout << "Asset in local path exists" << std::endl;
-        return localPath;
+    std::string binPath = "../assets/" + assetName;
+    if (std::filesystem::exists(binPath)) {
+        return binPath;
     }
     // Si no existe, usa la ruta instalada
-    std::string response = std::string(ASSETS_PATH) + assetName;
-    std::cout << response << std::endl;
-    return response;
+    return std::string(ASSETS_PATH) + assetName;
 }
 
 // Función para detectar si el idioma actual es japonés

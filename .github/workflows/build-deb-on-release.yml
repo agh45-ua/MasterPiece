@@ -19,8 +19,8 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y \
-            build-essential dpkg-dev debhelper \
-            libgl1-mesa-dev libx11-dev libxrandr-dev libxi-dev \
+            build-essential dpkg-dev debhelper cmake \
+            libgl-dev libx11-dev libxrandr-dev libxi-dev \
             libxcursor-dev libxxf86vm-dev libasound2-dev
 
       - name: Build .deb package
