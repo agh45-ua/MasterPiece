@@ -6,7 +6,7 @@
 using namespace std;
 
 int main() {
-    Arma canon = {"Canon", 25, 100.0f, 10.0f, RED};
+    Arma canon = {"Canon", 25, 100.0f, 10.0f, Texture2D{}};
     Jugador j1 = {1, "P1", {}, canon};
     Jugador j2 = {2, "P2", {}, canon};
 

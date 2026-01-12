@@ -9,8 +9,8 @@ using namespace std;
 
 int main() {
     // DATOS DE PRUEBA
-    Arma proyectil1 = {"Cañon", 50, 15.0f, 9.8f, RED};
-    Arma proyectil2 = {"Mortero", 40, 12.0f, 5.0f, BLUE};
+    Arma proyectil1 = {"Cañon", 50, 15.0f, 9.8f, Texture2D{}};
+    Arma proyectil2 = {"Mortero", 40, 12.0f, 5.0f, Texture2D{}};
 
     // La Texture2D se inicializa a 0 para el test
     Jugador j1 = {1, "Artillero 1", {}, proyectil1};

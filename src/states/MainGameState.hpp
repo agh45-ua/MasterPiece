@@ -5,20 +5,6 @@
 #include <string>
 #include <cmath>
 
-#ifdef _WIN32
-    #include <map>
-    #include <string>
-    extern std::map<std::string, std::string> translations;
-
-    #define _(STRING) translate(STRING)
-    const char* translate(const char* str);
-
-    void loadTranslations(const std::string& lang);
-#else
-    #include <libintl.h>
-    #define _(STRING) gettext(STRING)
-#endif
-
 #include <vector>
 #include <ctime>
 extern "C" {
