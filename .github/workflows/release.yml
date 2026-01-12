@@ -35,7 +35,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-windows-zip:
+  windows-zip:
     name: Build ZIP package (Windows)
     runs-on: windows-latest
 
