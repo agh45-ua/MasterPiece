@@ -8,16 +8,10 @@
 #ifdef _WIN32
     #include <map>
     #include <string>
-    
-    // Mapa simple de traducciones
-    static std::map<std::string, std::string> translations;
-    
-    inline const char* _(const char* str) {
-        auto it = translations.find(str);
-        return (it != translations.end()) ? it->second.c_str() : str;
-    }
-    
-    // Función para cargar traducciones desde un archivo
+    extern std::map<std::string, std::string> translations;
+
+    const char* _(const char* str);
+
     void loadTranslations(const std::string& lang);
 #else
     #include <libintl.h>
