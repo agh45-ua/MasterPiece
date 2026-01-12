@@ -68,10 +68,24 @@ file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
 enable_testing()
 add_subdirectory(tests)
 
+# ------------------------------------------
+# INSTALL (necesario para que CPack meta archivos en el ZIP)
+# ------------------------------------------
+install(TARGETS MasterPiece
+    RUNTIME DESTINATION .
+)
+
+install(DIRECTORY ${CMAKE_SOURCE_DIR}/assets
+    DESTINATION .
+)
+
+if (WIN32)
+    install(FILES $<TARGET_FILE:raylib> DESTINATION . OPTIONAL)
+endif()
+
 if (WIN32)
     set(CPACK_PACKAGE_NAME "MasterPiece")
     set(CPACK_PACKAGE_VERSION "1.0.0")
     set(CPACK_GENERATOR "ZIP")
     include(CPack)
-    cpack_add_component(MasterPiece)
 endif()

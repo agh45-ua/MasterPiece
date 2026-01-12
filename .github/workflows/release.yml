@@ -58,6 +58,7 @@ jobs:
         run: cmake --build build --config Release
 
       - name: Package with CPack
+        shell: pwsh
         run: |
           cd build
           cpack -C Release
