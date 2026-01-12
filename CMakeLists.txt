@@ -47,7 +47,7 @@ target_include_directories(GameLogic PUBLIC
 # ==========================================
 # EJECUTABLE PRINCIPAL
 # ==========================================
-add_executable(MasterPiece src/main.cpp)
+add_executable(MasterPiece src/core/main.cpp)
 
 target_include_directories(MasterPiece PRIVATE
     ${CMAKE_SOURCE_DIR}/src
