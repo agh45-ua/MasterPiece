@@ -14,13 +14,11 @@ endif()
 # ------------------------------------------
 find_package(raylib CONFIG REQUIRED)
 
-set(RAYLIB_LIB raylib)
-
 # 2. DEFINIR FUENTES Y CREAR LIBRERÍA (Target GameLogic)
 # ------------------------------------------
 # Listado explícito para evitar GLOB (Práctica recomendada por el profesor)
 set(GAME_SOURCES
-    src/core/GameState.cpp
+    src/core/GameState. cpp
     src/core/StateMachine.cpp
     src/core/ControlBindings.cpp
     src/core/ResourceManager.cpp
@@ -35,12 +33,14 @@ set(GAME_SOURCES
 # Primero creamos la librería...
 add_library(GameLogic STATIC ${GAME_SOURCES})
 
+# Enlazamos raylib a GameLogic (esto proporciona automáticamente los directorios de inclusión)
+target_link_libraries(GameLogic PUBLIC raylib)
+
 # ...y DESPUÉS le asignamos sus directorios de inclusión
 target_include_directories(GameLogic PUBLIC
     ${CMAKE_SOURCE_DIR}/src
     ${CMAKE_SOURCE_DIR}/src/core
     ${CMAKE_SOURCE_DIR}/src/states
-    ${RAYLIB_INCLUDE}
 )
 
 # 3. Librerias del sistema
@@ -54,12 +54,12 @@ endif()
 
 # 4. CREAR EJECUTABLE PRINCIPAL (Target MasterPiece)
 # ------------------------------------------
-# El ejecutable depende de main.cpp
+# El ejecutable depende de main. cpp
 add_executable(MasterPiece src/core/main.cpp)
 
-# Enlazamos a la lógica y a raylib. 
+# Enlazamos a la lógica (que ya incluye raylib).
 # NOTA: MasterPiece hereda los INCLUDES de GameLogic automáticamente por ser PUBLIC.
-target_link_libraries(MasterPiece PRIVATE GameLogic ${RAYLIB_LIB})
+target_link_libraries(MasterPiece PRIVATE GameLogic)
 
 # 5. RECURSOS, TESTS Y EMPAQUETADO
 # ------------------------------------------
