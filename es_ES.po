@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-12 08:38+0100\n"
+"POT-Creation-Date: 2026-01-12 09:46+0100\n"
 "PO-Revision-Date: 2026-01-12 08:51+0100\n"
 "Last-Translator: adriswag <agh45@alu.ua.es>\n"
 "Language-Team: Spanish <es@tp.org.es>\n"
@@ -137,28 +137,28 @@ msgstr "Ratón atrás"
 msgid "Boton "
 msgstr "Botón "
 
-#: src/states/ControlesState.cpp:104
+#: src/states/ControlesState.cpp:105
 msgid "Configuracion de teclas"
 msgstr "Configuración de teclas"
 
-#: src/states/ControlesState.cpp:109
+#: src/states/ControlesState.cpp:110
 msgid "Controles comunes"
 msgstr "Controles comunes"
 
-#: src/states/ControlesState.cpp:110
+#: src/states/ControlesState.cpp:111
 msgid "Controles por jugador"
 msgstr "Controles por jugador"
 
-#: src/states/ControlesState.cpp:155 src/states/PersonajesState.cpp:351
-#: src/states/PersonajesState.cpp:352
+#: src/states/ControlesState.cpp:156 src/states/PersonajesState.cpp:352
+#: src/states/PersonajesState.cpp:353
 msgid "Volver"
 msgstr "Volver"
 
-#: src/states/ControlesState.cpp:173
+#: src/states/ControlesState.cpp:174
 msgid "Pulsa una tecla o boton del raton para asignarla (ESC para cancelar)"
 msgstr "Pulsa una tecla o botón del ratón para asignarla (ESC para cancelar)"
 
-#: src/states/ControlesState.cpp:175
+#: src/states/ControlesState.cpp:176
 msgid "Haz clic sobre un control para reasignarlo."
 msgstr "Haz clic sobre un control para reasignarlo."
 
@@ -194,16 +194,16 @@ msgstr "Pulsa ESPACIO para jugar de nuevo"
 msgid "Pulsa ESCAPE para volver al inicio"
 msgstr "Pulsa ESCAPE para volver al inicio"
 
-#: src/states/InicioState.cpp:72 src/states/InicioState.cpp:76
-#: src/states/PersonajesState.cpp:343 src/states/PersonajesState.cpp:344
+#: src/states/InicioState.cpp:74 src/states/InicioState.cpp:78
+#: src/states/PersonajesState.cpp:344 src/states/PersonajesState.cpp:345
 msgid "Jugar"
 msgstr "Jugar"
 
-#: src/states/InicioState.cpp:73 src/states/InicioState.cpp:77
+#: src/states/InicioState.cpp:75 src/states/InicioState.cpp:79
 msgid "Controles"
 msgstr "Controles"
 
-#: src/states/InicioState.cpp:74 src/states/InicioState.cpp:78
+#: src/states/InicioState.cpp:76 src/states/InicioState.cpp:80
 msgid "Salir"
 msgstr "Salir"
 
@@ -215,19 +215,35 @@ msgstr "Turno "
 msgid "Turno de "
 msgstr "Turno de "
 
-#: src/states/MainGameState.cpp:290
+#: src/states/MainGameState.cpp:290 src/states/PersonajesState.cpp:52
 msgid "Jugador 1"
 msgstr "Jugador 1"
 
-#: src/states/MainGameState.cpp:296
+#: src/states/MainGameState.cpp:296 src/states/PersonajesState.cpp:53
 msgid "Jugador 2"
 msgstr "Jugador 2"
 
-#: src/states/PersonajesState.cpp:283 src/states/PersonajesState.cpp:305
+#: src/states/PersonajesState.cpp:40
+msgid "Estandar"
+msgstr ""
+
+#: src/states/PersonajesState.cpp:41
+msgid "Sniper"
+msgstr "Franco"
+
+#: src/states/PersonajesState.cpp:42
+msgid "Mortero"
+msgstr ""
+
+#: src/states/PersonajesState.cpp:43
+msgid "Pesada"
+msgstr ""
+
+#: src/states/PersonajesState.cpp:284 src/states/PersonajesState.cpp:306
 msgid "Arma:"
 msgstr "Arma:"
 
-#: src/states/PersonajesState.cpp:331 src/states/PersonajesState.cpp:332
-#: src/states/PersonajesState.cpp:333
+#: src/states/PersonajesState.cpp:332 src/states/PersonajesState.cpp:333
+#: src/states/PersonajesState.cpp:334
 msgid "Confirmar"
 msgstr "Confirmar"

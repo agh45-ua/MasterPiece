@@ -6,6 +6,7 @@
 #include "GameState.hpp"
 #include <iostream>
 #include <string>
+#include <cstdlib>
 #include "../core/config.h"
 extern "C" {
     #include <raylib.h>
@@ -19,6 +20,7 @@ InicioState::InicioState(){
 
 void InicioState::init(){
     fondo = LoadTexture(GetAssetPath("fondo-inicio.png").c_str());
+    // Siempre usar Poppins, ahora que japonés usa romaji
     poppins = LoadFontEx(GetAssetPath("Poppins-Bold.ttf").c_str(), 120, 0, 0);
 }
 

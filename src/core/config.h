@@ -4,6 +4,8 @@
 #include <iostream>
 #include <string>
 #include <filesystem>
+#include <cstdlib>
+#include <cstring>
 
 // Ruta base de assets
 #ifndef ASSETS_PATH
@@ -30,6 +32,28 @@ inline std::string GetAssetPath(const std::string& assetName) {
     std::string response = std::string(ASSETS_PATH) + assetName;
     std::cout << response << std::endl;
     return response;
+}
+
+// Función para detectar si el idioma actual es japonés
+inline bool IsJapaneseLanguage() {
+    const char* lang = std::getenv("LANGUAGE");
+    if (!lang) lang = std::getenv("LANG");
+    if (!lang) lang = std::getenv("LC_ALL");
+    
+    if (lang) {
+        std::string langStr(lang);
+        // Buscar "ja" en la variable de idioma
+        return (langStr.find("ja") == 0 || langStr.find("ja_") != std::string::npos);
+    }
+    return false;
+}
+
+// Función para obtener la fuente según el idioma
+inline std::string GetFontPath() {
+    if (IsJapaneseLanguage()) {
+        return GetAssetPath("NotoSansJP.ttf");
+    }
+    return GetAssetPath("Poppins-Bold.ttf");
 }
 
 #endif // CONFIG_H

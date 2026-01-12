@@ -5,6 +5,7 @@
 #include <memory>
 #include <sstream>
 #include <array>
+#include <cstdlib>
 
 float DrawWrappedText(Font font, const std::string& text, Vector2 position, float fontSize, float spacing, float maxWidth, Color color) {
     std::istringstream stream(text);

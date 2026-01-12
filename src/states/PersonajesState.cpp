@@ -5,6 +5,7 @@
 #include "GameState.hpp"
 #include <iostream>
 #include <string>
+#include <cstdlib>
 #include "../core/config.h"
 extern "C" {
     #include <raylib.h>
