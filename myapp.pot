@@ -1,0 +1,249 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-12 09:46+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/core/ControlBindings.cpp:91
+msgid "Movimiento izquierda"
+msgstr ""
+
+#: src/core/ControlBindings.cpp:93
+msgid "Movimiento derecha"
+msgstr ""
+
+#: src/core/ControlBindings.cpp:95
+msgid "Fijar lanzamiento"
+msgstr ""
+
+#: src/core/ControlBindings.cpp:97
+msgid "Finalizar turno J1"
+msgstr ""
+
+#: src/core/ControlBindings.cpp:99
+msgid "Finalizar turno J2"
+msgstr ""
+
+#: src/core/ControlBindings.cpp:112
+msgid "Sin asignar"
+msgstr ""
+
+#: src/core/ControlBindings.cpp:126
+msgid "Espacio"
+msgstr ""
+
+#: src/core/ControlBindings.cpp:128
+msgid "Intro"
+msgstr ""
+
+#: src/core/ControlBindings.cpp:130
+msgid "Tab"
+msgstr ""
+
+#: src/core/ControlBindings.cpp:132
+msgid "Ctrl izq"
+msgstr ""
+
+#: src/core/ControlBindings.cpp:134
+msgid "Ctrl der"
+msgstr ""
+
+#: src/core/ControlBindings.cpp:136
+msgid "Shift izq"
+msgstr ""
+
+#: src/core/ControlBindings.cpp:138
+msgid "Shift der"
+msgstr ""
+
+#: src/core/ControlBindings.cpp:140
+msgid "Alt izq"
+msgstr ""
+
+#: src/core/ControlBindings.cpp:142
+msgid "Alt der"
+msgstr ""
+
+#: src/core/ControlBindings.cpp:144
+msgid "Backspace"
+msgstr ""
+
+#: src/core/ControlBindings.cpp:146
+msgid "Delete"
+msgstr ""
+
+#: src/core/ControlBindings.cpp:148
+msgid "Flecha arriba"
+msgstr ""
+
+#: src/core/ControlBindings.cpp:150
+msgid "Flecha abajo"
+msgstr ""
+
+#: src/core/ControlBindings.cpp:152
+msgid "Flecha izq"
+msgstr ""
+
+#: src/core/ControlBindings.cpp:154
+msgid "Flecha der"
+msgstr ""
+
+#: src/core/ControlBindings.cpp:163
+msgid "Tecla "
+msgstr ""
+
+#: src/core/ControlBindings.cpp:169
+msgid "Click izq"
+msgstr ""
+
+#: src/core/ControlBindings.cpp:171
+msgid "Click der"
+msgstr ""
+
+#: src/core/ControlBindings.cpp:173
+msgid "Click medio"
+msgstr ""
+
+#: src/core/ControlBindings.cpp:175
+msgid "Mouse lateral"
+msgstr ""
+
+#: src/core/ControlBindings.cpp:177
+msgid "Mouse extra"
+msgstr ""
+
+#: src/core/ControlBindings.cpp:179
+msgid "Mouse adelante"
+msgstr ""
+
+#: src/core/ControlBindings.cpp:181
+msgid "Mouse atrás"
+msgstr ""
+
+#: src/core/ControlBindings.cpp:185
+msgid "Boton "
+msgstr ""
+
+#: src/states/ControlesState.cpp:105
+msgid "Configuracion de teclas"
+msgstr ""
+
+#: src/states/ControlesState.cpp:110
+msgid "Controles comunes"
+msgstr ""
+
+#: src/states/ControlesState.cpp:111
+msgid "Controles por jugador"
+msgstr ""
+
+#: src/states/ControlesState.cpp:156 src/states/PersonajesState.cpp:352
+#: src/states/PersonajesState.cpp:353
+msgid "Volver"
+msgstr ""
+
+#: src/states/ControlesState.cpp:174
+msgid "Pulsa una tecla o boton del raton para asignarla (ESC para cancelar)"
+msgstr ""
+
+#: src/states/ControlesState.cpp:176
+msgid "Haz clic sobre un control para reasignarlo."
+msgstr ""
+
+#: src/states/GameOverState.cpp:58
+msgid "GAME OVER"
+msgstr ""
+
+#: src/states/GameOverState.cpp:62
+msgid "Ganador: "
+msgstr ""
+
+#: src/states/GameOverState.cpp:66
+msgid "¡Enhorabuena!"
+msgstr ""
+
+#: src/states/GameOverState.cpp:70
+msgid "Tiempo de juego: "
+msgstr ""
+
+#: src/states/GameOverState.cpp:70
+msgid "m "
+msgstr ""
+
+#: src/states/GameOverState.cpp:70
+msgid "s"
+msgstr ""
+
+#: src/states/GameOverState.cpp:74
+msgid "Pulsa ESPACIO para jugar de nuevo"
+msgstr ""
+
+#: src/states/GameOverState.cpp:75
+msgid "Pulsa ESCAPE para volver al inicio"
+msgstr ""
+
+#: src/states/InicioState.cpp:74 src/states/InicioState.cpp:78
+#: src/states/PersonajesState.cpp:344 src/states/PersonajesState.cpp:345
+msgid "Jugar"
+msgstr ""
+
+#: src/states/InicioState.cpp:75 src/states/InicioState.cpp:79
+msgid "Controles"
+msgstr ""
+
+#: src/states/InicioState.cpp:76 src/states/InicioState.cpp:80
+msgid "Salir"
+msgstr ""
+
+#: src/states/MainGameState.cpp:226
+msgid "Turno "
+msgstr ""
+
+#: src/states/MainGameState.cpp:226
+msgid "Turno de "
+msgstr ""
+
+#: src/states/MainGameState.cpp:290 src/states/PersonajesState.cpp:52
+msgid "Jugador 1"
+msgstr ""
+
+#: src/states/MainGameState.cpp:296 src/states/PersonajesState.cpp:53
+msgid "Jugador 2"
+msgstr ""
+
+#: src/states/PersonajesState.cpp:40
+msgid "Estandar"
+msgstr ""
+
+#: src/states/PersonajesState.cpp:41
+msgid "Sniper"
+msgstr ""
+
+#: src/states/PersonajesState.cpp:42
+msgid "Mortero"
+msgstr ""
+
+#: src/states/PersonajesState.cpp:43
+msgid "Pesada"
+msgstr ""
+
+#: src/states/PersonajesState.cpp:284 src/states/PersonajesState.cpp:306
+msgid "Arma:"
+msgstr ""
+
+#: src/states/PersonajesState.cpp:332 src/states/PersonajesState.cpp:333
+#: src/states/PersonajesState.cpp:334
+msgid "Confirmar"
+msgstr ""

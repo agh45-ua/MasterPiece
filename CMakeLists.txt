@@ -5,69 +5,87 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 if (MSVC)
-    add_compile_options(/W3)
+    add_compile_options(/W3 /D_CRT_SECURE_NO_WARNINGS)
 else()
     add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
-# ==========================================
-# BUSCAR RAYLIB DEL SISTEMA
-# ==========================================
-find_package(raylib QUIET)
+# 1. BUSCAR DEPENDENCIAS (Raylib)
+# ------------------------------------------
+find_package(raylib CONFIG REQUIRED)
 
-# Si no existe raylib instalado, usar vendor/
-if (NOT raylib_FOUND)
-    message(STATUS "Raylib no encontrado, usando vendor/include y vendor/lib")
+# 2. DEFINIR FUENTES Y CREAR LIBRERÍA (Target GameLogic)
+# ------------------------------------------
+# Listado explícito para evitar GLOB (Práctica recomendada por el profesor)
+set(GAME_SOURCES
+    src/core/GameState.cpp
+    src/core/StateMachine.cpp
+    src/core/ControlBindings.cpp
+    src/core/ResourceManager.cpp
 
-    include_directories(${CMAKE_SOURCE_DIR}/vendor/include)
-    link_directories(${CMAKE_SOURCE_DIR}/vendor/lib)
+    src/states/InicioState.cpp
+    src/states/PersonajesState.cpp
+    src/states/GameOverState.cpp
+    src/states/MainGameState.cpp
+    src/states/ControlesState.cpp
+)
 
-    set(RAYLIB_LIB raylib)
-else()
-    set(RAYLIB_LIB raylib)
-endif()
+# Primero creamos la librería...
+add_library(GameLogic STATIC ${GAME_SOURCES})
 
-# ==========================================
-# ARCHIVOS FUENTE
-# ==========================================
-file(GLOB_RECURSE SOURCE_FILES src/*.cpp)
+# Enlazamos raylib a GameLogic (esto proporciona automáticamente los directorios de inclusión)
+target_link_libraries(GameLogic PUBLIC raylib)
 
-add_executable(MasterPiece ${SOURCE_FILES})
-
-# ==========================================
-# INCLUDES
-# ==========================================
-target_include_directories(MasterPiece PRIVATE
+# ...y DESPUÉS le asignamos sus directorios de inclusión
+target_include_directories(GameLogic PUBLIC
     ${CMAKE_SOURCE_DIR}/src
     ${CMAKE_SOURCE_DIR}/src/core
     ${CMAKE_SOURCE_DIR}/src/states
-    ${CMAKE_SOURCE_DIR}/vendor/include
 )
 
-# Enlace con raylib + librerías necesarias
-if (UNIX AND NOT APPLE)
-    target_link_libraries(MasterPiece
-        PRIVATE
-        ${RAYLIB_LIB}
-        m dl pthread GL X11 Xrandr Xi Xcursor Xxf86vm
-    )
-elseif (WIN32)
-    target_link_libraries(MasterPiece PRIVATE ${RAYLIB_LIB})
+# 3. Librerias del sistema
+if (WIN32)
+    # Librerías Multimedia de Windows
+    target_link_libraries(GameLogic PUBLIC winmm gdi32 shell32 user32 opengl32)
+elseif (UNIX AND NOT APPLE)
+    # Librerías de Linux (X11, GL, etc.)
+    target_link_libraries(GameLogic PUBLIC m dl pthread GL X11 Xrandr Xi Xcursor Xxf86vm)
 endif()
 
-# ==========================================
-# COPIAR ASSETS AUTOMÁTICAMENTE
-# ==========================================
+# 4. CREAR EJECUTABLE PRINCIPAL (Target MasterPiece)
+# ------------------------------------------
+# El ejecutable depende de main. cpp
+add_executable(MasterPiece src/core/main.cpp)
+
+# Enlazamos a la lógica (que ya incluye raylib).
+# NOTA: MasterPiece hereda los INCLUDES de GameLogic automáticamente por ser PUBLIC.
+target_link_libraries(MasterPiece PRIVATE GameLogic)
+
+# 5. RECURSOS, TESTS Y EMPAQUETADO
+# ------------------------------------------
 file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
 
+enable_testing()
+add_subdirectory(tests)
 
-# Solo empaquetamos con CPack en Windows
+# ------------------------------------------
+# INSTALL (necesario para que CPack meta archivos en el ZIP)
+# ------------------------------------------
+install(TARGETS MasterPiece
+    RUNTIME DESTINATION .
+)
+
+install(DIRECTORY ${CMAKE_SOURCE_DIR}/assets
+    DESTINATION .
+)
+
+if (WIN32)
+    install(FILES $<TARGET_FILE:raylib> DESTINATION . OPTIONAL)
+endif()
+
 if (WIN32)
     set(CPACK_PACKAGE_NAME "MasterPiece")
     set(CPACK_PACKAGE_VERSION "1.0.0")
     set(CPACK_GENERATOR "ZIP")
-
     include(CPack)
-
-    cpack_add_component(MasterPiece)
 endif()

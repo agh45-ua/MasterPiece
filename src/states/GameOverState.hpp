@@ -4,8 +4,9 @@ extern "C" {
 }
 #include <iostream>
 #include "GameState.hpp"
+#include "config.h"
 #include "PersonajesState.hpp"
-
+#include <ctime>
 using namespace std;
 
 class GameOverState: public GameState
@@ -23,9 +24,11 @@ class GameOverState: public GameState
         void resume() override;
     
     private:
-        int winner_id = 0;
         Jugador jugador1;
         Jugador jugador2;
+        int winner_id = 0;
         time_t game_time;
+
         Texture2D fondo;
+        Font poppins;
 };

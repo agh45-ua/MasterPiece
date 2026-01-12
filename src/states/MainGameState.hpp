@@ -1,15 +1,25 @@
 #pragma once
 #include "GameState.hpp"
-
-#include <raylib.h>
+#include "PersonajesState.hpp"
+#include "config.h"
 #include <string>
 #include <cmath>
+
+#include <vector>
+#include <ctime>
 extern "C" {
     #include <raylib.h>
-#include "PersonajesState.hpp"
 }
 
 using namespace std;
+
+struct Explosion {
+    Vector2 pos;
+    float radius;
+    float time;
+    float duration;
+    bool active;
+};
 
 struct Projectile {
     Vector2 pos;
@@ -37,12 +47,25 @@ class MainGameState : public GameState
         void pause(){};
         void resume(){};
 
+        //Metodos para los tests
+        int getPlayer1Health() const { return player1.health; }
+        int getPlayer2Health() const { return player2.health; }
+        bool isProjectile1Active() const { return projectile_1.active; }
+        void setTurno(char t) { turno = t; } // Para forzar la fase de resolución en el test
+        void setProjectile1(Vector2 pos, Vector2 vel) {
+            projectile_1.pos = pos;
+            projectile_1.vel = vel;
+            projectile_1.active = true;
+        }
+        void setGround(Rectangle g) { ground = g; }
     
     private:
+        vector<Explosion> explosions;
 
         Jugador jugador1;
         Jugador jugador2;
         Texture2D fondo;
+        Font poppins;
 
         // Ventana
         const int screenWidth = 800;
@@ -61,10 +84,8 @@ class MainGameState : public GameState
         int contador_turno =1;
 
         // --- Proyectiles ---
-        Projectile projectile_1 = {{0, 0}, {0, 0}, false};
-        const float gravity_1 = 400.0f;
-        Projectile projectile_2 = {{0, 0}, {0, 0}, false};
-        const float gravity_2 = 400.0f;
+        Projectile projectile_1 = {{0, 0}, {0, 0}, false, false};
+        Projectile projectile_2 = {{0, 0}, {0, 0}, false, false};
 
         // --- Apuntado ---
         float angle_1 = -30.0f * DEG2RAD, old_angle_1; // ángulo inicial (en radianes)

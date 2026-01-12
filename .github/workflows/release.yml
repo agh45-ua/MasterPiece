@@ -4,8 +4,10 @@ on:
   release:
     types: [published]
 
-jobs:
+permissions:
+  contents: write
 
+jobs:
   linux-deb:
     name: Build .deb package (Linux)
     runs-on: ubuntu-latest
@@ -19,23 +21,19 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y \
             build-essential devscripts debhelper dh-make \
-            cmake g++ libgl1-mesa-dev libx11-dev libraylib-dev
+            cmake g++ libgl1-mesa-dev libx11-dev \
+            libxrandr-dev libxi-dev libxcursor-dev libxinerama-dev libxxf86vm-dev \
+            libasound2-dev
 
       - name: Build Debian package
-        run: |
-          dpkg-buildpackage -us -uc
+        run: dpkg-buildpackage -us -uc -b -d
 
       - name: Upload .deb to release
-        uses: actions/upload-release-asset@v1
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ../masterpiece_*.deb
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ../masterpiece_*_amd64.deb
-          asset_name: masterpiece-linux.deb
-          asset_content_type: application/vnd.debian.binary-package
-
-
 
   windows-zip:
     name: Build ZIP package (Windows)
@@ -45,23 +43,29 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Install Raylib via vcpkg
+        run: vcpkg install raylib:x64-windows
+
+      - name: Clean build directory
+        run: |
+          if (Test-Path build) { Remove-Item -Recurse -Force build }
+          mkdir build
+
       - name: Configure CMake
-        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-windows
 
       - name: Build
         run: cmake --build build --config Release
 
       - name: Package with CPack
+        shell: pwsh
         run: |
           cd build
-          cpack
+          cpack -C Release
 
       - name: Upload ZIP to release
-        uses: actions/upload-release-asset@v1
+        uses: softprops/action-gh-release@v2
+        with:
+          files: build/*.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: build/*.zip
-          asset_name: MasterPiece-windows.zip
-          asset_content_type: application/zip

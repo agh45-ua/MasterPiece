@@ -1,0 +1,249 @@
+# Japanese translations for PACKAGE package.
+# Copyright (C) 2026 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <agh45@alu.ua.es>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-12 09:46+0100\n"
+"PO-Revision-Date: 2026-01-12 08:38+0100\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: src/core/ControlBindings.cpp:91
+msgid "Movimiento izquierda"
+msgstr "Hidari Ido"
+
+#: src/core/ControlBindings.cpp:93
+msgid "Movimiento derecha"
+msgstr "Migi Ido"
+
+#: src/core/ControlBindings.cpp:95
+msgid "Fijar lanzamiento"
+msgstr "Shageki Kakutei"
+
+#: src/core/ControlBindings.cpp:97
+msgid "Finalizar turno J1"
+msgstr "P1 Turn Shuryo"
+
+#: src/core/ControlBindings.cpp:99
+msgid "Finalizar turno J2"
+msgstr "P2 Turn Shuryo"
+
+#: src/core/ControlBindings.cpp:112
+msgid "Sin asignar"
+msgstr "Miwariato"
+
+#: src/core/ControlBindings.cpp:126
+msgid "Espacio"
+msgstr "Space"
+
+#: src/core/ControlBindings.cpp:128
+msgid "Intro"
+msgstr "Enter"
+
+#: src/core/ControlBindings.cpp:130
+msgid "Tab"
+msgstr "Tab"
+
+#: src/core/ControlBindings.cpp:132
+msgid "Ctrl izq"
+msgstr "Hidari Ctrl"
+
+#: src/core/ControlBindings.cpp:134
+msgid "Ctrl der"
+msgstr "Migi Ctrl"
+
+#: src/core/ControlBindings.cpp:136
+msgid "Shift izq"
+msgstr "Hidari Shift"
+
+#: src/core/ControlBindings.cpp:138
+msgid "Shift der"
+msgstr "Migi Shift"
+
+#: src/core/ControlBindings.cpp:140
+msgid "Alt izq"
+msgstr "Hidari Alt"
+
+#: src/core/ControlBindings.cpp:142
+msgid "Alt der"
+msgstr "Migi Alt"
+
+#: src/core/ControlBindings.cpp:144
+msgid "Backspace"
+msgstr "Backspace"
+
+#: src/core/ControlBindings.cpp:146
+msgid "Delete"
+msgstr "Sakujo"
+
+#: src/core/ControlBindings.cpp:148
+msgid "Flecha arriba"
+msgstr "Ue Yajirushi"
+
+#: src/core/ControlBindings.cpp:150
+msgid "Flecha abajo"
+msgstr "Shita Yajirushi"
+
+#: src/core/ControlBindings.cpp:152
+msgid "Flecha izq"
+msgstr "Hidari Yajirushi"
+
+#: src/core/ControlBindings.cpp:154
+msgid "Flecha der"
+msgstr "Migi Yajirushi"
+
+#: src/core/ControlBindings.cpp:163
+msgid "Tecla "
+msgstr "Key "
+
+#: src/core/ControlBindings.cpp:169
+msgid "Click izq"
+msgstr "Hidari Click"
+
+#: src/core/ControlBindings.cpp:171
+msgid "Click der"
+msgstr "Migi Click"
+
+#: src/core/ControlBindings.cpp:173
+msgid "Click medio"
+msgstr "Naka Click"
+
+#: src/core/ControlBindings.cpp:175
+msgid "Mouse lateral"
+msgstr "Side Mouse"
+
+#: src/core/ControlBindings.cpp:177
+msgid "Mouse extra"
+msgstr "Kakucho Mouse"
+
+#: src/core/ControlBindings.cpp:179
+msgid "Mouse adelante"
+msgstr "Susumu Mouse"
+
+#: src/core/ControlBindings.cpp:181
+msgid "Mouse atrás"
+msgstr "Modoru Mouse"
+
+#: src/core/ControlBindings.cpp:185
+msgid "Boton "
+msgstr "Button "
+
+#: src/states/ControlesState.cpp:105
+msgid "Configuracion de teclas"
+msgstr "Key Settei"
+
+#: src/states/ControlesState.cpp:110
+msgid "Controles comunes"
+msgstr "Kyotsu Sosa"
+
+#: src/states/ControlesState.cpp:111
+msgid "Controles por jugador"
+msgstr "Player Betsu Sosa"
+
+#: src/states/ControlesState.cpp:156 src/states/PersonajesState.cpp:352
+#: src/states/PersonajesState.cpp:353
+msgid "Volver"
+msgstr "Modoru"
+
+#: src/states/ControlesState.cpp:174
+msgid "Pulsa una tecla o boton del raton para asignarla (ESC para cancelar)"
+msgstr "Key matawa mouse button wo oshite wariate (ESC de cancel)"
+
+#: src/states/ControlesState.cpp:176
+msgid "Haz clic sobre un control para reasignarlo."
+msgstr "Control wo click shite sai-wariate"
+
+#: src/states/GameOverState.cpp:58
+msgid "GAME OVER"
+msgstr "GAME OVER"
+
+#: src/states/GameOverState.cpp:62
+msgid "Ganador: "
+msgstr "Shosha: "
+
+#: src/states/GameOverState.cpp:66
+msgid "¡Enhorabuena!"
+msgstr "Omedetou gozaimasu!"
+
+#: src/states/GameOverState.cpp:70
+msgid "Tiempo de juego: "
+msgstr "Play Jikan: "
+
+#: src/states/GameOverState.cpp:70
+msgid "m "
+msgstr "fun "
+
+#: src/states/GameOverState.cpp:70
+msgid "s"
+msgstr "byo"
+
+#: src/states/GameOverState.cpp:74
+msgid "Pulsa ESPACIO para jugar de nuevo"
+msgstr "SPACE key de sai-play"
+
+#: src/states/GameOverState.cpp:75
+msgid "Pulsa ESCAPE para volver al inicio"
+msgstr "ESC key de menu ni modoru"
+
+#: src/states/InicioState.cpp:74 src/states/InicioState.cpp:78
+#: src/states/PersonajesState.cpp:344 src/states/PersonajesState.cpp:345
+msgid "Jugar"
+msgstr "Play"
+
+#: src/states/InicioState.cpp:75 src/states/InicioState.cpp:79
+msgid "Controles"
+msgstr "Sosa"
+
+#: src/states/InicioState.cpp:76 src/states/InicioState.cpp:80
+msgid "Salir"
+msgstr "Shuryo"
+
+#: src/states/MainGameState.cpp:226
+msgid "Turno "
+msgstr "Turn "
+
+#: src/states/MainGameState.cpp:226
+msgid "Turno de "
+msgstr "Turn: "
+
+#: src/states/MainGameState.cpp:290 src/states/PersonajesState.cpp:52
+msgid "Jugador 1"
+msgstr "Player 1"
+
+#: src/states/MainGameState.cpp:296 src/states/PersonajesState.cpp:53
+msgid "Jugador 2"
+msgstr "Player 2"
+
+#: src/states/PersonajesState.cpp:40
+msgid "Estandar"
+msgstr "Standaru"
+
+#: src/states/PersonajesState.cpp:41
+msgid "Sniper"
+msgstr "Snipa"
+
+#: src/states/PersonajesState.cpp:42
+msgid "Mortero"
+msgstr "Morta"
+
+#: src/states/PersonajesState.cpp:43
+msgid "Pesada"
+msgstr "Hevy"
+
+#: src/states/PersonajesState.cpp:284 src/states/PersonajesState.cpp:306
+msgid "Arma:"
+msgstr "Buki:"
+
+#: src/states/PersonajesState.cpp:332 src/states/PersonajesState.cpp:333
+#: src/states/PersonajesState.cpp:334
+msgid "Confirmar"
+msgstr "Kakutei"
