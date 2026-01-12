@@ -36,10 +36,10 @@ void PersonajesState::init(){
 
     // DEFINICIÓN DE ARMAS
     armasDisponibles = {
-        Arma{"Estandar", 34, 500.0f, 400.0f, BLACK},
-        Arma{"Sniper", 25, 1000.0f, 50.0f, RED},       // Rápida, poca caída, menos daño
-        Arma{"Mortero", 50, 400.0f, 900.0f, DARKGREEN}, // Mucho daño, mucha gravedad
-        Arma{"Pesada", 40, 300.0f, 200.0f, PURPLE}      // Lenta, flota más, buen daño
+        Arma{_("Estandar"), 34, 500.0f, 400.0f, BLACK},
+        Arma{_("Sniper"), 25, 1000.0f, 50.0f, RED},       // Rápida, poca caída, menos daño
+        Arma{_("Mortero"), 50, 400.0f, 900.0f, DARKGREEN}, // Mucho daño, mucha gravedad
+        Arma{_("Pesada"), 40, 300.0f, 200.0f, PURPLE}      // Lenta, flota más, buen daño
     };
 
     indiceArma1 = 0;
@@ -48,8 +48,8 @@ void PersonajesState::init(){
     color1 = 0;
     color2 = 1;
 
-    jugador1 = {1, "Jugador 1", personajes[color1], armasDisponibles[indiceArma1]};
-    jugador2 = {2, "Jugador 2", personajes[color2], armasDisponibles[indiceArma2]};
+    jugador1 = {1, _("Jugador 1"), personajes[color1], armasDisponibles[indiceArma1]};
+    jugador2 = {2, _("Jugador 2"), personajes[color2], armasDisponibles[indiceArma2]};
 }
 
 void PersonajesState::handleInput(){
@@ -340,8 +340,8 @@ void PersonajesState::render() {
         DrawRectangleRounded(jugar, 0.3f, 8, Fade(hover ? GREEN : GRAY, transicionAlpha));
         
         float fuenteJugar = 35.0f;
-        Vector2 longJugar = MeasureTextEx(poppins, "Jugar", fuenteJugar, 2.0f);
-        DrawTextEx(poppins, "Jugar", { jugar.x + (anchoJugar - longJugar.x) / 2, jugar.y + (altoJugar - longJugar.y) / 2 }, fuenteJugar, 2.0f, Fade(RAYWHITE, transicionAlpha));
+        Vector2 longJugar = MeasureTextEx(poppins, _("Jugar"), fuenteJugar, 2.0f);
+        DrawTextEx(poppins, _("Jugar"), { jugar.x + (anchoJugar - longJugar.x) / 2, jugar.y + (altoJugar - longJugar.y) / 2 }, fuenteJugar, 2.0f, Fade(RAYWHITE, transicionAlpha));
     }
 
     // Volver
