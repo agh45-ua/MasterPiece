@@ -6,12 +6,11 @@
 #include <string>
 #include <cmath>
 #include <libintl.h>
+#include <ctime>
 #define _(STRING) gettext(STRING)
 extern "C" {
     #include <raylib.h>
 }
-
-using namespace std;
 
 struct Projectile {
     Vector2 pos;
@@ -56,6 +55,7 @@ class MainGameState : public GameState
         Jugador jugador1;
         Jugador jugador2;
         Texture2D fondo;
+        Font poppins;
 
         // Ventana
         const int screenWidth = 800;

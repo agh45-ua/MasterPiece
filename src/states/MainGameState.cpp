@@ -1,6 +1,7 @@
 #include "MainGameState.hpp"
 #include "StateMachine.hpp"
 #include "GameOverState.hpp"
+#include "ResourceManager.hpp"
 #include <string>
 #include <iostream>
 #include "../core/config.h"
@@ -15,7 +16,8 @@ MainGameState::MainGameState(const Jugador& a, const Jugador& b)
 : jugador1(a), jugador2(b) {}
 
 void MainGameState::init(){
-    fondo = LoadTexture(GetAssetPath("fondo-juego.png").c_str());
+    fondo = ResourceManager::getInstance().GetTexture(GetAssetPath("fondo-juego.png"));
+    poppins = ResourceManager::getInstance().GetFont(GetAssetPath("Poppins-Bold.ttf"));
     ground = {0, (float)screenHeight - groundHeight, (float)screenWidth, (float)groundHeight};
     player1 = {{100, ground.y - 50, 50, 50}, 100};
     player2 = {{screenWidth - 150.0f, ground.y - 50, 50, 50}, 100};
@@ -207,8 +209,8 @@ void MainGameState::update(float deltaTime){
 void MainGameState::render(){
     
     BeginDrawing();
-    
     ClearBackground(RAYWHITE);
+
     DrawTexturePro(
         fondo,
         { 0, 0, (float)fondo.width, (float)fondo.height },
@@ -217,10 +219,11 @@ void MainGameState::render(){
         0.0f,
         WHITE
     );
+
     if (countdownActive) {
         int secondsLeft = (int)ceil(countdownTime);
         string s = to_string(secondsLeft);
-        DrawText(s.c_str(), screenWidth/2 - 20, screenHeight/2 - 20, 50, PURPLE);
+        DrawTextEx(poppins, s.c_str(), { (float)screenWidth/2 - 20, (float)screenHeight/2 - 20 }, 50, 2, PURPLE);
     } else {
         //Turno
         string s1 = string(_("Turno "))+ to_string( contador_turno),s2 = string(_("Turno de "))+ string(1, turno);
@@ -282,24 +285,24 @@ void MainGameState::render(){
 
         }
         
-        // --- Barras de vida (HUD) ---
+        // Barras de vida (HUD)
         float maxBarWidth = 200;
         float barHeight = 20;
+        float fontSizeHUD = 20.0f;
 
         // Jugador 1 - esquina superior izquierda
-        DrawText(_("Jugador 1"), 30, 20, 20, BLACK);
+        DrawTextEx(poppins, _("Jugador 1"), { 30, 20 }, fontSizeHUD, 2, BLACK);
         DrawRectangle(30, 50, maxBarWidth, barHeight, GRAY);
         DrawRectangle(30, 50, maxBarWidth * (player1.health / 100.0f), barHeight, GREEN);
-        DrawText(TextFormat("%d / 100", player1.health), 30, 50 + barHeight + 5, 20, DARKGREEN);
+        DrawTextEx(poppins, TextFormat("%d / 100", player1.health), { 30, 50 + barHeight + 5 }, fontSizeHUD, 2, DARKGREEN);
 
         // Jugador 2 - esquina superior derecha
-        DrawText(_("Jugador 2"), screenWidth - 230, 20, 20, BLACK);
+        DrawTextEx(poppins, _("Jugador 2"), { (float)screenWidth - 230, 20 }, fontSizeHUD, 2, BLACK);
         DrawRectangle(screenWidth - 230, 50, maxBarWidth, barHeight, GRAY);
         DrawRectangle(screenWidth - 230 + (maxBarWidth * (1 - player2.health / 100.0f)), 50,
                     maxBarWidth * (player2.health / 100.0f), barHeight, GREEN);
-        DrawText(TextFormat("%d / 100", player2.health), screenWidth - 230, 50 + barHeight + 5, 20, DARKGREEN);
+        DrawTextEx(poppins, TextFormat("%d / 100", player2.health), { (float)screenWidth - 230, 50 + barHeight + 5 }, fontSizeHUD, 2, DARKGREEN);
 
-        //DrawText("ESPACIO para disparar", 20, 45, 20, DARKGRAY);
     }
     EndDrawing();
 }

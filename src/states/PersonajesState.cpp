@@ -3,6 +3,7 @@
 #include "PersonajesState.hpp"
 #include "StateMachine.hpp"
 #include "GameState.hpp"
+#include "ResourceManager.hpp"
 #include <iostream>
 #include <string>
 #include <cstdlib>
@@ -19,9 +20,9 @@ PersonajesState::PersonajesState(){
 
 void PersonajesState::init(){
     // CARGAR TEXTURAS
-    fondo = LoadTexture(GetAssetPath("fondo-juego.png").c_str());
-    poppins = LoadFontEx(GetAssetPath("Poppins-Bold.ttf").c_str(), 120, 0, 0);
-    
+    fondo = ResourceManager::getInstance().GetTexture(GetAssetPath("fondo-juego.png"));
+    poppins = ResourceManager::getInstance().GetFont(GetAssetPath("Poppins-Bold.ttf"));
+
     // INICIALIZAMOS VARIABLES
     color1 = 0;
     color2 = 1;
@@ -32,7 +33,7 @@ void PersonajesState::init(){
 
     // TEXTURAS PERSONAJES
     for (int i = 0; i < 6; i++) {
-        personajes[i] = LoadTexture(GetAssetPath(rutas[i]).c_str());
+        personajes[i] = ResourceManager::getInstance().GetTexture(GetAssetPath(rutas[i]));
     }
 
     // DEFINICIÓN DE ARMAS

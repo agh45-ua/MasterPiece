@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/test_states.dir/test_states.cpp.o -o test_states  ../libGameLogic.a "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/vendor/lib/libraylib.a" 

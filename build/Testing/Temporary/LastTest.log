@@ -1,0 +1,51 @@
+Start testing: Jan 12 15:12 CET
+----------------------------------------------------------
+1/3 Testing: StateMachineTests
+1/3 Test: StateMachineTests
+Command: "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/tests/test_statemachine"
+Directory: /home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/tests
+"StateMachineTests" start time: Jan 12 15:12 CET
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"StateMachineTests" end time: Jan 12 15:12 CET
+"StateMachineTests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+2/3 Testing: GameStateTests
+2/3 Test: GameStateTests
+Command: "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/tests/test_states"
+Directory: /home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/tests
+"GameStateTests" start time: Jan 12 15:12 CET
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"GameStateTests" end time: Jan 12 15:12 CET
+"GameStateTests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+3/3 Testing: GameplayTests
+3/3 Test: GameplayTests
+Command: "/home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/tests/test_gameplay"
+Directory: /home/luis/Escritorio/UA/4º Carrera/DCA/MasterPiece/build/tests
+"GameplayTests" start time: Jan 12 15:12 CET
+Output:
+----------------------------------------------------------
+[OK] Test 11: Físicas y Gravedad
+[OK] Test 12: Límite lateral
+[OK] Test 13: Colisión suelo
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"GameplayTests" end time: Jan 12 15:12 CET
+"GameplayTests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Jan 12 15:12 CET

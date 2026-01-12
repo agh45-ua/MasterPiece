@@ -6,6 +6,7 @@ extern "C" {
 #include "GameState.hpp"
 #include "PersonajesState.hpp"
 #include <libintl.h>
+#include <ctime>
 #define _(STRING) gettext(STRING)
 using namespace std;
 
@@ -24,9 +25,11 @@ class GameOverState: public GameState
         void resume() override;
     
     private:
-        int winner_id = 0;
         Jugador jugador1;
         Jugador jugador2;
+        int winner_id = 0;
         time_t game_time;
+
         Texture2D fondo;
+        Font poppins;
 };

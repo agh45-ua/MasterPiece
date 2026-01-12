@@ -4,6 +4,7 @@
 #include "ControlesState.hpp"
 #include "StateMachine.hpp"
 #include "GameState.hpp"
+#include "ResourceManager.hpp"
 #include <iostream>
 #include <string>
 #include <cstdlib>
@@ -19,9 +20,11 @@ InicioState::InicioState(){
 }
 
 void InicioState::init(){
-    fondo = LoadTexture(GetAssetPath("fondo-inicio.png").c_str());
+    //fondo = LoadTexture(GetAssetPath("fondo-inicio.png").c_str());
+    fondo = ResourceManager::getInstance().GetTexture(GetAssetPath("fondo-inicio.png"));
     // Siempre usar Poppins, ahora que japonés usa romaji
-    poppins = LoadFontEx(GetAssetPath("Poppins-Bold.ttf").c_str(), 120, 0, 0);
+    //poppins = LoadFontEx(GetAssetPath("Poppins-Bold.ttf").c_str(), 120, 0, 0);
+    poppins = ResourceManager::getInstance().GetFont(GetAssetPath("Poppins-Bold.ttf"));
 }
 
 void InicioState::handleInput(){
@@ -41,7 +44,6 @@ void InicioState::update(float deltaTime){
             this->state_machine->add_state(make_unique<ControlesState>(), true);
         }
         if (CheckCollisionPointRec(m, Salir)) {
-            CloseWindow();
             exit(0);
         }
     }

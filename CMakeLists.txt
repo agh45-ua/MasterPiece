@@ -28,6 +28,7 @@ set(GAME_SOURCES
     src/core/GameState.cpp
     src/core/StateMachine.cpp
     src/core/ControlBindings.cpp
+    src/core/ResourceManager.cpp
 
     src/states/InicioState.cpp
     src/states/PersonajesState.cpp
