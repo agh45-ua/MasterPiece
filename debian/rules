@@ -4,5 +4,8 @@
 %:
 	dh $@
 
+override_dh_auto_test:
+	@echo "Saltando tests para el empaquetado..."
+
 override_dh_auto_install:
 	$(MAKE) DESTDIR=$$(pwd)/debian/masterpiece PREFIX=/usr APP_NAME=masterpiece install

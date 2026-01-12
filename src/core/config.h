@@ -1,6 +1,13 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
+// PARCHE PARA MSVC (Windows)
+#ifdef _WIN32
+    #ifndef _CRT_SECURE_NO_WARNINGS
+        #define _CRT_SECURE_NO_WARNINGS
+    #endif
+#endif
+
 #include <iostream>
 #include <string>
 #include <filesystem>
@@ -14,17 +21,14 @@
 
 // Función para obtener la ruta correcta de un asset
 inline std::string GetAssetPath(const std::string& assetName) {
-    // Primero intenta la ruta local (para desarrollo)
     std::string localPath = "assets/" + assetName;
     if (std::filesystem::exists(localPath)) {
         return localPath;
     }
-    // Luego se prueba la ruta relativa al ejecutable (por si se está ejecutando desde el directorio bin/)
     std::string binPath = "../assets/" + assetName;
     if (std::filesystem::exists(binPath)) {
         return binPath;
     }
-    // Si no existe, usa la ruta instalada
     return std::string(ASSETS_PATH) + assetName;
 }
 
@@ -36,7 +40,6 @@ inline bool IsJapaneseLanguage() {
     
     if (lang) {
         std::string langStr(lang);
-        // Buscar "ja" en la variable de idioma
         return (langStr.find("ja") == 0 || langStr.find("ja_") != std::string::npos);
     }
     return false;
@@ -49,5 +52,23 @@ inline std::string GetFontPath() {
     }
     return GetAssetPath("Poppins-Bold.ttf");
 }
+
+// BLOQUE DE INTERNACIONALIZACIÓN
+#ifndef _WIN32
+    #include <libintl.h>
+    #include <locale.h>
+    #ifndef _
+        #define _(String) gettext(String)
+    #endif
+#else
+    #define _(String) (String)
+    #define gettext(String) (String)
+    #define textdomain(Domain)
+    #define bindtextdomain(Domain, Dir)
+    #define setlocale(Category, Locale)
+    #ifndef LC_ALL
+        #define LC_ALL 0
+    #endif
+#endif
 
 #endif // CONFIG_H

@@ -1,11 +1,9 @@
 #pragma once
 #include "GameState.hpp"
-#include <raylib.h>
+#include "config.h"
 #include <cmath>
 #include <string>
 #include <vector>
-#include <libintl.h>
-#define _(STRING) gettext(STRING)
 extern "C" {
     #include <raylib.h>
 }

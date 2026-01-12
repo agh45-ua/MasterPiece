@@ -16,7 +16,7 @@ find_package(raylib QUIET)
 
 if (NOT raylib_FOUND)
     # Buscamos la librería específica en vendor/ para no usar rutas globales
-    find_library(RAYLIB_LIB raylib PATHS ${CMAKE_SOURCE_DIR}/vendor/lib NO_DEFAULT_PATH)
+    find_library(RAYLIB_LIB raylib PATHS "${CMAKE_CURRENT_SOURCE_DIR}/vendor/lib" NO_DEFAULT_PATH)
 else()
     set(RAYLIB_LIB raylib)
 endif()

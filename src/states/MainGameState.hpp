@@ -1,13 +1,10 @@
 #pragma once
 #include "GameState.hpp"
 #include "PersonajesState.hpp"
-
-#include <raylib.h>
+#include "config.h"
 #include <string>
 #include <cmath>
-#include <libintl.h>
 #include <ctime>
-#define _(STRING) gettext(STRING)
 extern "C" {
     #include <raylib.h>
 }

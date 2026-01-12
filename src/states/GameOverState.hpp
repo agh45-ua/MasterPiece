@@ -4,10 +4,9 @@ extern "C" {
 }
 #include <iostream>
 #include "GameState.hpp"
+#include "config.h"
 #include "PersonajesState.hpp"
-#include <libintl.h>
 #include <ctime>
-#define _(STRING) gettext(STRING)
 using namespace std;
 
 class GameOverState: public GameState

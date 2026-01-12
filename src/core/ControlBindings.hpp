@@ -1,9 +1,8 @@
 #pragma once
-
+#include "config.h"
 #include <array>
 #include <string>
-#include <libintl.h>
-#define _(STRING) gettext(STRING)
+
 extern "C" {
 #include <raylib.h>
 }
