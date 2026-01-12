@@ -245,7 +245,7 @@ if (projectile_1.active && !projectile_1.hasHit) {
     if (colisionSuelo || colisionJugador) {
         if (jugador1.arma.nombre == "Lanzacohetes") {
             // Si toca el suelo, la explosión es en el suelo; si toca al jugador, en la bala
-            Vector2 puntoImpacto = colisionSuelo ? (Vector2){projectile_1.pos.x, ground.y} : projectile_1.pos;
+            Vector2 puntoImpacto = colisionSuelo ? Vector2{projectile_1.pos.x, ground.y} : projectile_1.pos;
             
             aplicarExplosion(puntoImpacto, 200, jugador1.arma.damage, player2);
             explosions.push_back({puntoImpacto, 200, 0.0f, 0.45f, true});
@@ -267,7 +267,7 @@ if (projectile_2.active && !projectile_2.hasHit) {
 
     if (colisionSuelo || colisionJugador) {
         if (jugador2.arma.nombre == "Lanzacohetes") {
-            Vector2 puntoImpacto = colisionSuelo ? (Vector2){projectile_2.pos.x, ground.y} : projectile_2.pos;
+            Vector2 puntoImpacto = colisionSuelo ? Vector2{projectile_2.pos.x, ground.y} : projectile_2.pos;
             
             aplicarExplosion(puntoImpacto, 200, jugador2.arma.damage, player1);
             explosions.push_back({puntoImpacto, 200, 0.0f, 0.45f, true});

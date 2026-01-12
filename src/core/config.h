@@ -61,7 +61,9 @@ inline std::string GetFontPath() {
         #define _(String) gettext(String)
     #endif
 #else
-    #define _(String) (String)
+    #ifndef _
+        #define _(String) (String)
+    #endif
     #define gettext(String) (String)
     #define textdomain(Domain)
     #define bindtextdomain(Domain, Dir)
