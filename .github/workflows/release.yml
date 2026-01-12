@@ -57,9 +57,9 @@ jobs:
       - name: Build
         run: cmake --build build --config Release
 
-      - name: Print Raylib version (5.5 necessary)
-        run: |
-        build\Release\print_raylib_version.exe
+      - name: Print Raylib version (5.5 needed)
+        shell: pwsh
+        run: .\build\Release\print_raylib_version.exe
 
       - name: Package with CPack
         run: |
