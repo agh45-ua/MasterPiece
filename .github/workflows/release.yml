@@ -42,29 +42,27 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Update vcpkg
-        shell: pwsh
-        run: |
-          cd C:\vcpkg
-          git pull
-          .\bootstrap-vcpkg.bat
-
-      - name: Install Raylib via vcpkg
-        run: vcpkg install raylib:x64-windows
+        with:
+          submodules: recursive   # por si raylib está como submódulo
 
       - name: Clean build directory
+        shell: pwsh
         run: |
           if (Test-Path build) { Remove-Item -Recurse -Force build }
-          mkdir build
+          New-Item -ItemType Directory -Path build | Out-Null
 
-      - name: Configure CMake
-        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-windows
+      - name: Configure CMake (use Raylib from repo)
+        shell: pwsh
+        run: |
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
 
       - name: Build
-        run: cmake --build build --config Release
+        shell: pwsh
+        run: |
+          cmake --build build --config Release
 
       - name: Package with CPack
+        shell: pwsh
         run: |
           cd build
           cpack -C Release
@@ -75,3 +73,4 @@ jobs:
           files: build/*.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
