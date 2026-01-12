@@ -2,18 +2,8 @@ Source: masterpiece
 Section: games
 Priority: optional
 Maintainer: agh45-ua <agh45@alu.ua.es>
-Build-Depends: debhelper-compat (= 13),
-               g++,
-               make,
-               cmake,
-               libgl1-mesa-dev,
-               libx11-dev,
-               libxrandr-dev,
-               libxi-dev,
-               libxcursor-dev,
-               libxxf86vm-dev,
-               libasound2-dev
-Standards-Version: 4.6.2
+Build-Depends: debhelper-compat (= 10), g++, libgl1-mesa-dev, libx11-dev, make
+Standards-Version: 4.6.0
 Homepage: https://github.com/agh45-ua/MasterPiece
 Rules-Requires-Root: no
 

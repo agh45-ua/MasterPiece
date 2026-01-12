@@ -4,13 +4,12 @@ on:
   release:
     types: [published]
 
-permissions:
-  contents: write
-
 jobs:
+
   linux-deb:
     name: Build .deb package (Linux)
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -19,37 +18,50 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y \
-            build-essential devscripts debhelper cmake g++ \
-            libgl1-mesa-dev libx11-dev libxrandr-dev libxi-dev \
-            libxcursor-dev libxxf86vm-dev libasound2-dev
+            build-essential devscripts debhelper dh-make \
+            cmake g++ libgl1-mesa-dev libx11-dev libraylib-dev
 
       - name: Build Debian package
-        run: make dist
+        run: |
+          dpkg-buildpackage -us -uc
 
       - name: Upload .deb to release
-        uses: softprops/action-gh-release@v2
-        with:
-          files: ../masterpiece_*.deb
+        uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ../masterpiece_*_amd64.deb
+          asset_name: masterpiece-linux.deb
+          asset_content_type: application/vnd.debian.binary-package
+
+
 
   windows-zip:
     name: Build ZIP package (Windows)
     runs-on: windows-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
       - name: Configure CMake
         run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+
       - name: Build
         run: cmake --build build --config Release
+
       - name: Package with CPack
         run: |
           cd build
           cpack
+
       - name: Upload ZIP to release
-        uses: softprops/action-gh-release@v2
-        with:
-          files: build/*.zip
+        uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: build/*.zip
+          asset_name: MasterPiece-windows.zip
+          asset_content_type: application/zip

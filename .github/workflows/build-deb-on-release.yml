@@ -3,10 +3,8 @@ name: Build .deb on release
 on:
   release:
     types: [published]
-
 permissions:
   contents: write
-
 jobs:
   build-deb:
     runs-on: ubuntu-latest
@@ -18,11 +16,17 @@ jobs:
       - name: Install build dependencies
         run: |
           sudo apt-get update
-          # Instalamos EXACTAMENTE los nombres que el proceso de empaquetado te pide en el log
           sudo apt-get install -y \
-            build-essential dpkg-dev debhelper cmake \
+            build-essential dpkg-dev debhelper cmake git \
             libgl1-mesa-dev libx11-dev libxrandr-dev libxi-dev \
-            libxcursor-dev libxxf86vm-dev libasound2-dev
+            libxcursor-dev libxinerama-dev libxxf86vm-dev
+
+      - name: Build & install raylib
+        run: |
+          git clone https://github.com/raysan5/raylib.git
+          cd raylib/src
+          make PLATFORM=PLATFORM_DESKTOP
+          sudo make install
 
       - name: Build .deb package
         run: |
@@ -34,4 +38,4 @@ jobs:
         with:
           files: ../*.deb
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
