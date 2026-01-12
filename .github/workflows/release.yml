@@ -43,6 +43,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Update vcpkg
+        shell: pwsh
+        run: |
+          cd C:\vcpkg
+          git pull
+          .\bootstrap-vcpkg.bat
+
       - name: Install Raylib via vcpkg
         run: vcpkg install raylib:x64-windows
 
