@@ -6,9 +6,9 @@
 using namespace std;
 
 int main() {
-    Arma cañon = {"Cañon", 25, 100.0f, 10.0f, RED};
-    Jugador j1 = {1, "P1", {}, cañon};
-    Jugador j2 = {2, "P2", {}, cañon};
+    Arma canon = {"Canon", 25, 100.0f, 10.0f, RED};
+    Jugador j1 = {1, "P1", {}, canon};
+    Jugador j2 = {2, "P2", {}, canon};
 
     MainGameState game(j1, j2);
     StateMachine sm;

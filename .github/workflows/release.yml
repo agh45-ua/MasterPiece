@@ -35,7 +35,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  windows-zip:
+windows-zip:
     name: Build ZIP package (Windows)
     runs-on: windows-latest
 
@@ -43,13 +43,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Install Raylib via vcpkg
+        run: vcpkg install raylib:x64-windows
+
       - name: Clean build directory
         run: |
           if (Test-Path build) { Remove-Item -Recurse -Force build }
           mkdir build
 
       - name: Configure CMake
-        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-windows
 
       - name: Build
         run: cmake --build build --config Release
@@ -57,7 +60,7 @@ jobs:
       - name: Package with CPack
         run: |
           cd build
-          cpack
+          cpack -C Release
 
       - name: Upload ZIP to release
         uses: softprops/action-gh-release@v2

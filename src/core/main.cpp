@@ -1,11 +1,10 @@
+#include "config.h"
 #include "StateMachine.hpp"
 #include "InicioState.hpp"
 #include "PersonajesState.hpp"
 #include "ResourceManager.hpp"
 #include <memory>
 #include <chrono>
-#include <libintl.h>
-#include <locale.h>
 extern "C" {
     #include <raylib.h>
 }

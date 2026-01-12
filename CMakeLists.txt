@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 if (MSVC)
-    add_compile_options(/W3)
+    add_compile_options(/W3 /D_CRT_SECURE_NO_WARNINGS)
 else()
     add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
@@ -48,7 +48,16 @@ target_include_directories(GameLogic PUBLIC
     ${CMAKE_SOURCE_DIR}/vendor/include
 )
 
-# 3. CREAR EJECUTABLE PRINCIPAL (Target MasterPiece)
+# 3. Librerias del sistema
+if (WIN32)
+    # Librerías Multimedia de Windows
+    target_link_libraries(GameLogic PUBLIC winmm gdi32 shell32 user32 opengl32)
+elseif (UNIX AND NOT APPLE)
+    # Librerías de Linux (X11, GL, etc.)
+    target_link_libraries(GameLogic PUBLIC m dl pthread GL X11 Xrandr Xi Xcursor Xxf86vm)
+endif()
+
+# 4. CREAR EJECUTABLE PRINCIPAL (Target MasterPiece)
 # ------------------------------------------
 # El ejecutable depende de main.cpp
 add_executable(MasterPiece src/core/main.cpp)
@@ -57,12 +66,7 @@ add_executable(MasterPiece src/core/main.cpp)
 # NOTA: MasterPiece hereda los INCLUDES de GameLogic automáticamente por ser PUBLIC.
 target_link_libraries(MasterPiece PRIVATE GameLogic ${RAYLIB_LIB})
 
-# Librerías adicionales para Linux
-if (UNIX AND NOT APPLE)
-    target_link_libraries(MasterPiece PRIVATE m dl pthread GL X11 Xrandr Xi Xcursor Xxf86vm)
-endif()
-
-# 4. RECURSOS, TESTS Y EMPAQUETADO
+# 5. RECURSOS, TESTS Y EMPAQUETADO
 # ------------------------------------------
 file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
 
