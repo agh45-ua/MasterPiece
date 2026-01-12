@@ -5,6 +5,7 @@
 #include <memory>
 #include <sstream>
 #include <array>
+#include <cstdlib>
 
 float DrawWrappedText(Font font, const std::string& text, Vector2 position, float fontSize, float spacing, float maxWidth, Color color) {
     std::istringstream stream(text);
@@ -101,13 +102,13 @@ void ControlesState::render(){
     const float titleSize = 36.0f;
     const float textSize = 20.0f;
     Vector2 titlePos = {panel.x + 50.0f, panel.y + 40.0f};
-    DrawTextEx(poppins, "Configuracion de teclas", titlePos, titleSize, 2, RAYWHITE);
+    DrawTextEx(poppins, _("Configuracion de teclas"), titlePos, titleSize, 2, RAYWHITE);
 
     float columnsTop = titlePos.y + titleSize + 30.0f;
     float leftColumnX = panel.x + 40.0f;
     float rightColumnX = panel.x + panel.width / 2.0f + 40.0f;
-    DrawTextEx(poppins, "Controles comunes", {leftColumnX, columnsTop}, textSize + 4.0f, 2, GOLD);
-    DrawTextEx(poppins, "Controles por jugador", {rightColumnX, columnsTop}, textSize + 4.0f, 2, PINK);
+    DrawTextEx(poppins, _("Controles comunes"), {leftColumnX, columnsTop}, textSize + 4.0f, 2, GOLD);
+    DrawTextEx(poppins, _("Controles por jugador"), {rightColumnX, columnsTop}, textSize + 4.0f, 2, PINK);
 
     ControlBindings &bindings = ControlBindings::Instance();
     Vector2 currentMouse = GetMousePosition();
@@ -152,7 +153,7 @@ void ControlesState::render(){
     bool hover = CheckCollisionPointRec(mouse, backButton);
     DrawRectangleRounded(backButton, 0.15f, 8, hover ? DARKGREEN : GREEN);
 
-    const char* backText = "Volver";
+    const char* backText = _("Volver");
     Vector2 textSizeVec = MeasureTextEx(poppins, backText, 24.0f, 2.0f);
     DrawTextEx(
         poppins,
@@ -170,9 +171,9 @@ void ControlesState::render(){
 
     std::string helperText;
     if (editingAction.has_value()) {
-        helperText = "Pulsa una tecla o boton del raton para asignarla (ESC para cancelar)";
+        helperText = _("Pulsa una tecla o boton del raton para asignarla (ESC para cancelar)");
     } else {
-        helperText = "Haz clic sobre un control para reasignarlo.";
+        helperText = _("Haz clic sobre un control para reasignarlo.");
     }
     DrawWrappedText(
         poppins,

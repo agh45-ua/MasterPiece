@@ -3,12 +3,18 @@
 #include "PersonajesState.hpp"
 #include <memory>
 #include <chrono>
+#include <libintl.h>
+#include <locale.h>
 extern "C" {
     #include <raylib.h>
 }
 
 int main()
 {
+    // Configurar gettext para internacionalización
+    setlocale(LC_ALL, "");
+    bindtextdomain("myapp", "./locale");
+    textdomain("myapp");
     const int screenWidth = 800;
     const int screenHeight = 600;
 

@@ -55,24 +55,24 @@ void GameOverState::render(){
     DrawRectangle(0, 0, screenWidth, screenHeight, Fade(BLACK, 0.6f));
     DrawCircleGradient(centerX, centerY, 260.0f, Fade(winnerColor, 0.45f), Fade(BLACK, 0.0f));
 
-    const char* title = "GAME OVER";
+    const char* title = _("GAME OVER");
     const int titleSize = 52;
     const int titleWidth = MeasureText(title, titleSize);
 
-    string winnerText = "Ganador: " + (winner_id == 1 ? jugador1.nombre : jugador2.nombre);
+    string winnerText = string(_("Ganador: ")) + (winner_id == 1 ? jugador1.nombre : jugador2.nombre);
     const int winnerSize = 42;
     const int winnerWidth = MeasureText(winnerText.c_str(), winnerSize);
 
-    const char* subText = "¡Enhorabuena!";
+    const char* subText = _("¡Enhorabuena!");
     const int subSize = 28;
     const int subWidth = MeasureText(subText, subSize);
 
-    string gameTimeText = string("Tiempo de juego: ") + to_string(game_time/60) + "m " + to_string(game_time%60) + "s";
+    string gameTimeText = string(_("Tiempo de juego: ")) + to_string(game_time/60) + _("m ") + to_string(game_time%60) + _("s");
     const int gameTimeSize = 22;
     const int gameTimeWidth = MeasureText(gameTimeText.c_str(), gameTimeSize);
 
-    const char* restartHint = "Pulsa ESPACIO para jugar de nuevo";
-    const char* exitHint = "Pulsa ESCAPE para volver al inicio";
+    const char* restartHint = _("Pulsa ESPACIO para jugar de nuevo");
+    const char* exitHint = _("Pulsa ESCAPE para volver al inicio");
     const int hintSize = 22;
     const int hintWidth = MeasureText(restartHint, hintSize);
 

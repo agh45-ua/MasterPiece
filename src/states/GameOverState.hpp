@@ -5,7 +5,8 @@ extern "C" {
 #include <iostream>
 #include "GameState.hpp"
 #include "PersonajesState.hpp"
-
+#include <libintl.h>
+#define _(STRING) gettext(STRING)
 using namespace std;
 
 class GameOverState: public GameState

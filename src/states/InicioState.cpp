@@ -6,6 +6,7 @@
 #include "GameState.hpp"
 #include <iostream>
 #include <string>
+#include <cstdlib>
 #include "../core/config.h"
 extern "C" {
     #include <raylib.h>
@@ -19,6 +20,7 @@ InicioState::InicioState(){
 
 void InicioState::init(){
     fondo = LoadTexture(GetAssetPath("fondo-inicio.png").c_str());
+    // Siempre usar Poppins, ahora que japonés usa romaji
     poppins = LoadFontEx(GetAssetPath("Poppins-Bold.ttf").c_str(), 120, 0, 0);
 }
 
@@ -69,13 +71,13 @@ void InicioState::render() {
     DrawRectangleRounded(Salir, 0.2f, 8, HoverSalir ? MAROON : RED);
 
     const int fuente = 24;
-    int anchoJugar = MeasureTextEx(poppins, "Jugar", fuente, 4).x;
-    int anchoControles = MeasureTextEx(poppins, "Controles", fuente, 4).x;
-    int anchoSalir = MeasureTextEx(poppins, "Salir", fuente, 4).x;
+    int anchoJugar = MeasureTextEx(poppins, _("Jugar"), fuente, 4).x;
+    int anchoControles = MeasureTextEx(poppins, _("Controles"), fuente, 4).x;
+    int anchoSalir = MeasureTextEx(poppins, _("Salir"), fuente, 4).x;
 
-    DrawTextEx(poppins, "Jugar",{ (float)(Jugar.x + (Jugar.width - anchoJugar) / 2),(float)(Jugar.y + (Jugar.height - fuente) / 2) },(float)fuente, 2, RAYWHITE);
-    DrawTextEx(poppins, "Controles",{ (float)(Controles.x + (Controles.width - anchoControles) / 2),(float)(Controles.y + (Controles.height - fuente) / 2) },(float)fuente, 2, RAYWHITE);
-    DrawTextEx(poppins, "Salir",{ (float)(Salir.x + (Salir.width - anchoSalir) / 2),(float)(Salir.y + (Salir.height - fuente) / 2) },(float)fuente, 2, RAYWHITE);
+    DrawTextEx(poppins, _("Jugar"),{ (float)(Jugar.x + (Jugar.width - anchoJugar) / 2),(float)(Jugar.y + (Jugar.height - fuente) / 2) },(float)fuente, 2, RAYWHITE);
+    DrawTextEx(poppins, _("Controles"),{ (float)(Controles.x + (Controles.width - anchoControles) / 2),(float)(Controles.y + (Controles.height - fuente) / 2) },(float)fuente, 2, RAYWHITE);
+    DrawTextEx(poppins, _("Salir"),{ (float)(Salir.x + (Salir.width - anchoSalir) / 2),(float)(Salir.y + (Salir.height - fuente) / 2) },(float)fuente, 2, RAYWHITE);
 
     EndDrawing();
 }

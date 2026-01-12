@@ -154,3 +154,8 @@ Se analizaron cuatro estrategias de ramas vistas en clase: **GitFlow**, **GitHub
 ### Conclusión
 GitFlow equilibra organización, control y flexibilidad. Es la opción más adecuada para un proyecto académico colaborativo, garantizando estabilidad, trazabilidad y buenas prácticas en ingeniería de software.
 
+### Idioma
+Para cambiar de idioma y ejecutar desde en source, hacer make clean -> make ->LANGUAGE=en_US ./bin/masterpiece
+
+Idiomas disponibles ahora mismo:Español, inglés y japonés(romanji)
+es_ES, en_US, ja_JP respectivamente.

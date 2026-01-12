@@ -223,7 +223,7 @@ void MainGameState::render(){
         DrawText(s.c_str(), screenWidth/2 - 20, screenHeight/2 - 20, 50, PURPLE);
     } else {
         //Turno
-        string s1 = "Turno "+ to_string( contador_turno),s2 = "Turno de "+ string(1, turno);
+        string s1 = string(_("Turno "))+ to_string( contador_turno),s2 = string(_("Turno de "))+ string(1, turno);
         DrawText(s1.c_str(),screenWidth/2,screenHeight/2,24,PURPLE);
         DrawText(s2.c_str(),100,screenHeight/2,24,PURPLE);
         // Jugadores para que sean ocultos los movimientos
@@ -287,13 +287,13 @@ void MainGameState::render(){
         float barHeight = 20;
 
         // Jugador 1 - esquina superior izquierda
-        DrawText("Jugador 1", 30, 20, 20, BLACK);
+        DrawText(_("Jugador 1"), 30, 20, 20, BLACK);
         DrawRectangle(30, 50, maxBarWidth, barHeight, GRAY);
         DrawRectangle(30, 50, maxBarWidth * (player1.health / 100.0f), barHeight, GREEN);
         DrawText(TextFormat("%d / 100", player1.health), 30, 50 + barHeight + 5, 20, DARKGREEN);
 
         // Jugador 2 - esquina superior derecha
-        DrawText("Jugador 2", screenWidth - 230, 20, 20, BLACK);
+        DrawText(_("Jugador 2"), screenWidth - 230, 20, 20, BLACK);
         DrawRectangle(screenWidth - 230, 50, maxBarWidth, barHeight, GRAY);
         DrawRectangle(screenWidth - 230 + (maxBarWidth * (1 - player2.health / 100.0f)), 50,
                     maxBarWidth * (player2.health / 100.0f), barHeight, GREEN);
