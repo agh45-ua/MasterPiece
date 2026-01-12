@@ -17,8 +17,10 @@ find_package(raylib QUIET)
 if (NOT raylib_FOUND)
     # Buscamos la librería específica en vendor/ para no usar rutas globales
     find_library(RAYLIB_LIB raylib PATHS "${CMAKE_CURRENT_SOURCE_DIR}/vendor/lib" NO_DEFAULT_PATH)
+    set(RAYLIB_INCLUDE "${CMAKE_CURRENT_SOURCE_DIR}/vendor/include")
 else()
     set(RAYLIB_LIB raylib)
+    set(RAYLIB_INCLUDE "")
 endif()
 
 # 2. DEFINIR FUENTES Y CREAR LIBRERÍA (Target GameLogic)
@@ -45,13 +47,14 @@ target_include_directories(GameLogic PUBLIC
     ${CMAKE_SOURCE_DIR}/src
     ${CMAKE_SOURCE_DIR}/src/core
     ${CMAKE_SOURCE_DIR}/src/states
-    ${CMAKE_SOURCE_DIR}/vendor/include
+    ${RAYLIB_INCLUDE}
 )
 
 # 3. Librerias del sistema
 if (WIN32)
     # Librerías Multimedia de Windows
     target_link_libraries(GameLogic PUBLIC winmm gdi32 shell32 user32 opengl32)
+    add_definitions(-DRAYLIB_DLL)
 elseif (UNIX AND NOT APPLE)
     # Librerías de Linux (X11, GL, etc.)
     target_link_libraries(GameLogic PUBLIC m dl pthread GL X11 Xrandr Xi Xcursor Xxf86vm)
