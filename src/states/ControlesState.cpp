@@ -1,6 +1,7 @@
 #include "ControlesState.hpp"
 #include "InicioState.hpp"
 #include "StateMachine.hpp"
+#include "ResourceManager.hpp"
 #include "../core/config.h"
 #include <memory>
 #include <sstream>
@@ -34,8 +35,8 @@ float DrawWrappedText(Font font, const std::string& text, Vector2 position, floa
 }
 
 void ControlesState::init(){
-    fondo = LoadTexture(GetAssetPath("fondo-inicio.png").c_str());
-    poppins = LoadFontEx(GetAssetPath("Poppins-Bold.ttf").c_str(), 64, 0, 0);
+    fondo = ResourceManager::getInstance().GetTexture(GetAssetPath("fondo-inicio.png"));
+    poppins = ResourceManager::getInstance().GetFont(GetAssetPath("Poppins-Bold.ttf"));
     editingAction.reset();
     toastMessage.clear();
     toastTimer = 0.0f;

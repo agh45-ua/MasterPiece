@@ -1,6 +1,7 @@
 #include "MainGameState.hpp"
 #include "StateMachine.hpp"
 #include "GameOverState.hpp"
+#include "ResourceManager.hpp"
 #include <string>
 #include <iostream>
 #include "../core/config.h"
@@ -42,7 +43,8 @@ MainGameState::MainGameState(const Jugador& a, const Jugador& b)
 : jugador1(a), jugador2(b) {}
 
 void MainGameState::init(){
-    fondo = LoadTexture(GetAssetPath("fondo-juego.png").c_str());
+    fondo = ResourceManager::getInstance().GetTexture(GetAssetPath("fondo-juego.png"));
+    poppins = ResourceManager::getInstance().GetFont(GetAssetPath("Poppins-Bold.ttf"));
     ground = {0, (float)screenHeight - groundHeight, (float)screenWidth, (float)groundHeight};
     player1 = {{100, ground.y - 50, 50, 50}, 100};
     player2 = {{screenWidth - 150.0f, ground.y - 50, 50, 50}, 100};
@@ -323,8 +325,8 @@ if (projectile_2.active && !projectile_2.hasHit) {
 void MainGameState::render(){
     
     BeginDrawing();
-    
     ClearBackground(RAYWHITE);
+
     DrawTexturePro(
         fondo,
         { 0, 0, (float)fondo.width, (float)fondo.height },
@@ -333,15 +335,27 @@ void MainGameState::render(){
         0.0f,
         Fade(WHITE, 0.8f)
     );
+
     if (countdownActive) {
         int secondsLeft = (int)ceil(countdownTime);
         string s = to_string(secondsLeft);
-        DrawText(s.c_str(), screenWidth/2 - 20, screenHeight/2 - 20, 50, PURPLE);
+        DrawTextEx(poppins, s.c_str(), { (float)screenWidth/2 - 20, (float)screenHeight/2 - 20 }, 50, 2, PURPLE);
     } else {
         //Turno
-        string s1 = string(_("Turno "))+ to_string( contador_turno),s2 = string(_("Turno de "))+ string(1, turno);
-        DrawText(s1.c_str(),screenWidth/2,screenHeight/2,24,PURPLE);
-        DrawText(s2.c_str(),100,screenHeight/2,24,PURPLE);
+        float bannerWidth = 300;
+        float bannerHeight = 40;
+        Rectangle bannerRect = { (float)screenWidth/2 - bannerWidth/2, 10, bannerWidth, bannerHeight };
+
+        DrawRectangleRounded(bannerRect, 0.4f, 10, Fade(DARKGRAY, 0.8f));
+        DrawRectangleRoundedLines(bannerRect, 0.8f, 2, BLACK);
+        string nombreActivo = (turno == '1') ? jugador1.nombre : (turno == '2' ? jugador2.nombre : _("Resolucion"));
+        Color colorTurno = (turno == '1') ? BLUE : (turno == '2' ? RED : GOLD);
+        string textoTurno = (turno == 'r') ? nombreActivo : string(_("TURNO DE: ")) + nombreActivo;
+        Vector2 textSize = MeasureTextEx(poppins, textoTurno.c_str(), 20, 2);
+        DrawTextEx(poppins, textoTurno.c_str(), { (float)screenWidth/2 - textSize.x/2, bannerRect.y + bannerHeight/2 - textSize.y/2 }, 20, 2, colorTurno);
+        string rondaStr = string(_("Ronda ")) + to_string(contador_turno);
+        DrawTextEx(poppins, rondaStr.c_str(), { (float)screenWidth/2 - MeasureTextEx(poppins, rondaStr.c_str(), 16, 1).x/2, 55 }, 16, 1, BLACK);
+        
         // Jugadores para que sean ocultos los movimientos
         auto src1 = Rectangle{0, 0, (float)jugador1.personaje.width, (float)jugador1.personaje.height};
         auto src2 = Rectangle{0, 0, (float)jugador2.personaje.width, (float)jugador2.personaje.height};
@@ -449,7 +463,7 @@ void MainGameState::render(){
                 // Ángulo según la dirección del proyectil
                 float angulo = atan2f(projectile_1.vel.y, projectile_1.vel.x) * RAD2DEG;
 
-                DrawRectanglePro(rec, origin, angulo, RED);
+                DrawRectanglePro(rec, origin, angulo, BLACK);
             }
             if (projectile_2.active) {
                 // Definimos el cuerpo de la bala (ej: 15px de largo, 5px de alto)
@@ -461,30 +475,32 @@ void MainGameState::render(){
                 // Ángulo según la dirección del proyectil
                 float angulo = atan2f(projectile_2.vel.y, projectile_2.vel.x) * RAD2DEG;
 
-                DrawRectanglePro(rec, origin, angulo, RED);
+                DrawRectanglePro(rec, origin, angulo, BLACK);
             }
 
         }
         
-        // --- Barras de vida (HUD) ---
+        // Barras de vida (HUD)
         float maxBarWidth = 200;
         float barHeight = 20;
+        float fontSizeHUD = 20.0f;
 
-        // Jugador 1 - esquina superior izquierda
-        DrawText(_("Jugador 1"), 30, 20, 20, BLACK);
-        DrawRectangle(30, 50, maxBarWidth, barHeight, GRAY);
-        DrawRectangle(30, 50, maxBarWidth * (player1.health / 100.0f), barHeight, GREEN);
-        DrawText(TextFormat("%d / 100", player1.health), 30, 50 + barHeight + 5, 20, DARKGREEN);
+        // Jugador 1 (Azul)
+        DrawTextEx(poppins, jugador1.nombre.c_str(), { 30, 20 }, 22, 2, BLUE);
+        DrawRectangleLines(29, 49, maxBarWidth + 2, barHeight + 2, BLACK); // Borde
+        DrawRectangle(30, 50, maxBarWidth, barHeight, Fade(GRAY, 0.5f));   // Fondo barra
+        DrawRectangle(30, 50, maxBarWidth * (player1.health / 100.0f), barHeight, BLUE);
+        DrawTextEx(poppins, TextFormat("%d HP", player1.health), { 35, 50 + 2 }, 15, 1, WHITE);
 
-        // Jugador 2 - esquina superior derecha
-        DrawText(_("Jugador 2"), screenWidth - 230, 20, 20, BLACK);
-        DrawRectangle(screenWidth - 230, 50, maxBarWidth, barHeight, GRAY);
-        DrawRectangle(screenWidth - 230 + (maxBarWidth * (1 - player2.health / 100.0f)), 50,
-                    maxBarWidth * (player2.health / 100.0f), barHeight, GREEN);
-        DrawText(TextFormat("%d / 100", player2.health), screenWidth - 230, 50 + barHeight + 5, 20, DARKGREEN);
-
-        //DrawText("ESPACIO para disparar", 20, 45, 20, DARKGRAY);
-    }
+        // Jugador 2 (Rojo)
+        float p2X = (float)screenWidth - 230;
+        DrawTextEx(poppins, jugador2.nombre.c_str(), { p2X, 20 }, 22, 2, RED);
+        DrawRectangleLines(p2X - 1, 49, maxBarWidth + 2, barHeight + 2, BLACK); // Borde
+        DrawRectangle(p2X, 50, maxBarWidth, barHeight, Fade(GRAY, 0.5f));        // Fondo barra
+        DrawRectangle(p2X + (maxBarWidth * (1 - player2.health / 100.0f)), 50, 
+                    maxBarWidth * (player2.health / 100.0f), barHeight, RED);
+        DrawTextEx(poppins, TextFormat("%d HP", player2.health), { p2X + 5, 50 + 2 }, 15, 1, WHITE);
+            }
     for (const auto& e : explosions) {
         if (!e.active) continue;
 

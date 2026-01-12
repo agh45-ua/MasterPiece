@@ -19,7 +19,8 @@ TARGET := $(BIN_DIR)/masterpiece
 CORE_OBJS := \
 	$(BUILD_DIR)/core/GameState.o \
 	$(BUILD_DIR)/core/StateMachine.o \
-	$(BUILD_DIR)/core/ControlBindings.o
+	$(BUILD_DIR)/core/ControlBindings.o \
+	$(BUILD_DIR)/core/ResourceManager.o
 
 STATE_OBJS := \
 	$(BUILD_DIR)/states/InicioState.o \

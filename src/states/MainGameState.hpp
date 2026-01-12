@@ -1,14 +1,13 @@
 #pragma once
 #include "GameState.hpp"
 #include "PersonajesState.hpp"
-
-#include <raylib.h>
+#include "config.h"
 #include <string>
 #include <cmath>
 #include <libintl.h>
 #define _(STRING) gettext(STRING)
 #include <vector>
-
+#include <ctime>
 extern "C" {
     #include <raylib.h>
 }
@@ -67,6 +66,7 @@ class MainGameState : public GameState
         Jugador jugador1;
         Jugador jugador2;
         Texture2D fondo;
+        Font poppins;
 
         // Ventana
         const int screenWidth = 800;
