@@ -77,8 +77,8 @@ if (WIN32)
 endif()
 
 add_executable(print_raylib_version src/print_raylib_version.cpp)
-
-target_link_libraries(print_raylib_version PRIVATE ${RAYLIB_LIB})
+target_link_libraries(print_raylib_version PRIVATE raylib)
+target_include_directories(print_raylib_version PRIVATE ${CMAKE_SOURCE_DIR}/src)
 
 if (UNIX AND NOT APPLE)
     target_link_libraries(print_raylib_version
