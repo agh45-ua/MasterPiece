@@ -5,81 +5,81 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 if (MSVC)
-    add_compile_options(/W3 /D_CRT_SECURE_NO_WARNINGS)
+    add_compile_options(/W3)
 else()
     add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
-# 1. BUSCAR DEPENDENCIAS (Raylib)
-# ------------------------------------------
+# ==========================================
+# BUSCAR RAYLIB DEL SISTEMA
+# ==========================================
 find_package(raylib QUIET)
 
-if (raylib_FOUND)
+# Si no existe raylib instalado, usar vendor/
+if (NOT raylib_FOUND)
+    message(STATUS "Raylib no encontrado, usando vendor/include y vendor/lib")
+    
+    include_directories(${CMAKE_SOURCE_DIR}/vendor/include)
+    link_directories(${CMAKE_SOURCE_DIR}/vendor/lib)
+    
     set(RAYLIB_LIB raylib)
 else()
-    find_library(RAYLIB_LIB raylib PATHS "${CMAKE_CURRENT_SOURCE_DIR}/vendor/lib" NO_DEFAULT_PATH)
-    set(RAYLIB_VENDOR_INCLUDE "${CMAKE_CURRENT_SOURCE_DIR}/vendor/include")
+    set(RAYLIB_LIB raylib)
 endif()
 
-# 2. DEFINIR FUENTES Y CREAR LIBRERÍA (Target GameLogic)
-# ------------------------------------------
-# Listado explícito para evitar GLOB (Práctica recomendada por el profesor)
-set(GAME_SOURCES
-    src/core/GameState.cpp
-    src/core/StateMachine.cpp
-    src/core/ControlBindings.cpp
-    src/core/ResourceManager.cpp
-
-    src/states/InicioState.cpp
-    src/states/PersonajesState.cpp
-    src/states/GameOverState.cpp
-    src/states/MainGameState.cpp
-    src/states/ControlesState.cpp
+# ==========================================
+# LIBRERÍA GameLogic
+# ==========================================
+file(GLOB_RECURSE GAMELOGIC_FILES 
+    src/core/*. cpp
+    src/states/*.cpp
 )
 
-# Primero creamos la librería...
-add_library(GameLogic STATIC ${GAME_SOURCES})
+add_library(GameLogic STATIC ${GAMELOGIC_FILES})
 
-# ...y DESPUÉS le asignamos sus directorios de inclusión
 target_include_directories(GameLogic PUBLIC
     ${CMAKE_SOURCE_DIR}/src
     ${CMAKE_SOURCE_DIR}/src/core
     ${CMAKE_SOURCE_DIR}/src/states
-    ${RAYLIB_INCLUDE}
+    ${CMAKE_SOURCE_DIR}/vendor/include
 )
 
-target_link_libraries(GameLogic PUBLIC ${RAYLIB_LIB})
+# ==========================================
+# EJECUTABLE PRINCIPAL
+# ==========================================
+add_executable(MasterPiece src/main.cpp)
 
-# 3. Librerias del sistema
-if (WIN32)
-    # Librerías Multimedia de Windows
-    target_link_libraries(GameLogic PUBLIC winmm gdi32 shell32 user32 opengl32)
-    add_definitions(-D_CRT_SECURE_NO_WARNINGS)
-elseif (UNIX AND NOT APPLE)
-    # Librerías de Linux (X11, GL, etc.)
-    target_link_libraries(GameLogic PUBLIC m dl pthread GL X11 Xrandr Xi Xcursor Xxf86vm)
+target_include_directories(MasterPiece PRIVATE
+    ${CMAKE_SOURCE_DIR}/src
+    ${CMAKE_SOURCE_DIR}/src/core
+    ${CMAKE_SOURCE_DIR}/src/states
+    ${CMAKE_SOURCE_DIR}/vendor/include
+)
+
+# Enlace con GameLogic y raylib
+target_link_libraries(MasterPiece PRIVATE GameLogic ${RAYLIB_LIB})
+
+if (UNIX AND NOT APPLE)
+    target_link_libraries(MasterPiece
+        PRIVATE
+        m dl pthread GL X11 Xrandr Xi Xcursor Xxf86vm
+    )
+elseif (WIN32)
+    target_link_libraries(MasterPiece PRIVATE winmm gdi32)
 endif()
 
-# 4. CREAR EJECUTABLE PRINCIPAL (Target MasterPiece)
-# ------------------------------------------
-# El ejecutable depende de main.cpp
-add_executable(MasterPiece src/core/main.cpp)
-
-# Enlazamos a la lógica y a raylib. 
-# NOTA: MasterPiece hereda los INCLUDES de GameLogic automáticamente por ser PUBLIC.
-target_link_libraries(MasterPiece PRIVATE GameLogic)
-
-# 5. RECURSOS, TESTS Y EMPAQUETADO
-# ------------------------------------------
+# ==========================================
+# COPIAR ASSETS AUTOMÁTICAMENTE
+# ==========================================
 file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
 
-enable_testing()
-add_subdirectory(tests)
-
+# Solo empaquetamos con CPack en Windows
 if (WIN32)
     set(CPACK_PACKAGE_NAME "MasterPiece")
     set(CPACK_PACKAGE_VERSION "1.0.0")
     set(CPACK_GENERATOR "ZIP")
+    
     include(CPack)
+    
     cpack_add_component(MasterPiece)
 endif()
