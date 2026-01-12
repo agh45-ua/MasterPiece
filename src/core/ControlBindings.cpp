@@ -110,9 +110,8 @@ bool ControlBindings::fixShotUsesMouseFallback() const {
     return fixShotMouseFallback;
 }
 
-// Implementación de GetKeyName si no está disponible en raylib
-#ifndef HAVE_RAYLIB_GETKEYNAME
-static const char* GetKeyName(int key) {
+// Implementación de GetKeyNameOwn si no está disponible en raylib
+static const char* GetKeyNameOwn(int key) {
     switch (key) {
     case KEY_NULL: return "NULL";
     case KEY_APOSTROPHE: return "'";
@@ -223,14 +222,13 @@ static const char* GetKeyName(int key) {
     default: return "";
     }
 }
-#endif
 
 std::string DescribeKeyboardKey(int key) {
     if (key == KEY_NULL) {
         return _("Sin asignar");
     }
 
-    const char *name = GetKeyName(key);
+    const char *name = GetKeyNameOwn(key);
     if (name && name[0] != '\0') {
         std::string result(name);
         if (!result.empty() && result[0] >= 'a' && result[0] <= 'z') {
