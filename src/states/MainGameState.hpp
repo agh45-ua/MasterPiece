@@ -7,11 +7,21 @@
 #include <cmath>
 #include <libintl.h>
 #define _(STRING) gettext(STRING)
+#include <vector>
+
 extern "C" {
     #include <raylib.h>
 }
 
 using namespace std;
+
+struct Explosion {
+    Vector2 pos;
+    float radius;
+    float time;
+    float duration;
+    bool active;
+};
 
 struct Projectile {
     Vector2 pos;
@@ -52,6 +62,7 @@ class MainGameState : public GameState
         void setGround(Rectangle g) { ground = g; }
     
     private:
+        vector<Explosion> explosions;
 
         Jugador jugador1;
         Jugador jugador2;

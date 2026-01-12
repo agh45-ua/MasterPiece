@@ -17,7 +17,7 @@ struct Arma{
     int damage;
     float speed;
     float gravity;
-    Color colorProyectil;
+    Texture2D sprite;
 };
 
 struct Jugador{
@@ -40,11 +40,16 @@ class PersonajesState: public GameState {
         void pause();
         void resume();
     private:
+        Color ROJO_CLARO = {255, 120, 120, 255};
         Texture2D fondo;
         Font poppins;
         Jugador jugador1;
         Jugador jugador2;
         Texture2D personajes[6];
+        Texture2D pistola;
+        Texture2D escopeta;
+        Texture2D lanzacohetes;
+        Texture2D sniper;
         string rutas[6] = {"Personaje1.png", "Personaje2.png", "Personaje3.png", "Personaje4.png", "Personaje5.png", "Personaje6.png"};
         
         int color1;
