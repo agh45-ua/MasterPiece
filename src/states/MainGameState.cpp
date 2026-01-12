@@ -339,7 +339,7 @@ void MainGameState::render(){
     if (countdownActive) {
         int secondsLeft = (int)ceil(countdownTime);
         string s = to_string(secondsLeft);
-        DrawTextEx(poppins, s.c_str(), { (float)screenWidth/2 - 20, (float)screenHeight/2 - 20 }, 50, 2, PURPLE);
+        DrawTextEx(poppins, s.c_str(), { (float)screenWidth/2 - 20, (float)screenHeight/2 - 20 }, 50, 2, BLACK);
     } else {
         //Turno
         float bannerWidth = 300;
@@ -356,6 +356,40 @@ void MainGameState::render(){
         string rondaStr = string(_("Ronda ")) + to_string(contador_turno);
         DrawTextEx(poppins, rondaStr.c_str(), { (float)screenWidth/2 - MeasureTextEx(poppins, rondaStr.c_str(), 16, 1).x/2, 55 }, 16, 1, BLACK);
         
+        DrawTextEx(poppins, rondaStr.c_str(), { (float)screenWidth/2 - MeasureTextEx(poppins, rondaStr.c_str(), 16, 1).x/2, 55 }, 16, 1, BLACK);
+
+        // --- Muros de Límite de Movimiento ---
+        if (turno == '1' || turno == '2') {
+            bool isP1 = (turno == '1');
+            Rectangle refRect = isP1 ? old_player1.rect : old_player2.rect;
+            Color colorMuro = isP1 ? BLUE : RED;
+            
+            float limiteIzquierdo = refRect.x - 200;
+            float limiteDerecho = refRect.x + refRect.width + 200;
+            
+            // Configuración del muro
+            float anchoMuro = 40.0f; // Qué tan ancho es el degradado
+            float altoMuro = 150.0f; // Qué tan alto sube el brillo
+            float ySuelo = ground.y - altoMuro;
+
+            // Efecto de parpadeo suave para que parezca energía
+            float pulsacion = (sinf(GetTime() * 4.0f) * 0.2f) + 0.6f; 
+            Color colorBrillo = Fade(colorMuro, 0.3f * pulsacion);
+
+            // Muro Izquierdo (Degradado vertical: Transparente arriba, Color abajo)
+            DrawRectangleGradientV(limiteIzquierdo - anchoMuro/2, ySuelo, anchoMuro, altoMuro, BLANK, colorBrillo);
+            // Línea central del muro para que se vea el borde exacto
+            DrawLineEx({limiteIzquierdo, ground.y}, {limiteIzquierdo, ground.y - altoMuro}, 2.0f, colorMuro);
+
+            // Muro Derecho
+            DrawRectangleGradientV(limiteDerecho - anchoMuro/2, ySuelo, anchoMuro, altoMuro, BLANK, colorBrillo);
+            // Línea central del muro
+            DrawLineEx({limiteDerecho, ground.y}, {limiteDerecho, ground.y - altoMuro}, 2.0f, colorMuro);
+            
+            // Opcional: Una línea brillante en el suelo uniendo ambos muros
+            DrawLineEx({limiteIzquierdo, ground.y}, {limiteDerecho, ground.y}, 2.0f, colorBrillo);
+        }
+
         // Jugadores para que sean ocultos los movimientos
         auto src1 = Rectangle{0, 0, (float)jugador1.personaje.width, (float)jugador1.personaje.height};
         auto src2 = Rectangle{0, 0, (float)jugador2.personaje.width, (float)jugador2.personaje.height};
