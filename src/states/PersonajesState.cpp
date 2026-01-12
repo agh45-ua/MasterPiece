@@ -35,17 +35,15 @@ void PersonajesState::init(){
     }
 
     // TEXTURAS ARMAS
-    escopeta = LoadTexture(GetAssetPath("armas/escopeta.png").c_str());
     lanzacohetes = LoadTexture(GetAssetPath("armas/lanzacohetes.png").c_str());
     pistola = LoadTexture(GetAssetPath("armas/pistola.png").c_str());
     sniper = LoadTexture(GetAssetPath("armas/sniper.png").c_str());
 
     // DEFINICIÓN DE ARMAS
     armasDisponibles = {
-        Arma{"Pistola", 30, 750.0f, 400.0f, pistola},
-        Arma{"Sniper", 20, 1000.0f, 50.0f, sniper},       // Rápida, poca caída, menos daño
-        Arma{"Lanzacohetes", 35, 500.0f, 500.0f, lanzacohetes}, // Mucho daño, mucha gravedad
-        Arma{"Escopeta", 20, 800.0f, 400.0f, escopeta}      // Lenta, flota más, buen daño
+        Arma{"Pistola", 35, 650.0f, 600.0f, pistola},
+        Arma{"Sniper", 20, 900.0f, 250.0f, sniper},       // Rápida, poca caída, menos daño
+        Arma{"Lanzacohetes", 50, 500.0f, 500.0f, lanzacohetes}, // Mucho daño, mucha gravedad
     };
 
     indiceArma1 = 0;

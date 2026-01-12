@@ -8,7 +8,34 @@ extern "C" {
     #include <raylib.h>
 }
 
+#include <raymath.h>
+
 using namespace std;
+
+void aplicarExplosion(Vector2 centro, float radio, int damageMax, Player& objetivo) {
+    Vector2 centroJugador = {
+        objetivo.rect.x + objetivo.rect.width / 2,
+        objetivo.rect.y + objetivo.rect.height / 2
+    };
+
+    float distancia = Vector2Distance(centro, centroJugador);
+    
+    // Si está fuera del radio, no hay daño
+    if (distancia >= radio) return;
+
+    // El factor va de 1.0 (en el centro) a 0.0 (en el borde)
+    float factor = 1.0f - (distancia / radio);
+    
+    // Calculamos el daño proporcional
+    int damageFinal = (int)(damageMax * factor);
+
+    // Aseguramos que nunca supere el damageMax por errores de precisión
+    if (damageFinal > damageMax) damageFinal = damageMax;
+    if (damageFinal < 0) damageFinal = 0;
+
+    objetivo.health -= damageFinal;
+}
+
 
 MainGameState::MainGameState(const Jugador& a, const Jugador& b)
 : jugador1(a), jugador2(b) {}
@@ -137,24 +164,106 @@ void MainGameState::update(float deltaTime){
 
         // Colisión con el suelo
         if (projectile_1.pos.y > ground.y) {
+
+            if (jugador1.arma.nombre == "Lanzacohetes" && !projectile_1.hasHit) {
+
+                Vector2 impacto = {
+                    projectile_1.pos.x,
+                    ground.y
+                };
+
+                aplicarExplosion(
+                    impacto,
+                    200,
+                    jugador1.arma.damage,
+                    player2
+                );
+                explosions.push_back({
+                    impacto,
+                    200,
+                    0.0f,
+                    0.45f,
+                    true
+                });
+            }
+            projectile_1.hasHit = true;
             projectile_1.active = false;
         }
+
         if (projectile_2.pos.y > ground.y) {
+
+            if (jugador2.arma.nombre == "Lanzacohetes" && !projectile_2.hasHit) {
+
+                Vector2 impacto = {
+                    projectile_2.pos.x,
+                    ground.y
+                };
+
+                aplicarExplosion(
+                    impacto,
+                    200,
+                    jugador2.arma.damage,
+                    player1
+                );
+                explosions.push_back({
+                    impacto,
+                    200,
+                    0.0f,
+                    0.45f,
+                    true
+                });
+            }
+            projectile_2.hasHit = true;
             projectile_2.active = false;
         }
 
+
         // Colisión con jugadores
-        if (!projectile_1.hasHit && CheckCollisionPointRec(projectile_1.pos, player2.rect)) {
-            projectile_1.active = false;
-            projectile_1.hasHit = true;
+        // --- Dentro de MainGameState::update, donde gestionas el turno 'r' ---
+
+// --- COLISIONES PROYECTIL 1 (Jugador 1 dispara) ---
+if (projectile_1.active && !projectile_1.hasHit) {
+    bool colisionSuelo = (projectile_1.pos.y > ground.y);
+    bool colisionJugador = CheckCollisionPointRec(projectile_1.pos, player2.rect);
+
+    if (colisionSuelo || colisionJugador) {
+        if (jugador1.arma.nombre == "Lanzacohetes") {
+            // Si toca el suelo, la explosión es en el suelo; si toca al jugador, en la bala
+            Vector2 puntoImpacto = colisionSuelo ? (Vector2){projectile_1.pos.x, ground.y} : projectile_1.pos;
+            
+            aplicarExplosion(puntoImpacto, 200, jugador1.arma.damage, player2);
+            explosions.push_back({puntoImpacto, 200, 0.0f, 0.45f, true});
+        } 
+        else if (colisionJugador) {
+            // Si no es lanzacohetes pero le da al jugador, daño normal
             player2.health -= jugador1.arma.damage;
         }
 
-        if (!projectile_2.hasHit && CheckCollisionPointRec(projectile_2.pos, player1.rect)) {
-            projectile_2.active = false;
-            projectile_2.hasHit = true;
+        projectile_1.hasHit = true;
+        projectile_1.active = false;
+    }
+}
+
+// --- COLISIONES PROYECTIL 2 (Jugador 2 dispara) ---
+if (projectile_2.active && !projectile_2.hasHit) {
+    bool colisionSuelo = (projectile_2.pos.y > ground.y);
+    bool colisionJugador = CheckCollisionPointRec(projectile_2.pos, player1.rect);
+
+    if (colisionSuelo || colisionJugador) {
+        if (jugador2.arma.nombre == "Lanzacohetes") {
+            Vector2 puntoImpacto = colisionSuelo ? (Vector2){projectile_2.pos.x, ground.y} : projectile_2.pos;
+            
+            aplicarExplosion(puntoImpacto, 200, jugador2.arma.damage, player1);
+            explosions.push_back({puntoImpacto, 200, 0.0f, 0.45f, true});
+        } 
+        else if (colisionJugador) {
             player1.health -= jugador2.arma.damage;
         }
+
+        projectile_2.hasHit = true;
+        projectile_2.active = false;
+    }
+}
 
         int winnerId = 0;
         //Si alguno de los dos jugadores pierde toda la vida cambiamos estado
@@ -185,6 +294,14 @@ void MainGameState::update(float deltaTime){
             old_player2=player2;
             contador_turno++;
             turno='1';
+        }
+    }
+    for (auto& e : explosions) {
+        if (!e.active) continue;
+
+        e.time += deltaTime;
+        if (e.time >= e.duration) {
+            e.active = false;
         }
     }
 }
@@ -308,8 +425,30 @@ void MainGameState::render(){
 
         // Proyectiles cuando sea resolucion
         if (turno=='r'){
-            if(projectile_1.active) DrawCircleV(projectile_1.pos, 5, RED);
-            if (projectile_2.active) DrawCircleV(projectile_2.pos, 5, RED);
+            if (projectile_1.active) {
+                // Definimos el cuerpo de la bala (ej: 15px de largo, 5px de alto)
+                Rectangle rec = { projectile_1.pos.x, projectile_1.pos.y, 15, 5 };
+                
+                // El centro de rotación (la mitad del ancho y alto)
+                Vector2 origin = { 7.5f, 2.5f }; 
+                
+                // Ángulo según la dirección del proyectil
+                float angulo = atan2f(projectile_1.vel.y, projectile_1.vel.x) * RAD2DEG;
+
+                DrawRectanglePro(rec, origin, angulo, RED);
+            }
+            if (projectile_2.active) {
+                // Definimos el cuerpo de la bala (ej: 15px de largo, 5px de alto)
+                Rectangle rec = { projectile_2.pos.x, projectile_2.pos.y, 15, 5 };
+                
+                // El centro de rotación (la mitad del ancho y alto)
+                Vector2 origin = { 7.5f, 2.5f }; 
+                
+                // Ángulo según la dirección del proyectil
+                float angulo = atan2f(projectile_2.vel.y, projectile_2.vel.x) * RAD2DEG;
+
+                DrawRectanglePro(rec, origin, angulo, RED);
+            }
 
         }
         
@@ -331,6 +470,20 @@ void MainGameState::render(){
         DrawText(TextFormat("%d / 100", player2.health), screenWidth - 230, 50 + barHeight + 5, 20, DARKGREEN);
 
         //DrawText("ESPACIO para disparar", 20, 45, 20, DARKGRAY);
+    }
+    for (const auto& e : explosions) {
+        if (!e.active) continue;
+
+        float t = e.time / e.duration;
+        float currentRadius = e.radius * t;
+
+        Color inner = Fade(ORANGE, 1.0f - t);
+        Color mid   = Fade(RED,    0.8f - t);
+        Color outer = Fade(YELLOW, 0.6f - t);
+
+        DrawCircleV(e.pos, currentRadius * 0.4f, inner);
+        DrawCircleV(e.pos, currentRadius * 0.7f, mid);
+        DrawCircleLines(e.pos.x, e.pos.y, currentRadius, outer);
     }
     EndDrawing();
 }
