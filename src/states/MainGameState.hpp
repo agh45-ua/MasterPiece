@@ -10,7 +10,8 @@
     #include <string>
     extern std::map<std::string, std::string> translations;
 
-    const char* _(const char* str);
+    #define _(STRING) translate(STRING)
+    const char* translate(const char* str);
 
     void loadTranslations(const std::string& lang);
 #else
