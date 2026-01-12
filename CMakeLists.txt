@@ -18,7 +18,7 @@ find_package(raylib CONFIG REQUIRED)
 # ------------------------------------------
 # Listado explícito para evitar GLOB (Práctica recomendada por el profesor)
 set(GAME_SOURCES
-    src/core/GameState. cpp
+    src/core/GameState.cpp
     src/core/StateMachine.cpp
     src/core/ControlBindings.cpp
     src/core/ResourceManager.cpp
