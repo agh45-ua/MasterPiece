@@ -19,8 +19,12 @@ find_package(raylib QUIET)
 if (NOT raylib_FOUND)
     message(STATUS "Raylib no encontrado, usando vendor/include y vendor/lib")
     
-    include_directories(${CMAKE_SOURCE_DIR}/vendor/include)
-    link_directories(${CMAKE_SOURCE_DIR}/vendor/lib)
+    # Crear una biblioteca importada para raylib
+    add_library(raylib STATIC IMPORTED)
+    set_target_properties(raylib PROPERTIES
+        IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/vendor/lib/libraylib.a
+        INTERFACE_INCLUDE_DIRECTORIES ${CMAKE_SOURCE_DIR}/vendor/include
+    )
     
     set(RAYLIB_LIB raylib)
 else()
@@ -47,7 +51,7 @@ target_include_directories(GameLogic PUBLIC
 # ==========================================
 # EJECUTABLE PRINCIPAL
 # ==========================================
-add_executable(MasterPiece src/core/main.cpp)
+add_executable(MasterPiece src/core/main. cpp)
 
 target_include_directories(MasterPiece PRIVATE
     ${CMAKE_SOURCE_DIR}/src
