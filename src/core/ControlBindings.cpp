@@ -111,6 +111,7 @@ bool ControlBindings::fixShotUsesMouseFallback() const {
 }
 
 // Implementación de GetKeyName si no está disponible en raylib
+#ifndef HAVE_RAYLIB_GETKEYNAME
 static const char* GetKeyName(int key) {
     switch (key) {
     case KEY_NULL: return "NULL";
@@ -222,6 +223,7 @@ static const char* GetKeyName(int key) {
     default: return "";
     }
 }
+#endif
 
 std::string DescribeKeyboardKey(int key) {
     if (key == KEY_NULL) {
