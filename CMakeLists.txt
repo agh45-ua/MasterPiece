@@ -14,13 +14,11 @@ endif()
 # ------------------------------------------
 find_package(raylib QUIET)
 
-if (NOT raylib_FOUND)
-    # Buscamos la librería específica en vendor/ para no usar rutas globales
-    find_library(RAYLIB_LIB raylib PATHS "${CMAKE_CURRENT_SOURCE_DIR}/vendor/lib" NO_DEFAULT_PATH)
-    set(RAYLIB_INCLUDE "${CMAKE_CURRENT_SOURCE_DIR}/vendor/include")
-else()
+if (raylib_FOUND)
     set(RAYLIB_LIB raylib)
-    set(RAYLIB_INCLUDE "")
+else()
+    find_library(RAYLIB_LIB raylib PATHS "${CMAKE_CURRENT_SOURCE_DIR}/vendor/lib" NO_DEFAULT_PATH)
+    set(RAYLIB_VENDOR_INCLUDE "${CMAKE_CURRENT_SOURCE_DIR}/vendor/include")
 endif()
 
 # 2. DEFINIR FUENTES Y CREAR LIBRERÍA (Target GameLogic)
@@ -50,11 +48,13 @@ target_include_directories(GameLogic PUBLIC
     ${RAYLIB_INCLUDE}
 )
 
+target_link_libraries(GameLogic PUBLIC ${RAYLIB_LIB})
+
 # 3. Librerias del sistema
 if (WIN32)
     # Librerías Multimedia de Windows
     target_link_libraries(GameLogic PUBLIC winmm gdi32 shell32 user32 opengl32)
-    add_definitions(-DRAYLIB_DLL)
+    add_definitions(-D_CRT_SECURE_NO_WARNINGS)
 elseif (UNIX AND NOT APPLE)
     # Librerías de Linux (X11, GL, etc.)
     target_link_libraries(GameLogic PUBLIC m dl pthread GL X11 Xrandr Xi Xcursor Xxf86vm)
@@ -67,7 +67,7 @@ add_executable(MasterPiece src/core/main.cpp)
 
 # Enlazamos a la lógica y a raylib. 
 # NOTA: MasterPiece hereda los INCLUDES de GameLogic automáticamente por ser PUBLIC.
-target_link_libraries(MasterPiece PRIVATE GameLogic ${RAYLIB_LIB})
+target_link_libraries(MasterPiece PRIVATE GameLogic)
 
 # 5. RECURSOS, TESTS Y EMPAQUETADO
 # ------------------------------------------
