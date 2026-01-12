@@ -54,15 +54,6 @@ jobs:
       - name: Configure CMake
         run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-windows
 
-      - name: Build raylib version checker (even if build fails)
-        continue-on-error: true
-        shell: pwsh
-        run: cmake --build build --config Release --target print_raylib_version
-
-      - name: Print Raylib version (5.5 needed)
-        shell: pwsh
-        run: .\build\Release\print_raylib_version.exe
-
       - name: Build
         run: cmake --build build --config Release
 

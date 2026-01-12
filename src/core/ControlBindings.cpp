@@ -1,4 +1,7 @@
 #include "ControlBindings.hpp"
+extern "C" {
+    #include <raylib.h>
+}
 
 InputBinding ControlBindings::CreateDefault(ControlAction action) {
     switch (action) {
@@ -105,6 +108,119 @@ const char *ControlBindings::GetActionLabel(ControlAction action) {
 
 bool ControlBindings::fixShotUsesMouseFallback() const {
     return fixShotMouseFallback;
+}
+
+// Implementación de GetKeyName si no está disponible en raylib
+static const char* GetKeyName(int key) {
+    switch (key) {
+    case KEY_NULL: return "NULL";
+    case KEY_APOSTROPHE: return "'";
+    case KEY_COMMA: return ",";
+    case KEY_MINUS: return "-";
+    case KEY_PERIOD: return ".";
+    case KEY_SLASH: return "/";
+    case KEY_ZERO: return "0";
+    case KEY_ONE: return "1";
+    case KEY_TWO: return "2";
+    case KEY_THREE: return "3";
+    case KEY_FOUR: return "4";
+    case KEY_FIVE: return "5";
+    case KEY_SIX: return "6";
+    case KEY_SEVEN: return "7";
+    case KEY_EIGHT: return "8";
+    case KEY_NINE: return "9";
+    case KEY_SEMICOLON: return ";";
+    case KEY_EQUAL: return "=";
+    case KEY_A: return "A";
+    case KEY_B: return "B";
+    case KEY_C: return "C";
+    case KEY_D: return "D";
+    case KEY_E: return "E";
+    case KEY_F: return "F";
+    case KEY_G: return "G";
+    case KEY_H: return "H";
+    case KEY_I: return "I";
+    case KEY_J: return "J";
+    case KEY_K: return "K";
+    case KEY_L: return "L";
+    case KEY_M: return "M";
+    case KEY_N: return "N";
+    case KEY_O: return "O";
+    case KEY_P: return "P";
+    case KEY_Q: return "Q";
+    case KEY_R: return "R";
+    case KEY_S: return "S";
+    case KEY_T: return "T";
+    case KEY_U: return "U";
+    case KEY_V: return "V";
+    case KEY_W: return "W";
+    case KEY_X: return "X";
+    case KEY_Y: return "Y";
+    case KEY_Z: return "Z";
+    case KEY_LEFT_BRACKET: return "[";
+    case KEY_BACKSLASH: return "\\";
+    case KEY_RIGHT_BRACKET: return "]";
+    case KEY_GRAVE: return "`";
+    case KEY_SPACE: return "Space";
+    case KEY_ESCAPE: return "Esc";
+    case KEY_ENTER: return "Enter";
+    case KEY_TAB: return "Tab";
+    case KEY_BACKSPACE: return "Backspace";
+    case KEY_INSERT: return "Ins";
+    case KEY_DELETE: return "Del";
+    case KEY_RIGHT: return "Right";
+    case KEY_LEFT: return "Left";
+    case KEY_DOWN: return "Down";
+    case KEY_UP: return "Up";
+    case KEY_PAGE_UP: return "PgUp";
+    case KEY_PAGE_DOWN: return "PgDn";
+    case KEY_HOME: return "Home";
+    case KEY_END: return "End";
+    case KEY_CAPS_LOCK: return "CapsLock";
+    case KEY_SCROLL_LOCK: return "ScrollLock";
+    case KEY_NUM_LOCK: return "NumLock";
+    case KEY_PRINT_SCREEN: return "PrtScn";
+    case KEY_PAUSE: return "Pause";
+    case KEY_F1: return "F1";
+    case KEY_F2: return "F2";
+    case KEY_F3: return "F3";
+    case KEY_F4: return "F4";
+    case KEY_F5: return "F5";
+    case KEY_F6: return "F6";
+    case KEY_F7: return "F7";
+    case KEY_F8: return "F8";
+    case KEY_F9: return "F9";
+    case KEY_F10: return "F10";
+    case KEY_F11: return "F11";
+    case KEY_F12: return "F12";
+    case KEY_LEFT_SHIFT: return "Shift L";
+    case KEY_LEFT_CONTROL: return "Ctrl L";
+    case KEY_LEFT_ALT: return "Alt L";
+    case KEY_LEFT_SUPER: return "Super L";
+    case KEY_RIGHT_SHIFT: return "Shift R";
+    case KEY_RIGHT_CONTROL: return "Ctrl R";
+    case KEY_RIGHT_ALT: return "Alt R";
+    case KEY_RIGHT_SUPER: return "Super R";
+    case KEY_KB_MENU: return "Menu";
+    case KEY_KP_0: return "Kp0";
+    case KEY_KP_1: return "Kp1";
+    case KEY_KP_2: return "Kp2";
+    case KEY_KP_3: return "Kp3";
+    case KEY_KP_4: return "Kp4";
+    case KEY_KP_5: return "Kp5";
+    case KEY_KP_6: return "Kp6";
+    case KEY_KP_7: return "Kp7";
+    case KEY_KP_8: return "Kp8";
+    case KEY_KP_9: return "Kp9";
+    case KEY_KP_DECIMAL: return "Kp.";
+    case KEY_KP_DIVIDE: return "Kp/";
+    case KEY_KP_MULTIPLY: return "Kp*";
+    case KEY_KP_SUBTRACT: return "Kp-";
+    case KEY_KP_ADD: return "Kp+";
+    case KEY_KP_ENTER: return "KpEnter";
+    case KEY_KP_EQUAL: return "Kp=";
+    default: return "";
+    }
 }
 
 std::string DescribeKeyboardKey(int key) {
