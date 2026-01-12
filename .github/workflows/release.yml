@@ -57,6 +57,11 @@ jobs:
       - name: Build
         run: cmake --build build --config Release
 
+      # ESTE STEP ES EL NUEVO PARA IMPRIMIR LA VERSION DE RAYLIB (NECESITA 5.5)
+      - name: Print Raylib version
+        run: |
+        build\Release\print_raylib_version.exe
+
       - name: Package with CPack
         run: |
           cd build

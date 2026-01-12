@@ -75,3 +75,14 @@ if (WIN32)
     include(CPack)
     cpack_add_component(MasterPiece)
 endif()
+
+add_executable(print_raylib_version src/print_raylib_version.cpp)
+
+target_link_libraries(print_raylib_version PRIVATE ${RAYLIB_LIB})
+
+if (UNIX AND NOT APPLE)
+    target_link_libraries(print_raylib_version
+        PRIVATE
+        m dl pthread GL X11 Xrandr Xi Xcursor Xxf86vm
+    )
+endif()
